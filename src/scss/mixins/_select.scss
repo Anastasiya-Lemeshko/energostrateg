@@ -1,0 +1,143 @@
+@use "breakpoint" as *;
+@use "interactive-states" as *;
+
+@mixin select-standard {
+  position: relative;
+
+  &-button {
+    --color: var(--text-basic);
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 15px;
+    gap: 5px;
+    width: 100%;
+    padding: 5px 0;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--color);
+    text-align: left;
+    background-color: var(--transparent);
+    border: none;
+    transition: color 0.3s;
+    cursor: pointer;
+
+    @include vp-768 {
+      font-size: 16px;
+    }
+
+    @include hover-focus {
+      --color: var(--text-basic);
+
+      outline: none;
+    }
+
+    @include active {
+      --color: var(--grey);
+    }
+
+    @include disabled {
+      --color: var(--grey-middle);
+
+      background-color: var(--grey-light);
+      cursor: default;
+      pointer-events: none;
+    }
+
+    &::after {
+      grid-area: 1 / 2 / 2 / 3;
+      content: "";
+      width: 12px;
+      height: 11px;
+      background-color: var(--bg-primary);
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-image: url("../img/sprite.svg#select-arrow");
+      mask-size: 12px 11px;
+      transform: scaleY(1);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+  }
+
+  .select__list {
+    position: absolute;
+    top: calc(100% - 5px);
+    left: 0;
+    width: 250px;
+    max-height: 70vw;
+    overflow-y: auto;
+    margin: 0;
+    padding: 9px 20px;
+    list-style-type: none;
+    background-color: var(--bg-light);
+    transform: scaleY(0);
+    opacity: 0.7;
+    transform-origin: top;
+    transition: transform 0.3s, opacity 0.3s;
+    z-index: var(--z-select);
+
+    @include vp-1366 {
+      padding: 9px 40px;
+    }
+  }
+
+  .select__item {
+    @include interactive-link-dark;
+
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    margin: 0 0 10px;
+    padding: 0;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 12px;
+    text-align: left;
+    color: var(--text-light);
+    border: none;
+    background-color: var(--transparent);
+    transition: color 0.3s, opacity 0.3s;
+    cursor: pointer;
+
+    @include vp-768 {
+      font-size: 16px;
+    }
+  }
+
+  &.select--open .select__button::after {
+    transform: scaleY(-1);
+  }
+
+  &.select--open .select__list {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@mixin select-dark {
+  @include select-standard;
+
+  &-button {
+    --color: var(--text-basic);
+
+    background-color: var(--grey-extra-light);
+
+    @include hover-focus {
+      --color: var(--bg-accent);
+    }
+
+    @include active {
+      --color: var(--bg-accent-opacity);
+    }
+  }
+
+  .select__list {
+    background-color: var(--grey-extra-light);
+  }
+
+  .select__item {
+    @include interactive-link-accent;
+
+    color: var(--text-basic);
+  }
+}

@@ -1,0 +1,51 @@
+@use "index" as *;
+
+.button {
+  @include interactive-button;
+
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 5px;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--white);
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  background-color: var(--bg-primary);
+  cursor: pointer;
+
+  @include vp-768 {
+    padding: 5px 12px;
+    font-size: 16px;
+  }
+
+  &--disabled {
+    background-color: var(--grey-middle);
+    color: var(--grey-extra-light);
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &--main {
+    position: relative;
+    padding: 16px 33px 15px 17px;
+    font-size: 16px;
+
+    &::after {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      content: "";
+      border: 8px solid var(--transparent);
+      border-right: 8px solid var(--white);
+      border-top: 8px solid var(--white);
+    }
+  }
+
+  &--dark {
+    background-color: var(--bg-dark);
+  }
+}

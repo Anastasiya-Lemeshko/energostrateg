@@ -1,0 +1,37 @@
+:root {
+  // base
+  --font-family: "Inter Tight", "Arial", sans-serif;
+  --content-width: 1440px;
+  --container-offset: 20px;
+
+  // colors
+  --transparent: rgba(255, 255, 255, 0);
+  --white: #ffffff;
+  --black: #000000;
+  --text-basic: #191919;
+  --text-light: #676767;
+  --bg-primary: #0684ac;
+  --bg-dark: #055670;
+  --bg-light: #f0f0f0;
+  --error: #c10000;
+
+  // z-index
+  --z-close-button: 5;
+  --z-select: 10;
+  --z-button-scroll-top: 15;
+  --z-header: 20;
+  --z-modal: 25;
+}
+
+// Viewports
+// ---------------------------------
+
+$vp-320: 320px;
+$vp-400: 400px;
+$vp-550: 550px;
+$vp-768: 768px;
+$vp-1024: 1024px;
+$vp-1280: 1280px;
+$vp-1366: 1366px;
+$vp-1640: 1640px;
+$vp-1920: 1920px;

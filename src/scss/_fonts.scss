@@ -1,0 +1,4 @@
+@use "mixins" as *;
+
+@include font-face("Inter Tight", "InterTight-Regular-400", 400, normal);
+@include font-face("Inter Tight", "InterTight-Medium-500", 500, normal);
