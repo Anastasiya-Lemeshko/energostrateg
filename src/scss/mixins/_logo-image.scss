@@ -8,6 +8,10 @@
   height: 27px;
 
   @include vp-768 {
+    height: 40px;
+  }
+
+  @include vp-1280 {
     height: 44px;
   }
 

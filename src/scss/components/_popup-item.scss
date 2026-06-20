@@ -1,0 +1,27 @@
+.popup-item {
+  --opacity: 0;
+  --transform: scaleY(0);
+  --transition: opacity 0.3s, transform 0s 0.4s;
+
+  position: relative;
+
+  &.open {
+    --opacity: 1;
+    --transform: scaleY(1);
+    --transition: opacity 0.3s;
+  }
+}
+
+.popup-list {
+  position: absolute;
+  top: calc(100% + 5px);
+  width: max-content;
+  margin: 0;
+  padding: 20px;
+  list-style-type: none;
+  background-color: var(--bg-light);
+  opacity: var(--opacity);
+  transform: var(--transform);
+  transform-origin: top;
+  transition: var(--transition);
+}

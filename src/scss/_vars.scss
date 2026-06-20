@@ -2,6 +2,8 @@
   // base
   --font-family: "Inter Tight", "Arial", sans-serif;
   --content-width: 1440px;
+  --big-content-width: 1840px;
+  --full-content-width: 1960px;
   --container-offset: 20px;
 
   // colors
@@ -13,6 +15,7 @@
   --bg-primary: #0684ac;
   --bg-dark: #055670;
   --bg-light: #f0f0f0;
+  --green: #3caa3c;
   --error: #c10000;
 
   // z-index
@@ -33,5 +36,7 @@ $vp-768: 768px;
 $vp-1024: 1024px;
 $vp-1280: 1280px;
 $vp-1366: 1366px;
-$vp-1640: 1640px;
+$vp-1400: 1400px;
 $vp-1920: 1920px;
+$vp-2500: 2500px;
+$vp-4000: 4000px;

@@ -52,8 +52,31 @@
               <li class="header__nav-item">
                 <a class="header__nav-link" href="about.html">О&nbsp;компании</a>
               </li>
-              <li class="header__nav-item">
-                <a class="header__nav-link" href="services.html">Услуги</a>
+              <li class="header__nav-item header__nav-item--services popup-item">
+                <a class="header__nav-link popup-button" href="#">Услуги</a>
+                <ul class="header__nav-sublist popup-list">
+                  <li class="header__nav-subitem">
+                    <a class="header__nav-sublink" href="#">Лизинг</a>
+                  </li>
+                  <li class="header__nav-subitem">
+                    <a class="header__nav-sublink" href="#">Установка и монтаж оборудования под&nbsp;ключ</a>
+                  </li>
+                  <li class="header__nav-subitem">
+                    <a class="header__nav-sublink" href="#">Сервисное обслуживание и диагностика оборудования</a>
+                  </li>
+                  <li class="header__nav-subitem">
+                    <a class="header__nav-sublink" href="#">Подбор оборудования</a>
+                  </li>
+                  <li class="header__nav-subitem">
+                    <a class="header__nav-sublink" href="#">Ремонт оборудования</a>
+                  </li>
+                  <li class="header__nav-subitem">
+                    <a class="header__nav-sublink" href="#">Модернизация и дооснащение</a>
+                  </li>
+                  <li class="header__nav-subitem">
+                    <a class="header__nav-sublink" href="#">Аренда генераторов</a>
+                  </li>
+                </ul>
               </li>
               <li class="header__nav-item">
                 <a class="header__nav-link" href="blog.html">Блог</a>
@@ -72,11 +95,12 @@
               </li>
             </ul>
             <div class="header__address">
-              <p class="header__address-text">Москва, Новоданиловский проезд, д.4</p>
-              <p class="header__address-text">пн-вс с&nbsp;8:00&nbsp;до&nbsp;18:00</p>
+              <p class="header__address-text header__address-text--address">143080, Московская обл., Одинцовский&nbsp;р-н, д.п.&nbsp;Лесной городок, ул.&nbsp;Молодёжная, д.&nbsp;6, п.&nbsp;13</p>
+              <p class="header__address-text">пн-вс с&nbsp;9:00&nbsp;до&nbsp;18:00</p>
+              <a class="header__address-text header__address-text--mail" href="mailto:info@generatory-russia.ru" target="_blank" rel="noreferrer noopener">info@generatory-russia.ru</a>
             </div>
             <div class="header__feedback">
-              <a class="header__tel" href="tel:+79812312412">89812312412</a>
+              <a class="header__tel" href="tel:+7(495)7488890">+7&nbsp;(495)&nbsp;748&nbsp;88&nbsp;90</a>
               <button class="header__callback" type="button" aria-label="Заказать обратный звонок" data-modal-button="callback">Обратный звонок</button>
             </div>
             <ul class="header__socials js-header-socials">
@@ -105,10 +129,10 @@
 
       <div class="header__bottom">
         <div class="header__catalog">
-          <button class="header__catalog-button" type="button">Каталог</button>
+          <button class="header__catalog-button button" type="button">Каталог</button>
           <div class="header__catalog-container">
             <div class="header__catalog-group">
-              <p class="header__catalog-title">Генераторы</p>
+              <a class="header__catalog-title" href="#">Генераторы</a>
               <ul class="header__catalog-list">
                 <li class="header__catalog-item">
                   <a class="header__catalog-link" href="#">Дизель-генераторы (ДГУ)</a>
@@ -128,7 +152,7 @@
               </ul>
             </div>
             <div class="header__catalog-group">
-              <p class="header__catalog-title">Электроснабжение и автоматика</p>
+              <a class="header__catalog-title" href="#">Электроснабжение и автоматика</a>
               <ul class="header__catalog-list">
                 <li class="header__catalog-item">
                   <a class="header__catalog-link" href="#">ИБП (источники бесперебойного питания)</a>
@@ -142,7 +166,7 @@
               </ul>
             </div>
             <div class="header__catalog-group">
-              <p class="header__catalog-title">Компрессорное и насосное оборудование</p>
+              <a class="header__catalog-title" href="#">Компрессорное и насосное <br>оборудование</a>
               <ul class="header__catalog-list">
                 <li class="header__catalog-item">
                   <a class="header__catalog-link" href="#">Дизельные компрессоры</a>
@@ -153,7 +177,7 @@
               </ul>
             </div>
             <div class="header__catalog-group">
-              <p class="header__catalog-title">Тепловое оборудование</p>
+              <a class="header__catalog-title" href="#">Тепловое оборудование</a>
               <ul class="header__catalog-list">
                 <li class="header__catalog-item">
                   <a class="header__catalog-link" href="#">Тепловые пушки</a>
@@ -164,7 +188,7 @@
               </ul>
             </div>
             <div class="header__catalog-group">
-              <p class="header__catalog-title">Строительное оборудование</p>
+              <a class="header__catalog-title" href="#">Строительное оборудование</a>
               <ul class="header__catalog-list">
                 <li class="header__catalog-item">
                   <a class="header__catalog-link" href="#">Виброплиты</a>
@@ -175,7 +199,7 @@
               </ul>
             </div>
             <div class="header__catalog-group">
-              <p class="header__catalog-title">Освещение</p>
+              <a class="header__catalog-title" href="#">Освещение</a>
               <ul class="header__catalog-list">
                 <li class="header__catalog-item">
                   <a class="header__catalog-link" href="#">Осветительные мачты</a>
@@ -183,7 +207,6 @@
               </ul>
             </div>
           </div>
-          <a class="header__catalog-more" href="catalog.html">Перейти в каталог</a>
         </div>
 
         <form class="header__search search-form">

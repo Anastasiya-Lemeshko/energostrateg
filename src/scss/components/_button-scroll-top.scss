@@ -30,7 +30,7 @@
     right: 6px;
   }
 
-  @include vp-1640 {
+  @include vp-1400 {
     right: calc(50% - var(--content-width) / 2 + 3px);
     transform: translateX(50%);
   }

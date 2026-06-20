@@ -1,5 +1,5 @@
 import {
-  SLIDES_COUNT,
+  SLIDER_CONFIG,
   DESKTOP_WIDTH,
   TABLET_WIDTH
 } from './_vars.js';
@@ -39,6 +39,12 @@ const getSlidesCount = (swiper) => {
   const swiperList = swiper.querySelector('[class*="swiper-wrapper"]');
   return swiperList.children.length;
 };
+
+const getAutoSlidesCount = (swiper) => {
+  const swiperSlide = swiper.querySelector('[class*="swiper-wrapper"] li');
+  const slideWidth = swiperSlide.offsetWidth;
+  return Math.floor(window.innerWidth / slideWidth);
+}
 
 const addSwiperClass = (swiper, el) => {
   const swiperWrapper = swiper.querySelector(`.${el}swiper-wrapper`);
@@ -105,16 +111,31 @@ const setSlidesTabIndex = (swiper, countVisibleSlides) => {
 };
 
 const checkVisibleSlides = (block) => {
-  if (SLIDES_COUNT[block]) {
+  if (SLIDER_CONFIG[block]) {
     if (DESKTOP_WIDTH.matches) {
-      return SLIDES_COUNT[block].desktop;
+      return SLIDER_CONFIG[block].desktop_count;
     } else if (TABLET_WIDTH.matches) {
-      return SLIDES_COUNT[block].tablet;
+      return SLIDER_CONFIG[block].tablet_count;
     }
-    return SLIDES_COUNT[block].mobile;
+    return SLIDER_CONFIG[block].mobile_count;
   } else {
-    return SLIDES_COUNT.default;
+    return SLIDER_CONFIG.default;
   }
+};
+
+const formatNumber = (num) => {
+  return num < 10 ? `0${num}` : `${num}`;
+};
+
+const setSwiperProgress = (swiper) => {
+  const progressElement = swiper.el.querySelector('.swiper-progress');
+
+  if (!progressElement) return;
+
+  const activeIndex = swiper.realIndex;
+  const totalSlides = swiper.slides.length;
+
+  progressElement.textContent = `${formatNumber(activeIndex + 1)}/${formatNumber(totalSlides)}`;
 };
 
 const debounce = (callback, timeoutDelay = 500) => {
@@ -135,11 +156,13 @@ export {
   setTabIndex,
   removeTabIndex,
   getSlidesCount,
+  getAutoSlidesCount,
   addSwiperClass,
   removeSwiperClass,
   getSwiperClass,
   getBlockClass,
   setSlidesTabIndex,
   checkVisibleSlides,
+  setSwiperProgress,
   debounce
 };

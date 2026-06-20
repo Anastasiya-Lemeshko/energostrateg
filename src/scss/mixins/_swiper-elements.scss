@@ -87,14 +87,14 @@
 
 @mixin swiper-scrollbar {
   border-radius: 0;
-  background-color: var(--grey);
+  background: linear-gradient(to bottom, var(--transparent) 44%, var(--white) 44%, var(--white) 56%, var(--transparent) 56%);
   height: 8px;
   margin: 0 0 10px;
 
-  &-drag {
+  .swiper-scrollbar-drag {
     height: 100%;
-    background-color: var(--accent-dark);
-    border-radius: 0;
+    background-color: var(--bg-dark);
+    border-radius: 2px;
     cursor: pointer;
   }
 }

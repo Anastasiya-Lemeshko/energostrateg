@@ -9,33 +9,52 @@ export const TABLET_WIDTH = window.matchMedia('(min-width: 768px)');
 export const SMALL_DESKTOP_WIDTH = window.matchMedia('(min-width: 1024px)');
 export const DESKTOP_WIDTH = window.matchMedia('(min-width: 1366px)');
 
-export const SLIDES_COUNT = {
+export const HEADER_FIXED_OFFSET = 500;
+
+export const MODAL_TIMER = 3000000;
+
+export const TABS_DELAY = 5000;
+
+export const TEXTAREA_LINEHEIGHT = 22;
+
+export const MODAL_CONTENT = {
+  'title': {
+    'individual-calc': 'Получите индивидуальный расчёт под ваш проект',
+    'request': 'Оставьте заявку — мы подберём оптимальное решение для вашей перголы',
+    'order': 'Закажите перголу с гарантией результата',
+    'cost': 'Точная стоимость — для вашего проекта под ключ',
+    'question': 'Не нашли нужной информации? Спросите нас напрямую',
+    'design': 'Закажите перголу с индивидуальным дизайном',
+  },
+  'desc': {
+    'question': 'Мы на связи и готовы помочь с выбором, расчётом или техническими нюансами.',
+  },
+  'pattern': {
+    'individual-design': 'Заказать перголу {title} по индивидуальному дизайну',
+  },
+}
+
+export const SLIDER_CONFIG = {
   'default': {
-    'mobile': 1,
-    'tablet': 2,
-    'desktop': 3
+    'mobile_count': 1,
+    'tablet_count': 2,
+    'desktop_count': 3,
   },
-  'team': {
-    'mobile': 1,
-    'tablet': 2,
-    'desktop': 3
+  'product': {
+    'mobile_count': 2,
+    'tablet_count': 3,
+    'desktop_count': 10000,
+    'loop': true,
+    'hasNavigation': false,
+    'hasScrollbar': true,
   },
-  'featured': {
-    'mobile': 1,
-    'tablet': 3,
-    'desktop': 6
-  },
-  'blog-preview': {
-    'mobile': 1,
-    'tablet': 2,
-    'desktop': 3
-  },
-  'similar': {
-    'mobile': 1,
-    'tablet': 2,
-    'desktop': 3,
+  'blog': {
+    'mobile_count': 1,
+    'tablet_count': 2,
+    'desktop_count': 4,
+    'loop': true,
     'desktop_width': SMALL_DESKTOP_WIDTH,
-  }
+  },
 };
 
 export const RANGE_VALUES = {

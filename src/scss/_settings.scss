@@ -96,6 +96,14 @@ form {
   margin: 0 auto;
   padding: 0 var(--container-offset);
   max-width: var(--content-width);
+
+  @include vp-2500 {
+    max-width: var(--big-content-width);
+  }
+
+  @include vp-4000 {
+    max-width: var(--full-content-width);
+  }
 }
 
 .centered {
