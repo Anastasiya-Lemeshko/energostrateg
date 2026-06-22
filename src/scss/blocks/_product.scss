@@ -321,6 +321,7 @@
 }
 
 .product__card-button {
+  width: 100%;
   padding: 6px 11px;
   font-size: 12px;
 
@@ -346,10 +347,6 @@
       border-top: 8px solid var(--icon-color);
     }
   }
-}
-
-.product__card-button {
-  width: 100%;
 }
 
 .product__swiper-scrollbar {
