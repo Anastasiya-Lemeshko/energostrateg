@@ -40,6 +40,13 @@ export const SLIDER_CONFIG = {
     'tablet_count': 2,
     'desktop_count': 3,
   },
+  'hero': {
+    'mobile_count': 1,
+    'tablet_count': 1,
+    'desktop_count': 1,
+    'loop': true,
+    'auto_height': false,
+  },
   'product': {
     'mobile_count': 2,
     'tablet_count': 3,

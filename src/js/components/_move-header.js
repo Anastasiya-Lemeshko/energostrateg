@@ -11,27 +11,26 @@ const fixButton = header ? header.querySelector('.header__fix-button--catalog') 
 
 const headerTop = header ? header.querySelector('.header__top') : null;
 const headerBottom = header ? header.querySelector('.header__bottom') : null;
-let isUserheaderMoved = false;
+let isHeaderMoved = false;
 
-const moveheader = () => {
-  if (header && SMALL_DESKTOP_WIDTH.matches && !isUserheaderMoved) {
+const moveHeader = () => {
+  if (header && SMALL_DESKTOP_WIDTH.matches && !isHeaderMoved) {
     headerBottom.insertAdjacentElement('afterbegin', logo);
     headerBottom.insertAdjacentElement('beforeend', user);
     headerBottom.insertAdjacentElement('beforeend', socials);
 
-
-    isUserheaderMoved = true;
+    isHeaderMoved = true;
   }
 
-  if (header && !SMALL_DESKTOP_WIDTH.matches && isUserheaderMoved) {
+  if (header && !SMALL_DESKTOP_WIDTH.matches && isHeaderMoved) {
     select.insertAdjacentElement('afterend', logo);
     fixButton.insertAdjacentElement('afterend', user);
     menuContainer.insertAdjacentElement('beforeend', socials);
 
-    isUserheaderMoved = false;
+    isHeaderMoved = false;
   }
 };
 
-SMALL_DESKTOP_WIDTH.addEventListener('change', moveheader);
+SMALL_DESKTOP_WIDTH.addEventListener('change', moveHeader);
 
-export { moveheader };
+export { moveHeader };

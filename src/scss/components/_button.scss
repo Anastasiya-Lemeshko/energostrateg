@@ -36,6 +36,10 @@
     padding: 16px 17px 15px;
     font-size: 14px;
 
+    @include vp-1280 {
+      font-size: 16px;
+    }
+
     &::after {
       position: absolute;
       top: 8px;
@@ -56,5 +60,12 @@
 
     color: var(--bg-primary);
     background-color: var(--bg-light);
+  }
+
+  &--white {
+    --icon-color: var(--bg-primary);
+
+    color: var(--bg-primary);
+    background-color: var(--white);
   }
 }

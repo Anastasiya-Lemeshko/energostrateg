@@ -15,7 +15,11 @@
 
 // подключения секций страницы
 @use "./blocks/header";
-
+@use "./blocks/hero";
+@use "./blocks/features";
+@use "./blocks/catalog";
+// @use "./blocks/header";
+// @use "./blocks/header";
 @use "./blocks/product";
 // @use "./blocks/header";
 // @use "./blocks/header";
@@ -27,8 +31,3 @@
 // @use "./blocks/header";
 // @use "./blocks/header";
 // @use "./blocks/header";
-// @use "./blocks/header";
-// @use "./blocks/header";
-// @use "./blocks/header";
-// @use "./blocks/header";
-

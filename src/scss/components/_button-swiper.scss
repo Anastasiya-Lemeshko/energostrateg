@@ -6,13 +6,12 @@
 
   position: relative;
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 36px;
   padding: 0;
   border: none;
   background-color: var(--bg-color);
   transition: background-color 0.3s;
-  border-radius: 5px;
   cursor: pointer;
 
   @include vp-768 {
@@ -32,7 +31,7 @@
     content: "";
     width: 100%;
     height: 100%;
-    mask-image: url("../img/sprite.svg#arrow");
+    mask-image: url("../img/sprite.svg#swiper-arrow");
     mask-position: center;
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
@@ -44,18 +43,17 @@
   }
 
   @include hover-focus {
-    --bg-color: var(--bg-accent);
+    --bg-color: var(--bg-dark);
 
     outline: none;
   }
 
   @include active {
-    --bg-color: var(--bg-accent-opacity);
+    --bg-color: var(--text-light);
   }
 
   @include disabled {
-    --color-arrow: var(--grey-extra-light);
-    --bg-color: var(--grey);
+    --bg-color: var(--text-light);
 
     cursor: default;
     pointer-events: none;
