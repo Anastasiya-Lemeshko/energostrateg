@@ -10594,7 +10594,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_popup_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/_popup.js */ "./src/js/components/_popup.js");
 /* harmony import */ var _components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/_navigation-swiper.js */ "./src/js/components/_navigation-swiper.js");
 /* harmony import */ var _components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/_cards-swiper.js */ "./src/js/components/_cards-swiper.js");
+/* harmony import */ var _components_move_hero_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/_move-hero.js */ "./src/js/components/_move-hero.js");
 // import { openVisibleFontCardContent, setAccordeonToggles } from './components/_accordion.js';
+
 
 
 
@@ -10604,10 +10606,11 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener('DOMContentLoaded', () => {
   (0,_components_custom_select_js__WEBPACK_IMPORTED_MODULE_0__.renderCustomSelect)();
   (0,_components_open_mobile_menu_js__WEBPACK_IMPORTED_MODULE_1__.setMobileMenu)();
-  (0,_components_move_header_js__WEBPACK_IMPORTED_MODULE_2__.moveheader)();
+  (0,_components_move_header_js__WEBPACK_IMPORTED_MODULE_2__.moveHeader)();
   (0,_components_popup_js__WEBPACK_IMPORTED_MODULE_3__.setPopup)();
   (0,_components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_4__.setNavigationSwiper)();
   (0,_components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_5__.initCardsSwiper)();
+  (0,_components_move_hero_js__WEBPACK_IMPORTED_MODULE_6__.moveHero)();
 });
 
 /***/ }),
@@ -10811,6 +10814,13 @@ const SLIDER_CONFIG = {
     'mobile_count': 1,
     'tablet_count': 2,
     'desktop_count': 3
+  },
+  'hero': {
+    'mobile_count': 1,
+    'tablet_count': 1,
+    'desktop_count': 1,
+    'loop': true,
+    'auto_height': false
   },
   'product': {
     'mobile_count': 2,
@@ -11087,7 +11097,7 @@ const renderCustomSelect = () => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   moveheader: () => (/* binding */ moveheader)
+/* harmony export */   moveHeader: () => (/* binding */ moveHeader)
 /* harmony export */ });
 /* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_vars.js */ "./src/js/_vars.js");
 
@@ -11101,22 +11111,52 @@ const socials = header ? header.querySelector('.js-header-socials') : null;
 const fixButton = header ? header.querySelector('.header__fix-button--catalog') : null;
 const headerTop = header ? header.querySelector('.header__top') : null;
 const headerBottom = header ? header.querySelector('.header__bottom') : null;
-let isUserheaderMoved = false;
-const moveheader = () => {
-  if (header && _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isUserheaderMoved) {
+let isHeaderMoved = false;
+const moveHeader = () => {
+  if (header && _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isHeaderMoved) {
     headerBottom.insertAdjacentElement('afterbegin', logo);
     headerBottom.insertAdjacentElement('beforeend', user);
     headerBottom.insertAdjacentElement('beforeend', socials);
-    isUserheaderMoved = true;
+    isHeaderMoved = true;
   }
-  if (header && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isUserheaderMoved) {
+  if (header && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isHeaderMoved) {
     select.insertAdjacentElement('afterend', logo);
     fixButton.insertAdjacentElement('afterend', user);
     menuContainer.insertAdjacentElement('beforeend', socials);
-    isUserheaderMoved = false;
+    isHeaderMoved = false;
   }
 };
-_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.addEventListener('change', moveheader);
+_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.addEventListener('change', moveHeader);
+
+
+/***/ }),
+
+/***/ "./src/js/components/_move-hero.js":
+/*!*****************************************!*\
+  !*** ./src/js/components/_move-hero.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   moveHero: () => (/* binding */ moveHero)
+/* harmony export */ });
+/* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_vars.js */ "./src/js/_vars.js");
+
+const heroTop = document.querySelector('.hero__top');
+const content = heroTop ? heroTop.querySelector('.hero__content') : null;
+let isHeroMoved = false;
+const moveHero = () => {
+  if (heroTop && _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches && !isHeroMoved) {
+    heroTop.insertAdjacentElement('afterbegin', content);
+    isHeroMoved = true;
+  }
+  if (heroTop && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches && isHeroMoved) {
+    heroTop.insertAdjacentElement('beforeend', content);
+    isHeroMoved = false;
+  }
+};
+_vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.addEventListener('change', moveHero);
 
 
 /***/ }),
