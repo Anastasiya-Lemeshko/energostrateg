@@ -6,6 +6,7 @@ import { setPopup } from './components/_popup.js';
 import { setNavigationSwiper } from './components/_navigation-swiper.js';
 import { initCardsSwiper } from './components/_cards-swiper.js';
 import { moveHero } from './components/_move-hero.js';
+import { setTabs } from './components/_tabs.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCustomSelect();
@@ -15,4 +16,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setNavigationSwiper();
   initCardsSwiper();
   moveHero();
+  setTabs();
 });

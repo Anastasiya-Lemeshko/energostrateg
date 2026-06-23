@@ -1,11 +1,7 @@
 @use "index" as *;
 
 .catalog {
-  padding: 40px 0;
-
-  @include vp-1024 {
-    padding: 80px 0;
-  }
+  @include block-margin;
 }
 
 .catalog__title {

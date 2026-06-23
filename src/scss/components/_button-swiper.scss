@@ -14,16 +14,6 @@
   transition: background-color 0.3s;
   cursor: pointer;
 
-  @include vp-768 {
-    width: 40px;
-    height: 40px;
-  }
-
-  @include vp-1366 {
-    width: 54px;
-    height: 54px;
-  }
-
   &::before {
     position: absolute;
     top: 0;

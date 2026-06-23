@@ -1,0 +1,64 @@
+@use "index" as *;
+
+.quick {
+  @include block-margin;
+}
+
+.quick__tablinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0 0 15px;
+}
+
+.quick__subtablinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0 0 20px;
+}
+
+.quick__tablink {
+  padding: 10px;
+  color: var(--bg-primary);
+  background-color: var(--bg-light);
+
+  &.tabs__tablink--active {
+    color: var(--white);
+    background-color: var(--bg-primary);
+  }
+}
+
+.quick__subtablinks .quick__tablink {
+  padding: 9px;
+  color: var(--text-basic);
+
+  &.tabs__tablink--active {
+    color: var(--white);
+    background-color: var(--bg-dark);
+  }
+}
+
+.quick__subtabcontents {
+  padding: 15px;
+  background-color: var(--bg-primary);
+}
+
+.quick__subtabcontent.tabs__tabcontent--active {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.quick__link {
+  padding: 10px;
+  color: var(--text-basic);
+  background-color: var(--bg-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  @include hover-focus {
+    color: var(--bg-light);
+    background-color: var(--bg-dark);
+  }
+}

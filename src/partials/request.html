@@ -1,0 +1,66 @@
+<section class="form">
+  <div class="container">
+    <form class="form__body" action="form.php" method="post">
+      <p class="form__title title">Подберем выгодное предложение под&nbsp;вашу задачу и&nbsp;объект</p>
+      <p class="form__text">Подберем оборудование под ваш объект, организуем поставку, выполним монтаж, подключение и&nbsp;запуск. Вы&nbsp;получите готовое решение без лишних подрядчиков и&nbsp;сложностей.</p>
+      <div class="form__img">
+        <picture>
+          <source width="689" height="488" type="image/webp" media="(min-width: 768px)" srcset="img/form/form-tablet@1x.webp 1x, img/form/form-tablet@2x.webp 2x">
+          <source width="400" height="296" type="image/webp" srcset="img/form/form-mobile@1x.webp 1x, img/form/form-mobile@2x.webp 2x">
+          <source width="689" height="488" type="image/jpg" media="(min-width: 768px)" srcset="img/form/form-tablet@1x.jpg 1x, img/form/form-tablet@2x.jpg 2x">
+          <img src="img/form/form-mobile@1x.jpg" srcset="img/form/form-mobile@2x.jpg 2x" width="400" height="296" alt="Логотип компании">
+        </picture>
+      </div>
+      <div class="form__content">
+        <ul class="form__list">
+          <li class="form__item">
+            <label class="form__field">
+              <span class="visually-hidden">Номер телефона</span>
+              <input class="form__input" type="tel" name="phone" placeholder="Номер телефона*" required>
+            </label>
+          </li>
+          <li class="form__item">
+            <label class="form__field">
+              <span class="visually-hidden">Ваша почта</span>
+              <input class="form__input" type="email" name="email" placeholder="Ваша почта*">
+            </label>
+          </li>
+          <li class="form__item">
+            <label class="form__field">
+              <span class="visually-hidden">Ваше имя</span>
+              <input class="form__input" type="text" name="name" placeholder="Ваше имя*">
+            </label>
+          </li>
+          <li class="form__item">
+            <label class="form__field">
+              <span class="visually-hidden">Для какого объекта нужно оборудование (необязательно)</span>
+              <input class="form__input" type="text" name="object" placeholder="Для какого объекта нужно оборудование">
+            </label>
+          </li>
+          <li class="form__item">
+            <label class="form__field">
+              <span class="visually-hidden">Что должно работать (необязательно)</span>
+              <input class="form__input" type="text" name="purpose" placeholder="Что должно работать">
+            </label>
+          </li>
+          <li class="form__item">
+            <label class="form__field">
+              <span class="visually-hidden">Когда должно работать (сезон)? (необязательно)</span>
+              <input class="form__input" type="text" name="season" placeholder="Когда должно работать (сезон)?">
+            </label>
+          </li>
+        </ul>
+        <label class="form__accept">
+          <span class="form__label">Я даю согласие на обработку персональных данных в&nbsp;соответствии с&nbsp;Политикой конфиденциальности.</span>
+          <input class="visually-hidden" type="checkbox" name="accept">
+        </label>
+        <div class="form__button-container">
+          <div class="form__error-wrapper form-error-message">
+            <p class="form__error hidden">Обязательные поля не заполнены</p>
+          </div>
+          <button class="form__button button button--main" type="submit">Отправить заявку</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

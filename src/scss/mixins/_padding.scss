@@ -1,9 +1,18 @@
 @use "breakpoint" as *;
 
-@mixin block-padding {
-  padding: 10px 0 5px;
+@mixin block-margin {
+  margin: 40px 0;
 
   @include vp-1024 {
-    padding: 20px 0;
+    margin: 80px 0 120px;
   }
 }
+
+@mixin block-padding {
+  padding: 40px 0;
+
+  @include vp-1024 {
+    padding: 80px 0;
+  }
+}
+

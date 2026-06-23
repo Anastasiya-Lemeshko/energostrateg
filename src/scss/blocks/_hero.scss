@@ -80,12 +80,16 @@
   transform: translateX(-50%);
   z-index: 1;
 
-
   @include vp-768 {
     left: unset;
     right: 17px;
     bottom: 10px;
     transform: unset;
+  }
+
+  @include vp-1024 {
+    right: 17px;
+    bottom: 24px;
   }
 
   &.hidden {
@@ -102,6 +106,7 @@
     display: grid;
     grid-template-rows: auto 1fr;
     min-height: 360px;
+    padding: 20px;
   }
 
   @include vp-1280 {

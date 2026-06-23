@@ -51,7 +51,7 @@ export const SLIDER_CONFIG = {
     'mobile_count': 2,
     'tablet_count': 3,
     'desktop_count': 10000,
-    'loop': true,
+    'loop': false,
     'hasNavigation': false,
     'hasScrollbar': true,
   },

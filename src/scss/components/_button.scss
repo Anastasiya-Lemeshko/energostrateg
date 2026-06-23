@@ -68,4 +68,8 @@
     color: var(--bg-primary);
     background-color: var(--white);
   }
+
+  &.hidden {
+    display: none;
+  }
 }

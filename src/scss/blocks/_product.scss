@@ -1,12 +1,9 @@
 @use "index" as *;
 
 .product {
-  padding: 40px 0;
-  background-color: var(--bg-light);
+  @include block-padding;
 
-  @include vp-1024 {
-    padding: 80px 0;
-  }
+  background-color: var(--bg-light);
 }
 
 .product__swiper-container {
@@ -29,12 +26,12 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  @include vp-2500 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-
   @include vp-1400 {
     gap: 20px;
+  }
+
+  @include vp-2500 {
+    gap: 30px;
   }
 
   &.swiper-wrapper {
@@ -59,6 +56,10 @@
 
   @include vp-768 {
     padding: 20px 10px 10px;
+  }
+
+  @include vp-2500 {
+    padding: 30px 20px 20px;
   }
 }
 
@@ -195,6 +196,10 @@
   @include vp-1024 {
     font-size: 22px;
   }
+
+  @include vp-2500 {
+    margin: 0 10px 25px;
+  }
 }
 
 .product__card-swiper-container {
@@ -202,6 +207,10 @@
 
   @include vp-768 {
     margin: 0 0 16px;
+  }
+
+  @include vp-2500 {
+    margin: 0 0 25px;
   }
 }
 
@@ -227,6 +236,10 @@
   @include vp-1024 {
     display: block;
     margin: 0 10px 20px;
+  }
+
+  @include vp-2500 {
+    margin: 0 10px 25px;
   }
 
   div {
@@ -257,6 +270,10 @@
   @include vp-1024 {
     position: relative;
     align-self: end;
+  }
+
+  @include vp-2500 {
+    margin: 0 0 15px;
   }
 }
 

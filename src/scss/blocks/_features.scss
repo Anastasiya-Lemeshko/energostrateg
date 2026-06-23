@@ -1,11 +1,7 @@
 @use "index" as *;
 
 .features {
-  padding: 40px 0;
-
-  @include vp-1024 {
-    padding: 80px 0;
-  }
+  @include block-margin;
 }
 
 .features__list {
