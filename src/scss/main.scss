@@ -13,6 +13,7 @@
 @use "./components/search-form";
 @use "./components/popup-item";
 @use "./components/tabs";
+@use "./components/block";
 
 // подключения секций страницы
 @use "./blocks/header";
@@ -24,10 +25,10 @@
 @use "./blocks/clients";
 @use "./blocks/product";
 @use "./blocks/form";
-// @use "./blocks/product";
-// @use "./blocks/product";
-// @use "./blocks/product";
-// @use "./blocks/product";
+@use "./blocks/services-preview";
+@use "./blocks/projects";
+@use "./blocks/blog";
+@use "./blocks/reviews";
 // @use "./blocks/product";
 // @use "./blocks/product";
 // @use "./blocks/product";

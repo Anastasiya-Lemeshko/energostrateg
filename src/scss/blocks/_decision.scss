@@ -1,9 +1,5 @@
 @use "index" as *;
 
-.decision {
-  @include block-margin;
-}
-
 .decision__title {
   margin: 0 0 40px;
 

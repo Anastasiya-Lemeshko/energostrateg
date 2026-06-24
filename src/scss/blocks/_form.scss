@@ -1,9 +1,5 @@
 @use "index" as *;
 
-.form {
-  @include block-margin;
-}
-
 .form__body {
   @include vp-768 {
     display: grid;

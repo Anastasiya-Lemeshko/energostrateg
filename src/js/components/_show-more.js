@@ -9,7 +9,7 @@ const onButtonClick = (evt) => {
   const container = showButton.closest('.js-show-more');
   const activeList = container ? container.querySelector('.js-show-more-list-active') : null;
 
-  const tags = activeList ? [...activeList.children].filter(el => !el.classList.contains('js-show-more-button')) : null;
+  const tags = activeList ? activeList.querySelectorAll('.js-show-more-tag') : null;
 
   if (!tags || !tags.length) return;
 
@@ -47,7 +47,7 @@ const showAllTags = (list) => {
   const buttonMore = container ? container.querySelector('.js-show-more-button') : null;
   if (!list || !buttonMore) return;
 
-  const tags = [...list.children].filter(el => !el.classList.contains('js-show-more-button'));
+  const tags = list.querySelectorAll('.js-show-more-tag');
   if (!tags || !tags.length) return;
 
   // если скрытие нужно только на моб.версии, а открыт десктоп - показывает все теги и выходит из функции
@@ -84,13 +84,20 @@ const onWindowChange = () => {
 
   activeLists.forEach((list) => {
     if (list.classList.contains('js-show-more-mobile-only') && TABLET_WIDTH.matches) {
-      const buttonMore = list.querySelector('.js-show-more-button');
-      const tags = [...list.children].filter(el => !el.classList.contains('js-show-more-button'));
+      const currentContainer = list.closest('.js-show-more');
+      const buttonMore = currentContainer ? currentContainer.querySelector('.js-show-more-button') : null;
+      const tags = list.querySelectorAll('.js-show-more-tag');
 
       if (buttonMore) {
+        const span = buttonMore.querySelector('span');
+
         buttonMore.classList.add('hidden');
         buttonMore.classList.remove('js-hide-all');
-        buttonMore.textContent = 'Показать еще';
+        if (span) {
+          span.textContent = 'Показать еще';
+        } else {
+          buttonMore.textContent = 'Показать еще';
+        }
       }
 
       if (tags && tags.length) {

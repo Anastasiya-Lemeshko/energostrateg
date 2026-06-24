@@ -11,7 +11,7 @@ const setTabs = () => {
 
     if (!tabLinkContainer) return;
 
-    const tabLinks = [...tabLinkContainer.children].filter(el => el.classList.contains('tabs__tablink'));
+    const tabLinks = [...tabLinkContainer.children].map(item => item.querySelector('.tabs__tablink'));
     const tabContents = tabContentContainer ? [...tabContentContainer.children].filter(el => el.classList.contains('tabs__tabcontent')) : null;
 
     const openTabs = (evt) => {

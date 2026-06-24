@@ -1,13 +1,37 @@
 @use "index" as *;
 
 .clients {
-  @include block-margin;
-
   overflow: hidden;
+
+  .container {
+    padding: 0;
+
+    @include vp-1024 {
+      padding: 0 var(--container-offset);
+    }
+  }
+}
+
+.clients__title {
+  padding: 0 var(--container-offset);
+
+  @include vp-1024 {
+    padding: 0;
+  }
+
+}
+
+.clients__swiper-container {
+  margin: 0 0 30px;
+
+  @include vp-1024 {
+    margin: 0 0 40px;
+  }
 }
 
 .clients__swiper-wrapper {
   display: flex;
+  margin: 0 var(--container-offset);
   padding: 0;
   list-style-type: none;
 
@@ -24,7 +48,7 @@
   &.swiper-wrapper {
     display: flex;
     gap: unset;
-    margin: 0 0 20px;
+    margin: 0 0 20px var(--container-offset);
   }
 }
 
@@ -81,4 +105,18 @@
 
 .clients__swiper-scrollbar {
   @include swiper-scrollbar;
+
+  margin: 0 var(--container-offset);
+}
+
+.clients__order {
+  @include link-order;
+
+  width: calc(100% - 2 * var(--container-offset));
+  margin: 0 var(--container-offset);
+
+  @include vp-768 {
+    width: fit-content;
+    margin: 0 auto;
+  }
 }

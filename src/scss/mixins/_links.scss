@@ -1,4 +1,5 @@
 @use "interactive-states" as *;
+@use "breakpoint" as *;
 
 @mixin social-link {
   @include interactive-opacity;
@@ -57,5 +58,16 @@
 
   @include active {
     opacity: 0.3;
+  }
+}
+
+@mixin link-order {
+  width: 100%;
+
+  @include vp-768 {
+    display: block;
+    width: fit-content;
+    min-width: 312px;
+    margin: 0 auto;
   }
 }

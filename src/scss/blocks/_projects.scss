@@ -1,0 +1,154 @@
+@use "index" as *;
+
+.projects {}
+
+.projects__tabs {
+  margin: 0 0 30px;
+
+  @include vp-1024 {
+    margin: 0 0 40px;
+  }
+}
+
+.projects__tablinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style-type: none;
+
+  @include vp-1024 {
+    margin: 0 0 25px;
+  }
+}
+
+.projects__tablink {
+  font-family: var(--second-family);
+  padding: 11px 10px 10px;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: var(--bg-primary);
+  background-color: var(--bg-light);
+
+  &.tabs__tablink--active {
+    color: var(--white);
+    background-color: var(--bg-primary);
+  }
+}
+
+.projects__list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  @include vp-768 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @include vp-1024 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.projects__item {
+  @include vp-768 {
+    min-height: 500px;
+  }
+
+  @include vp-1024 {
+    min-height: 450px;
+  }
+
+  @include vp-1280 {
+    min-height: 510px;
+  }
+
+  @include vp-2500 {
+    min-height: 570px;
+  }
+
+  &:not(:last-child) {
+    margin: 0 0 10px;
+
+    @include vp-768 {
+      margin: 0;
+    }
+  }
+}
+
+.projects__card {
+  --bg: var(--bg-primary);
+
+  display: block;
+
+  @include vp-768 {
+    display: grid;
+    grid-auto-rows: 1fr auto;
+    height: 100%;
+  }
+
+  @include hover-focus {
+    --bg: var(--bg-dark);
+
+    outline: none;
+  }
+}
+
+.projects__card-content {
+  padding: 15px;
+  background-color: var(--bg);
+  transition: background-color 0.3s;
+
+  @include vp-768 {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+}
+
+.projects__card-name {
+  margin: 0 0 15px;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--bg-light);
+}
+
+.projects__card-img {
+  position: relative;
+  aspect-ratio: 370 / 305;
+  margin: 0 0 20px;
+  width: 100%;
+
+  @include vp-550 {
+    aspect-ratio: unset;
+  }
+
+  img {
+    @include img-bg;
+  }
+}
+
+.projects__card-text {
+  margin: 0;
+  padding: 20px 0 0;
+  font-weight: 400;
+  font-size: 16px;
+  border-top: 1px solid var(--bg-light);
+  color: var(--white);
+
+  @include vp-768 {
+    min-height: 63px;
+  }
+}
+
+.projects__card-link {
+  width: 100%;
+  margin: 0;
+}
+
+.projects__link {
+  @include link-order;
+}

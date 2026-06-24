@@ -1,9 +1,5 @@
 @use "index" as *;
 
-.features {
-  @include block-margin;
-}
-
 .features__list {
   margin: 0;
   padding: 0;

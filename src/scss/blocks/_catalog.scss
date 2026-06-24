@@ -1,9 +1,5 @@
 @use "index" as *;
 
-.catalog {
-  @include block-margin;
-}
-
 .catalog__title {
   margin: 0 0 40px;
 }
@@ -169,12 +165,5 @@
 }
 
 .catalog__order {
-  width: 100%;
-
-  @include vp-768 {
-    display: block;
-    width: fit-content;
-    min-width: 312px;
-    margin: 0 auto;
-  }
+  @include link-order;
 }

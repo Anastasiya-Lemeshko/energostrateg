@@ -1,13 +1,11 @@
 @use "index" as *;
 
-.product {
-  @include block-padding;
-
-  background-color: var(--bg-light);
-}
-
 .product__swiper-container {
-  margin: 0 0 40px;
+  margin: 0 0 30px;
+
+  @include vp-1024 {
+    margin: 0 0 40px;
+  }
 }
 
 .product__swiper-wrapper {
@@ -371,14 +369,7 @@
 }
 
 .product__order {
-  width: 100%;
-
-  @include vp-768 {
-    display: block;
-    width: fit-content;
-    min-width: 312px;
-    margin: 0 auto;
-  }
+  @include link-order;
 
   @include vp-2500 {
     min-width: 450px;

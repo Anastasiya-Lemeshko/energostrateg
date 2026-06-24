@@ -1,7 +1,7 @@
 @use "breakpoint" as *;
 
 @mixin block-margin {
-  margin: 40px 0;
+  margin: 40px 0 80px;
 
   @include vp-1024 {
     margin: 80px 0 120px;
