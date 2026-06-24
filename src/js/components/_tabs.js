@@ -34,6 +34,8 @@ const setTabs = () => {
       }
 
       const newContent = tab.querySelector(`[data-tab-content="${section}"]`);
+
+      // проверяет, есть ли у табконтента функция "показать все"
       if (newContent) {
         const listElement = newContent.classList.contains('js-show-more-list') ? newContent : newContent.querySelector('.tabs__tabcontent--active.js-show-more-list');
 

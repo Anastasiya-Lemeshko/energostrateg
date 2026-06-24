@@ -1,9 +1,10 @@
-import { TABLET_WIDTH } from "../_vars.js";
+import { TABLET_WIDTH, COUNT_VISIBLE_TAGS } from "../_vars.js";
 
 const activeLists = document.querySelectorAll('.js-show-more-list-active');
 
 const onButtonClick = (evt) => {
   const showButton = evt.target;
+  const span = showButton.querySelector('span');
 
   const container = showButton.closest('.js-show-more');
   const activeList = container ? container.querySelector('.js-show-more-list-active') : null;
@@ -14,20 +15,30 @@ const onButtonClick = (evt) => {
 
   if (!showButton.classList.contains('js-hide-all')) {
     tags.forEach((tag, index) => {
-      if (index >= 12) {
+      if (index >= COUNT_VISIBLE_TAGS) {
         tag.classList.remove('hidden');
       }
     });
     showButton.classList.add('js-hide-all');
-    showButton.textContent = 'Скрыть';
+
+    if (span) {
+      span.textContent = 'Скрыть';
+    } else {
+      showButton.textContent = 'Скрыть';
+    }
   } else {
     tags.forEach((tag, index) => {
-      if (index >= 12) {
+      if (index >= COUNT_VISIBLE_TAGS) {
         tag.classList.add('hidden');
       }
     });
     showButton.classList.remove('js-hide-all');
-    showButton.textContent = 'Показать еще';
+
+    if (span) {
+      span.textContent = 'Показать еще';
+    } else {
+      showButton.textContent = 'Показать еще';
+    }
   }
 };
 
@@ -50,7 +61,7 @@ const showAllTags = (list) => {
     return;
   };
 
-  if (tags.length <= 12) {
+  if (tags.length <= COUNT_VISIBLE_TAGS) {
     buttonMore.classList.add('hidden');
     return;
   }
@@ -59,7 +70,7 @@ const showAllTags = (list) => {
   buttonMore.classList.remove('hidden');
 
   tags.forEach((tag, index) => {
-    if (index >= 12) {
+    if (index >= COUNT_VISIBLE_TAGS) {
       tag.classList.add('hidden');
     }
   });
@@ -95,6 +106,8 @@ const onWindowChange = () => {
   });
 };
 
+
+// скрытие табов на мобильной версии (добавление кнопки "показать все")
 if (activeLists && activeLists.length) {
   activeLists.forEach((list) => {
     showAllTags(list);

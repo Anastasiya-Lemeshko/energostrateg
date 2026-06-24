@@ -367,7 +367,7 @@
 }
 
 .product__swiper-scrollbar {
-  @include swiper-scrollbar;
+  @include swiper-scrollbar-light;
 }
 
 .product__order {

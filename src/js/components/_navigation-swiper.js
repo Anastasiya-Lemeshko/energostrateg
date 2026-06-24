@@ -59,8 +59,8 @@ const setNavigationSwiper = () => {
         swiperScrollbar.classList.remove('hidden');
       }
 
-      const hasNavigation = sliderConfig.hasNavigation ?? true;
-      const hasScrollbar = sliderConfig.hasScrollbar ?? false;
+      const hasNavigation = sliderConfig.has_navigation ?? true;
+      const hasScrollbar = sliderConfig.has_scrollbar ?? false;
 
       // Сборка модулей
       const modules = [EffectFade, FreeMode];
@@ -86,7 +86,7 @@ const setNavigationSwiper = () => {
         speed: 500,
         allowTouchMove: true,
         slidesPerView: sliderConfig.mobile_count,
-        spaceBetween: 10,
+        spaceBetween: sliderConfig.mobile_margin ?? 10,
         loop: isLoopNeeded,
         autoHeight: sliderConfig.auto_height ?? sliderConfig.mobile_count === 1,
         noSwiping: true,

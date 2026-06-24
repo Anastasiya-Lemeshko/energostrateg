@@ -87,7 +87,7 @@
 
 @mixin swiper-scrollbar {
   border-radius: 0;
-  background: linear-gradient(to bottom, var(--transparent) 44%, var(--white) 44%, var(--white) 56%, var(--transparent) 56%);
+  background: linear-gradient(to bottom, var(--transparent) 44%, var(--bg-light) 44%, var(--bg-light) 56%, var(--transparent) 56%);
   height: 8px;
   margin: 0 0 10px;
 
@@ -97,4 +97,10 @@
     border-radius: 2px;
     cursor: pointer;
   }
+}
+
+@mixin swiper-scrollbar-light {
+  @include swiper-scrollbar;
+
+  background: linear-gradient(to bottom, var(--transparent) 44%, var(--white) 44%, var(--white) 56%, var(--transparent) 56%);
 }

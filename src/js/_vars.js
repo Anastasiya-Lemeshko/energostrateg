@@ -11,6 +11,8 @@ export const DESKTOP_WIDTH = window.matchMedia('(min-width: 1366px)');
 
 export const HEADER_FIXED_OFFSET = 500;
 
+export const COUNT_VISIBLE_TAGS = 12;
+
 export const MODAL_TIMER = 3000000;
 
 export const TABS_DELAY = 5000;
@@ -52,14 +54,17 @@ export const SLIDER_CONFIG = {
     'tablet_count': 3,
     'desktop_count': 10000,
     'loop': false,
-    'hasNavigation': false,
-    'hasScrollbar': true,
+    'has_navigation': false,
+    'has_scrollbar': true,
   },
-  'blog': {
-    'mobile_count': 1,
-    'tablet_count': 2,
-    'desktop_count': 4,
-    'loop': true,
+  'clients': {
+    'mobile_count': 'auto',
+    'tablet_count': 'auto',
+    'desktop_count': 10000,
+    'loop': false,
+    'has_navigation': false,
+    'has_scrollbar': true,
+    'mobile_margin': 20,
     'desktop_width': SMALL_DESKTOP_WIDTH,
   },
 };

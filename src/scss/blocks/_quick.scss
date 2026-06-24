@@ -16,12 +16,20 @@
   flex-wrap: wrap;
   gap: 5px;
   margin: 0 0 20px;
+
+  @include vp-1024 {
+    margin: 0 0 40px;
+  }
 }
 
 .quick__tablink {
   padding: 10px;
   color: var(--bg-primary);
   background-color: var(--bg-light);
+
+  @include vp-1024 {
+    padding: 15px 10px;
+  }
 
   &.tabs__tablink--active {
     color: var(--white);
@@ -60,5 +68,63 @@
   @include hover-focus {
     color: var(--bg-light);
     background-color: var(--bg-dark);
+  }
+}
+
+.quick__show-more {
+  --arrow-transform: scale(1);
+
+  width: 100%;
+  padding: 5px 0 0;
+  background-color: var(--transparent);
+  border: none;
+  text-align: left;
+
+  &.js-hide-all {
+    --arrow-transform: scale(-1);
+  }
+
+  span {
+    display: grid;
+    grid-template-columns: max-content min-content;
+    align-items: center;
+    gap: 3px;
+    font-weight: 400;
+    font-size: 16px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-skip-ink: none;
+    color: var(--bg-light);
+    pointer-events: none;
+
+    &::after {
+      grid-area: 1 / 2 / 2 / 3;
+      content: "";
+      width: 12px;
+      height: 11px;
+      background-color: var(--bg-light);
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-image: url("../img/sprite.svg#select-arrow");
+      mask-size: 12px 11px;
+      transform: var(--arrow-transform);
+      transition: transform 0.3s;
+    }
+  }
+}
+
+.quick__order {
+  width: 100%;
+  margin: 20px 0 0;
+
+  @include vp-768 {
+    display: block;
+    width: fit-content;
+    min-width: 312px;
+    margin: 20px auto 0;
+  }
+
+  @include vp-1024 {
+    margin: 40px auto 0;
   }
 }
