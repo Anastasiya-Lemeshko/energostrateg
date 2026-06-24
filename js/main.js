@@ -10679,6 +10679,8 @@ const getSlidesCount = swiper => {
 const getAutoSlidesCount = swiper => {
   const swiperSlide = swiper.querySelector('[class*="swiper-wrapper"] li');
   const slideWidth = swiperSlide.offsetWidth;
+  console.log(slideWidth);
+  console.log(window.innerWidth);
   return Math.floor(window.innerWidth / slideWidth);
 };
 const addSwiperClass = (swiper, el) => {
@@ -10771,6 +10773,7 @@ const debounce = (callback, timeoutDelay = 500) => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   COUNT_GRID_COLUMNS: () => (/* binding */ COUNT_GRID_COLUMNS),
+/* harmony export */   COUNT_VISIBLE_TAGS: () => (/* binding */ COUNT_VISIBLE_TAGS),
 /* harmony export */   DESKTOP_WIDTH: () => (/* binding */ DESKTOP_WIDTH),
 /* harmony export */   HEADER_FIXED_OFFSET: () => (/* binding */ HEADER_FIXED_OFFSET),
 /* harmony export */   MODAL_CONTENT: () => (/* binding */ MODAL_CONTENT),
@@ -10793,6 +10796,7 @@ const TABLET_WIDTH = window.matchMedia('(min-width: 768px)');
 const SMALL_DESKTOP_WIDTH = window.matchMedia('(min-width: 1024px)');
 const DESKTOP_WIDTH = window.matchMedia('(min-width: 1366px)');
 const HEADER_FIXED_OFFSET = 500;
+const COUNT_VISIBLE_TAGS = 12;
 const MODAL_TIMER = 3000000;
 const TABS_DELAY = 5000;
 const TEXTAREA_LINEHEIGHT = 22;
@@ -10830,14 +10834,17 @@ const SLIDER_CONFIG = {
     'tablet_count': 3,
     'desktop_count': 10000,
     'loop': false,
-    'hasNavigation': false,
-    'hasScrollbar': true
+    'has_navigation': false,
+    'has_scrollbar': true
   },
-  'blog': {
-    'mobile_count': 1,
-    'tablet_count': 2,
-    'desktop_count': 4,
-    'loop': true,
+  'clients': {
+    'mobile_count': 'auto',
+    'tablet_count': 'auto',
+    'desktop_count': 10000,
+    'loop': false,
+    'has_navigation': false,
+    'has_scrollbar': true,
+    'mobile_margin': 20,
     'desktop_width': SMALL_DESKTOP_WIDTH
   }
 };
@@ -11217,8 +11224,8 @@ const setNavigationSwiper = () => {
       if (swiperScrollbar) {
         swiperScrollbar.classList.remove('hidden');
       }
-      const hasNavigation = sliderConfig.hasNavigation ?? true;
-      const hasScrollbar = sliderConfig.hasScrollbar ?? false;
+      const hasNavigation = sliderConfig.has_navigation ?? true;
+      const hasScrollbar = sliderConfig.has_scrollbar ?? false;
 
       // Сборка модулей
       const modules = [swiper_modules__WEBPACK_IMPORTED_MODULE_1__.EffectFade, swiper_modules__WEBPACK_IMPORTED_MODULE_1__.FreeMode];
@@ -11243,7 +11250,7 @@ const setNavigationSwiper = () => {
         speed: 500,
         allowTouchMove: true,
         slidesPerView: sliderConfig.mobile_count,
-        spaceBetween: 10,
+        spaceBetween: sliderConfig.mobile_margin ?? 10,
         loop: isLoopNeeded,
         autoHeight: sliderConfig.auto_height ?? sliderConfig.mobile_count === 1,
         noSwiping: true,
@@ -11539,26 +11546,35 @@ __webpack_require__.r(__webpack_exports__);
 const activeLists = document.querySelectorAll('.js-show-more-list-active');
 const onButtonClick = evt => {
   const showButton = evt.target;
+  const span = showButton.querySelector('span');
   const container = showButton.closest('.js-show-more');
   const activeList = container ? container.querySelector('.js-show-more-list-active') : null;
   const tags = activeList ? [...activeList.children].filter(el => !el.classList.contains('js-show-more-button')) : null;
   if (!tags || !tags.length) return;
   if (!showButton.classList.contains('js-hide-all')) {
     tags.forEach((tag, index) => {
-      if (index >= 12) {
+      if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_TAGS) {
         tag.classList.remove('hidden');
       }
     });
     showButton.classList.add('js-hide-all');
-    showButton.textContent = 'Скрыть';
+    if (span) {
+      span.textContent = 'Скрыть';
+    } else {
+      showButton.textContent = 'Скрыть';
+    }
   } else {
     tags.forEach((tag, index) => {
-      if (index >= 12) {
+      if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_TAGS) {
         tag.classList.add('hidden');
       }
     });
     showButton.classList.remove('js-hide-all');
-    showButton.textContent = 'Показать еще';
+    if (span) {
+      span.textContent = 'Показать еще';
+    } else {
+      showButton.textContent = 'Показать еще';
+    }
   }
 };
 const showAllTags = list => {
@@ -11577,14 +11593,14 @@ const showAllTags = list => {
     return;
   }
   ;
-  if (tags.length <= 12) {
+  if (tags.length <= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_TAGS) {
     buttonMore.classList.add('hidden');
     return;
   }
   list.appendChild(buttonMore);
   buttonMore.classList.remove('hidden');
   tags.forEach((tag, index) => {
-    if (index >= 12) {
+    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_TAGS) {
       tag.classList.add('hidden');
     }
   });
@@ -11614,6 +11630,8 @@ const onWindowChange = () => {
     }
   });
 };
+
+// скрытие табов на мобильной версии (добавление кнопки "показать все")
 if (activeLists && activeLists.length) {
   activeLists.forEach(list => {
     showAllTags(list);
@@ -11661,6 +11679,8 @@ const setTabs = () => {
         activeList.classList.remove('js-show-more-list-active');
       }
       const newContent = tab.querySelector(`[data-tab-content="${section}"]`);
+
+      // проверяет, есть ли у табконтента функция "показать все"
       if (newContent) {
         const listElement = newContent.classList.contains('js-show-more-list') ? newContent : newContent.querySelector('.tabs__tabcontent--active.js-show-more-list');
         if (listElement) {

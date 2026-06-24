@@ -2784,11 +2784,21 @@ span.breadcrumbs__link {
   gap: 5px;
   margin: 0 0 20px;
 }
+@media (min-width: 1024px) {
+  .quick__subtablinks {
+    margin: 0 0 40px;
+  }
+}
 
 .quick__tablink {
   padding: 10px;
   color: var(--bg-primary);
   background-color: var(--bg-light);
+}
+@media (min-width: 1024px) {
+  .quick__tablink {
+    padding: 15px 10px;
+  }
 }
 .quick__tablink.tabs__tablink--active {
   color: var(--white);
@@ -2834,6 +2844,84 @@ span.breadcrumbs__link {
 .quick__link:focus-visible {
   color: var(--bg-light);
   background-color: var(--bg-dark);
+}
+
+.quick__show-more {
+  --arrow-transform: scale(1);
+  width: 100%;
+  padding: 5px 0 0;
+  background-color: var(--transparent);
+  border: none;
+  text-align: left;
+}
+.quick__show-more.js-hide-all {
+  --arrow-transform: scale(-1);
+}
+.quick__show-more span {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: -webkit-max-content -webkit-min-content;
+  -ms-grid-columns: max-content min-content;
+  grid-template-columns: -webkit-max-content -webkit-min-content;
+  grid-template-columns: max-content min-content;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 3px;
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  -webkit-text-decoration-skip-ink: none;
+  text-decoration-skip-ink: none;
+  color: var(--bg-light);
+  pointer-events: none;
+}
+.quick__show-more span::after {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-area: 1/2/2/3;
+  content: "";
+  width: 12px;
+  height: 11px;
+  background-color: var(--bg-light);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-image: url("../img/sprite.svg#select-arrow");
+  mask-image: url("../img/sprite.svg#select-arrow");
+  -webkit-mask-size: 12px 11px;
+  mask-size: 12px 11px;
+  -webkit-transform: var(--arrow-transform);
+  -ms-transform: var(--arrow-transform);
+  transform: var(--arrow-transform);
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+
+.quick__order {
+  width: 100%;
+  margin: 20px 0 0;
+}
+@media (min-width: 768px) {
+  .quick__order {
+    display: block;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    min-width: 312px;
+    margin: 20px auto 0;
+  }
+}
+@media (min-width: 1024px) {
+  .quick__order {
+    margin: 40px auto 0;
+  }
 }
 
 .features {
@@ -3389,6 +3477,131 @@ span.breadcrumbs__link {
   color: var(-text-light);
 }
 
+.clients {
+  margin: 40px 0;
+}
+@media (min-width: 1024px) {
+  .clients {
+    margin: 80px 0 120px;
+  }
+}
+.clients {
+  overflow: hidden;
+}
+
+.clients__swiper-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0;
+  list-style-type: none;
+}
+@media (min-width: 1024px) {
+  .clients__swiper-wrapper {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[2];
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+@media (min-width: 1280px) {
+  .clients__swiper-wrapper {
+    -ms-grid-columns: (1fr)[4];
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.clients__swiper-wrapper.swiper-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: unset;
+  margin: 0 0 20px;
+}
+
+.clients__slide {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: auto;
+  width: auto;
+}
+
+.clients__card {
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  width: 100%;
+  overflow: hidden;
+  width: 335px;
+  padding: 15px;
+  background-color: var(--bg-light);
+}
+@media (min-width: 2500px) {
+  .clients__card {
+    padding: 20px;
+  }
+}
+@media (min-width: 1024px) {
+  .clients__card {
+    width: unset;
+  }
+}
+
+.clients__img {
+  position: relative;
+  width: 100%;
+  height: 370px;
+  margin: 0 0 20px;
+}
+@media (min-width: 2500px) {
+  .clients__img {
+    height: unset;
+    aspect-ratio: 305/370;
+  }
+}
+.clients__img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--text-light);
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.clients__subtitle {
+  margin: 0 0 10px;
+  font-weight: 400;
+  font-size: 22px;
+}
+
+.clients__text {
+  margin: 0;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text-light);
+}
+
+.clients__swiper-scrollbar {
+  border-radius: 0;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(44%, var(--transparent)), color-stop(44%, var(--bg-light)), color-stop(56%, var(--bg-light)), color-stop(56%, var(--transparent)));
+  background: linear-gradient(to bottom, var(--transparent) 44%, var(--bg-light) 44%, var(--bg-light) 56%, var(--transparent) 56%);
+  height: 8px;
+  margin: 0 0 10px;
+}
+.clients__swiper-scrollbar .swiper-scrollbar-drag {
+  height: 100%;
+  background-color: var(--bg-dark);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
 .product {
   padding: 40px 0;
 }
@@ -3852,8 +4065,8 @@ span.breadcrumbs__link {
 
 .product__swiper-scrollbar {
   border-radius: 0;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(44%, var(--transparent)), color-stop(44%, var(--white)), color-stop(56%, var(--white)), color-stop(56%, var(--transparent)));
-  background: linear-gradient(to bottom, var(--transparent) 44%, var(--white) 44%, var(--white) 56%, var(--transparent) 56%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(44%, var(--transparent)), color-stop(44%, var(--bg-light)), color-stop(56%, var(--bg-light)), color-stop(56%, var(--transparent)));
+  background: linear-gradient(to bottom, var(--transparent) 44%, var(--bg-light) 44%, var(--bg-light) 56%, var(--transparent) 56%);
   height: 8px;
   margin: 0 0 10px;
 }
@@ -3862,6 +4075,10 @@ span.breadcrumbs__link {
   background-color: var(--bg-dark);
   border-radius: 2px;
   cursor: pointer;
+}
+.product__swiper-scrollbar {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(44%, var(--transparent)), color-stop(44%, var(--white)), color-stop(56%, var(--white)), color-stop(56%, var(--transparent)));
+  background: linear-gradient(to bottom, var(--transparent) 44%, var(--white) 44%, var(--white) 56%, var(--transparent) 56%);
 }
 
 .product__order {
