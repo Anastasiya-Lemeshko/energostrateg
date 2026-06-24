@@ -10679,8 +10679,6 @@ const getSlidesCount = swiper => {
 const getAutoSlidesCount = swiper => {
   const swiperSlide = swiper.querySelector('[class*="swiper-wrapper"] li');
   const slideWidth = swiperSlide.offsetWidth;
-  console.log(slideWidth);
-  console.log(window.innerWidth);
   return Math.floor(window.innerWidth / slideWidth);
 };
 const addSwiperClass = (swiper, el) => {
@@ -11549,7 +11547,7 @@ const onButtonClick = evt => {
   const span = showButton.querySelector('span');
   const container = showButton.closest('.js-show-more');
   const activeList = container ? container.querySelector('.js-show-more-list-active') : null;
-  const tags = activeList ? [...activeList.children].filter(el => !el.classList.contains('js-show-more-button')) : null;
+  const tags = activeList ? activeList.querySelectorAll('.js-show-more-tag') : null;
   if (!tags || !tags.length) return;
   if (!showButton.classList.contains('js-hide-all')) {
     tags.forEach((tag, index) => {
@@ -11581,7 +11579,7 @@ const showAllTags = list => {
   const container = list.closest('.js-show-more');
   const buttonMore = container ? container.querySelector('.js-show-more-button') : null;
   if (!list || !buttonMore) return;
-  const tags = [...list.children].filter(el => !el.classList.contains('js-show-more-button'));
+  const tags = list.querySelectorAll('.js-show-more-tag');
   if (!tags || !tags.length) return;
 
   // если скрытие нужно только на моб.версии, а открыт десктоп - показывает все теги и выходит из функции
@@ -11611,12 +11609,18 @@ const onWindowChange = () => {
   const activeLists = document.querySelectorAll('.js-show-more-list-active');
   activeLists.forEach(list => {
     if (list.classList.contains('js-show-more-mobile-only') && _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches) {
-      const buttonMore = list.querySelector('.js-show-more-button');
-      const tags = [...list.children].filter(el => !el.classList.contains('js-show-more-button'));
+      const currentContainer = list.closest('.js-show-more');
+      const buttonMore = currentContainer ? currentContainer.querySelector('.js-show-more-button') : null;
+      const tags = list.querySelectorAll('.js-show-more-tag');
       if (buttonMore) {
+        const span = buttonMore.querySelector('span');
         buttonMore.classList.add('hidden');
         buttonMore.classList.remove('js-hide-all');
-        buttonMore.textContent = 'Показать еще';
+        if (span) {
+          span.textContent = 'Показать еще';
+        } else {
+          buttonMore.textContent = 'Показать еще';
+        }
       }
       if (tags && tags.length) {
         tags.forEach(tag => {
@@ -11661,7 +11665,7 @@ const setTabs = () => {
     const tabLinkContainer = tab.querySelector('.tabs__tablinks');
     const tabContentContainer = tab.querySelector('.tabs__tabcontents');
     if (!tabLinkContainer) return;
-    const tabLinks = [...tabLinkContainer.children].filter(el => el.classList.contains('tabs__tablink'));
+    const tabLinks = [...tabLinkContainer.children].map(item => item.querySelector('.tabs__tablink'));
     const tabContents = tabContentContainer ? [...tabContentContainer.children].filter(el => el.classList.contains('tabs__tabcontent')) : null;
     const openTabs = evt => {
       const btnTarget = evt.currentTarget;
