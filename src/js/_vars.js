@@ -67,6 +67,16 @@ export const SLIDER_CONFIG = {
     'mobile_margin': 20,
     'desktop_width': SMALL_DESKTOP_WIDTH,
   },
+  'reviews': {
+    'mobile_count': 'auto',
+    'tablet_count': 'auto',
+    'desktop_count': 10000,
+    'loop': false,
+    'has_navigation': false,
+    'has_scrollbar': true,
+    'mobile_margin': 20,
+    'desktop_width': SMALL_DESKTOP_WIDTH,
+  },
 };
 
 export const RANGE_VALUES = {

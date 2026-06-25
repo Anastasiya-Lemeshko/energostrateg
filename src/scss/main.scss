@@ -14,6 +14,7 @@
 @use "./components/popup-item";
 @use "./components/tabs";
 @use "./components/block";
+@use "./components/stars";
 
 // подключения секций страницы
 @use "./blocks/header";
@@ -29,7 +30,7 @@
 @use "./blocks/projects";
 @use "./blocks/blog";
 @use "./blocks/reviews";
-// @use "./blocks/product";
+@use "./blocks/footer";
 // @use "./blocks/product";
 // @use "./blocks/product";
 // @use "./blocks/product";
