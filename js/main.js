@@ -10596,7 +10596,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/_cards-swiper.js */ "./src/js/components/_cards-swiper.js");
 /* harmony import */ var _components_move_hero_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/_move-hero.js */ "./src/js/components/_move-hero.js");
 /* harmony import */ var _components_tabs_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/_tabs.js */ "./src/js/components/_tabs.js");
+/* harmony import */ var _components_modal_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/_modal.js */ "./src/js/components/_modal.js");
+/* harmony import */ var _components_rating_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/_rating.js */ "./src/js/components/_rating.js");
+/* harmony import */ var _components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/_button-scroll-top.js */ "./src/js/components/_button-scroll-top.js");
 // import { openVisibleFontCardContent, setAccordeonToggles } from './components/_accordion.js';
+
+
+
 
 
 
@@ -10614,6 +10620,9 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_5__.initCardsSwiper)();
   (0,_components_move_hero_js__WEBPACK_IMPORTED_MODULE_6__.moveHero)();
   (0,_components_tabs_js__WEBPACK_IMPORTED_MODULE_7__.setTabs)();
+  (0,_components_modal_js__WEBPACK_IMPORTED_MODULE_8__.setModals)();
+  (0,_components_rating_js__WEBPACK_IMPORTED_MODULE_9__.setRating)();
+  (0,_components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_10__.addScrollButton)();
 });
 
 /***/ }),
@@ -10909,6 +10918,42 @@ const COUNT_GRID_COLUMNS = {
 
 /***/ }),
 
+/***/ "./src/js/components/_button-scroll-top.js":
+/*!*************************************************!*\
+  !*** ./src/js/components/_button-scroll-top.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addScrollButton: () => (/* binding */ addScrollButton)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../_utils.js */ "./src/js/_utils.js");
+
+const scrollButton = document.querySelector('.button-scroll-top');
+const onWindowScroll = () => {
+  if (window.pageYOffset > 350) {
+    scrollButton.classList.add('button-scroll-top--visible');
+  } else {
+    scrollButton.classList.remove('button-scroll-top--visible');
+  }
+};
+const debouncedOnScrollWindow = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.debounce)(onWindowScroll, 30);
+const onScrollButtonClick = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+};
+const addScrollButton = () => {
+  if (!scrollButton) return;
+  window.addEventListener('scroll', debouncedOnScrollWindow);
+  scrollButton.addEventListener('click', onScrollButtonClick);
+};
+
+
+/***/ }),
+
 /***/ "./src/js/components/_cards-swiper.js":
 /*!********************************************!*\
   !*** ./src/js/components/_cards-swiper.js ***!
@@ -11101,6 +11146,272 @@ const renderCustomSelect = () => {
     }
     createCustomSelect();
     toggleSelect();
+  });
+};
+
+
+/***/ }),
+
+/***/ "./src/js/components/_modal-render.js":
+/*!********************************************!*\
+  !*** ./src/js/components/_modal-render.js ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   renderModalContent: () => (/* binding */ renderModalContent),
+/* harmony export */   renderPhotoToModal: () => (/* binding */ renderPhotoToModal)
+/* harmony export */ });
+/* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../_vars.js */ "./src/js/_vars.js");
+/* harmony import */ var _video_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_video.js */ "./src/js/components/_video.js");
+
+
+const renderPhotoToModal = (modal, button) => {
+  const modalImgContainer = modal.querySelector('.modal-photo__img');
+  const fullImgContainer = button.parentElement.querySelector('[data-full-photo]');
+  if (!modalImgContainer || !fullImgContainer) return;
+  const copyFullImg = fullImgContainer.cloneNode(true);
+  modalImgContainer.innerHTML = '';
+  modalImgContainer.appendChild(copyFullImg);
+  (0,_video_js__WEBPACK_IMPORTED_MODULE_1__.initVideo)(copyFullImg);
+};
+const renderModalContent = (modal, button) => {
+  // Отрисовка заголовка для модального окна
+  if (button.hasAttribute('data-modal-title')) {
+    const titleKey = button.getAttribute('data-modal-title');
+    const modalTitle = modal.querySelector('[data-modal-title]');
+    if (_vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.title && _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.title[titleKey] && modalTitle) {
+      modalTitle.textContent = _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.title[titleKey];
+    }
+    ;
+  }
+
+  // Отрисовка описания для модального окна
+  if (button.hasAttribute('data-modal-desc')) {
+    const descKey = button.getAttribute('data-modal-desc');
+    const modalDesc = modal.querySelector('[data-modal-desc]');
+    if (_vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.title && _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.desc[descKey] && modalDesc) {
+      modalDesc.textContent = _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.desc[descKey];
+    }
+    ;
+  }
+
+  // Отрисовка динамического заголовка
+  if (button.hasAttribute('data-modal-dynamic')) {
+    let sourceTitle = button.closest('[data-modal-title]');
+    const modalTitle = modal.querySelector('[data-modal-title]');
+    if (!sourceTitle) sourceTitle = button.parentElement.querySelector('[data-modal-title]');
+    if (sourceTitle && modalTitle) {
+      modalTitle.textContent = sourceTitle.textContent;
+    }
+    ;
+  }
+
+  // Отрисовка заголовка с паттерном
+  if (button.hasAttribute('data-modal-pattern')) {
+    let sourceTitle = button.closest('[data-modal-title]');
+    const modalTitle = modal.querySelector('[data-modal-title]');
+    const patternKey = button.getAttribute('data-modal-pattern');
+    if (!sourceTitle) sourceTitle = button.parentElement.querySelector('[data-modal-title]');
+    if (sourceTitle && modalTitle && _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.pattern[patternKey]) {
+      const dynamicText = sourceTitle.textContent.trim();
+      const pattern = _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.pattern[patternKey];
+      modalTitle.textContent = pattern.replace('{title}', dynamicText);
+    }
+    ;
+  }
+};
+
+
+/***/ }),
+
+/***/ "./src/js/components/_modal.js":
+/*!*************************************!*\
+  !*** ./src/js/components/_modal.js ***!
+  \*************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   setModals: () => (/* binding */ setModals)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_utils.js */ "./src/js/_utils.js");
+/* harmony import */ var _components_modal_render_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/_modal-render.js */ "./src/js/components/_modal-render.js");
+/* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../_vars.js */ "./src/js/_vars.js");
+
+
+
+class ModalWindow {
+  constructor(buttons) {
+    this.html = document.querySelector('html');
+    this.buttons = buttons || [];
+    this.firstFocusableElement = null;
+    this.lastFocusableElement = null;
+  }
+  handleOpen() {
+    if (this.buttons.length === 0) return;
+    this.buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const modalName = button.getAttribute('data-modal-button');
+        if (!modalName) return;
+        this.modal = document.querySelector(`[data-modal="${modalName}"]`);
+        if (!this.modal) return;
+        if (modalName === 'image-full' && !_vars_js__WEBPACK_IMPORTED_MODULE_2__.TABLET_WIDTH.matches) return;
+
+        // проверка необходимости отрисовки элементов в модальном окне
+        if (modalName === 'image-full') {
+          (0,_components_modal_render_js__WEBPACK_IMPORTED_MODULE_1__.renderPhotoToModal)(this.modal, button);
+        }
+        (0,_components_modal_render_js__WEBPACK_IMPORTED_MODULE_1__.renderModalContent)(this.modal, button);
+        this.modalWindow = this.modal.querySelector('.modal__container');
+        this.closeBtn = this.modal.querySelector('.modal-close');
+        const focusableElements = Array.from(this.modal.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+        this.firstFocusableElement = focusableElements[0];
+        this.lastFocusableElement = focusableElements[focusableElements.length - 1];
+        this.addEventListeners();
+        this.openModal(this.modal);
+      });
+
+      // обработка enter, если вызов модалки идет через тег <a>
+      if (button.tagName === 'A' && !button.href) {
+        button.addEventListener('keydown', evt => {
+          if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isEnterKey)(evt)) {
+            evt.preventDefault();
+            button.click();
+          }
+        });
+      }
+    });
+  }
+
+  // открывает модальные окна по истечении таймера
+  timerStart() {
+    const subscribeModal = document.querySelector('[data-modal="subscribe"]');
+    if (!subscribeModal) return;
+    let inactivityTimer;
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        const otherModalOpened = document.querySelector('.modal.open');
+        if (otherModalOpened) return;
+        this.modal = subscribeModal;
+        this.modalWindow = subscribeModal.querySelector('.modal__container');
+        this.closeBtn = subscribeModal.querySelector('.modal-close');
+        const focusableElements = Array.from(subscribeModal.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+        this.firstFocusableElement = focusableElements[0];
+        this.lastFocusableElement = focusableElements[focusableElements.length - 1];
+        this.addEventListeners();
+        this.openModal(subscribeModal);
+      }, _vars_js__WEBPACK_IMPORTED_MODULE_2__.MODAL_TIMER);
+    };
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keydown', resetTimer);
+    window.addEventListener('scroll', resetTimer);
+    window.addEventListener('click', resetTimer);
+    resetTimer();
+  }
+  addEventListeners() {
+    if (!this.modal || !this.modalWindow || !this.closeBtn) return;
+
+    // Закрытие по кнопке
+    this.closeBtn.addEventListener('click', this.handleClose);
+
+    // Закрытие по Escape
+    this.escapeHandler = evt => {
+      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isEscapeKey)(evt)) this.closeModal(this.modal);
+    };
+    window.addEventListener('keydown', this.escapeHandler);
+
+    // Закрытие по клику вне модального окна
+    this.modalWindow.addEventListener('click', evt => {
+      evt.stopPropagation();
+    });
+    this.modal.addEventListener('click', this.handleOverlayClick);
+
+    // Зацикливание фокуса
+    this.modal.addEventListener('keydown', this.loopFocus);
+  }
+  removeEventListeners() {
+    if (this.closeBtn) {
+      this.closeBtn.removeEventListener('click', this.handleClose);
+    }
+    window.removeEventListener('keydown', this.escapeHandler);
+    if (this.modal) {
+      this.modal.removeEventListener('click', this.handleOverlayClick);
+      this.modal.removeEventListener('keydown', this.loopFocus);
+    }
+  }
+  handleClose = () => {
+    this.closeModal(this.modal);
+  };
+  handleOverlayClick = evt => {
+    if (evt.target === this.modal) {
+      this.closeModal(this.modal);
+    }
+  };
+  loopFocus = evt => {
+    if (!(0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isTabKey)(evt)) {
+      return;
+    }
+    if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isTabKey)(evt) && evt.shiftKey && document.activeElement === this.firstFocusableElement) {
+      evt.preventDefault();
+      this.lastFocusableElement.focus();
+    } else if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isTabKey)(evt) && !evt.shiftKey && document.activeElement === this.lastFocusableElement) {
+      evt.preventDefault();
+      this.firstFocusableElement.focus();
+    }
+  };
+  openModal(modal) {
+    if (!modal) return;
+    modal.classList.add('open');
+    this.closeBtn.focus();
+  }
+  openModalSuccess(modalSuccess) {
+    if (!modalSuccess) return;
+    this.closeAllModal();
+    this.modal = modalSuccess;
+    this.modalWindow = this.modal.querySelector('.modal__container');
+    this.closeBtn = this.modal.querySelector('.modal-close');
+    const focusableElements = Array.from(this.modal.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+    this.firstFocusableElement = focusableElements[0];
+    this.lastFocusableElement = focusableElements[focusableElements.length - 1];
+    this.addEventListeners();
+    this.openModal(this.modal);
+  }
+  closeModal(modal) {
+    if (!modal) return;
+    modal.classList.remove('open');
+    this.removeEventListeners();
+  }
+  closeAllModal() {
+    const allModal = document.querySelectorAll('.modal');
+    if (!allModal) return;
+    allModal.forEach(el => {
+      if (el.classList.contains('open')) {
+        el.classList.remove('open');
+      }
+    });
+    this.removeEventListeners();
+  }
+  init() {
+    this.handleOpen();
+    this.timerStart();
+  }
+}
+const setModals = () => {
+  const openButtons = document.querySelectorAll('[data-modal-button]');
+  const modalWindow = new ModalWindow(openButtons);
+  const modalSuccess = document.querySelector('[modal-success]');
+  modalWindow.init();
+
+  // Проверка наличия jQuery
+  if (typeof jQuery === 'undefined' && typeof $ === 'undefined') {
+    console.warn('jQuery is not loaded.');
+    return;
+  }
+  $(document).on('af_complete', (evt, res) => {
+    if (modalSuccess) if (res.success) modalWindow.openModalSuccess(modalSuccess);
   });
 };
 
@@ -11539,6 +11850,56 @@ const setPopup = () => {
 
 /***/ }),
 
+/***/ "./src/js/components/_rating.js":
+/*!**************************************!*\
+  !*** ./src/js/components/_rating.js ***!
+  \**************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   setRating: () => (/* binding */ setRating)
+/* harmony export */ });
+const ratings = document.querySelectorAll('.rating');
+const setRating = () => {
+  if (!ratings || !ratings.length) return;
+  ratings.forEach(rating => {
+    const stars = rating.querySelectorAll('.rating__star');
+    const hiddenInput = rating.querySelector('input');
+    if (!stars || !stars.length || !hiddenInput) return;
+    let currentRating = 0;
+    const updateStars = value => {
+      stars.forEach(star => {
+        const starValue = parseInt(star.dataset.value);
+        if (starValue <= value) {
+          star.classList.add('rating__star--active');
+        } else {
+          star.classList.remove('rating__star--active');
+        }
+      });
+    };
+    stars.forEach(star => {
+      const value = parseInt(star.dataset.value);
+      star.addEventListener('mouseenter', () => {
+        updateStars(value);
+      });
+      star.addEventListener('click', () => {
+        currentRating = value;
+        hiddenInput.value = currentRating;
+        updateStars(currentRating);
+      });
+    });
+
+    // Возврат к текущему рейтингу при уходе мыши
+    rating.addEventListener('mouseleave', () => {
+      updateStars(currentRating);
+    });
+  });
+};
+
+
+/***/ }),
+
 /***/ "./src/js/components/_show-more.js":
 /*!*****************************************!*\
   !*** ./src/js/components/_show-more.js ***!
@@ -11708,6 +12069,60 @@ const setTabs = () => {
     tabLinks.forEach(tablink => {
       tablink.addEventListener('click', openTabs);
     });
+  });
+};
+
+
+/***/ }),
+
+/***/ "./src/js/components/_video.js":
+/*!*************************************!*\
+  !*** ./src/js/components/_video.js ***!
+  \*************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initVideo: () => (/* binding */ initVideo),
+/* harmony export */   playVideo: () => (/* binding */ playVideo)
+/* harmony export */ });
+const initVideo = videoWrapper => {
+  const video = videoWrapper.querySelector('video');
+  const playButton = videoWrapper.querySelector('.video__button-play');
+  if (!video || !playButton) return;
+  playButton.addEventListener('click', () => {
+    const isVideoPlaying = playButton.classList.contains('playing');
+    if (!isVideoPlaying) {
+      video.play().then(() => {
+        playButton.classList.add('playing');
+        playButton.classList.add('hidden');
+        video.setAttribute('controls', '');
+      }).catch(err => {
+        console.warn('Не удалось воспроизвести видео:', err);
+      });
+    } else {
+      video.pause();
+      playButton.classList.remove('playing');
+    }
+  });
+  video.addEventListener('ended', () => {
+    playButton.classList.remove('playing');
+  });
+  video.addEventListener('pause', () => {
+    playButton.classList.remove('playing');
+  });
+  video.addEventListener('play', () => {
+    playButton.classList.add('playing');
+  });
+  video.addEventListener('error', () => {
+    playButton.classList.remove('playing');
+  });
+};
+const playVideo = () => {
+  const videoWrappers = document.querySelectorAll('.video');
+  if (!videoWrappers || !videoWrappers.length) return;
+  videoWrappers.forEach(wrapper => {
+    initVideo(wrapper);
   });
 };
 
