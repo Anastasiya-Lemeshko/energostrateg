@@ -12,6 +12,7 @@ class ModalWindow {
     this.buttons = buttons || [];
     this.firstFocusableElement = null;
     this.lastFocusableElement = null;
+    this.openedByButton = null;
   }
 
   handleOpen() {
@@ -41,6 +42,7 @@ class ModalWindow {
         this.firstFocusableElement = focusableElements[0];
         this.lastFocusableElement = focusableElements[focusableElements.length - 1];
 
+        this.openedByButton = button;
         this.addEventListeners();
         this.openModal(this.modal);
       });
@@ -181,6 +183,11 @@ class ModalWindow {
 
   closeModal(modal) {
     if (!modal) return;
+
+    if (this.openedByButton) {
+      this.openedByButton.focus();
+      this.openedByButton = null;
+    }
 
     modal.classList.remove('open');
     this.removeEventListeners();

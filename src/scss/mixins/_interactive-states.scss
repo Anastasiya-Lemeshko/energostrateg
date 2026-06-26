@@ -81,7 +81,7 @@
 
 @mixin interactive-button {
   opacity: 1;
-  transition: background-color 0.3s, opacity 0.3s;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 
   @include hover-focus {
     --icon-color: var(--white);
@@ -105,7 +105,7 @@
 
 @mixin interactive-button-dark {
   opacity: 1;
-  transition: background-color 0.3s, opacity 0.3s;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 
   @include hover-focus {
     --icon-color: var(--bg-primary);

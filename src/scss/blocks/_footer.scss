@@ -85,7 +85,7 @@
 }
 
 .footer__link {
-  @include interactive-link;
+  @include interactive-opacity;
 }
 
 .footer__contacts {
@@ -105,7 +105,7 @@
 
 .footer__contacts-tel,
 .footer__contacts-mail {
-  @include interactive-link;
+  @include interactive-opacity;
 
   display: block;
   margin: 0;
@@ -258,7 +258,7 @@
 }
 
 .footer__policy-link {
-  @include interactive-link;
+  @include interactive-opacity;
 
   font-size: 14px;
   color: var(--bg-light);

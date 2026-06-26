@@ -437,6 +437,7 @@
   transform: var(--transform);
   transform-origin: top;
   transition: var(--transition);
+  z-index: var(--z-select);
 
   @include vp-1366 {
     grid-template-columns: repeat(6, auto);
