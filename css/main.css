@@ -2769,15 +2769,6 @@ span.breadcrumbs__link {
   color: inherit;
 }
 
-.header__nav-item:not(:last-child) {
-  margin: 0 0 5px;
-}
-@media (min-width: 768px) {
-  .header__nav-item:not(:last-child) {
-    margin: 0;
-  }
-}
-
 .header__nav-sublink {
   -webkit-transition: color 0.3s, opacity 0.3s;
   transition: color 0.3s, opacity 0.3s;
@@ -4221,7 +4212,6 @@ ul.quick__subtabcontent.tabs__tabcontent--active {
 @media (min-width: 768px) {
   .decision__desc {
     display: block;
-    margin: 0 0 24px;
     max-width: 80%;
     margin: 0 0 20px;
     font-weight: 400;
