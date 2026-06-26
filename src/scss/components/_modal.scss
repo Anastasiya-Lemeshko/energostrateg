@@ -1,21 +1,30 @@
 @use "index" as *;
 
 .modal {
+  --modal-transform: translateY(20px);
+  --modal-opacity: 0;
+
   position: fixed;
   box-sizing: border-box;
   overflow-y: auto;
   top: 0;
   left: 0;
-  display: none;
+  display: flex;
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
   width: 100%;
   height: 100%;
   padding: 20px 0;
-  background-color: var(--overlay);
-  backdrop-filter: blur(8px);
-  z-index: 300;
+  z-index: var(--z-modal);
 
   &.open {
-    display: flex;
+    --modal-transform: translateY(0);
+    --modal-opacity: 1;
+
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
@@ -24,15 +33,25 @@
   box-sizing: border-box;
   width: calc(100% - 20px);
   max-width: 500px;
-  padding: 20px;
+  padding: 40px 10px 20px;
   margin: auto;
   color: var(--white);
-  background-color: var(--bg-accent);
-  border-radius: 5px;
+  background-color: var(--bg-dark);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  transform: var(--modal-transform);
+  opacity: var(--modal-opacity);
+  transition: transform 0.5s, opacity 0.5s;
 
   @include vp-768 {
-    max-width: 680px;
-    padding: 30px;
+    width: calc(100% - 50px);
+    padding: 40px 20px 20px;
+  }
+
+  @include vp-1024 {
+    max-width: 1042px;
+    width: calc(100% - 120px);
+    padding: 40px;
+    box-shadow: 0 0 32px rgba(0, 0, 0, 0.25);
   }
 }
 
@@ -41,13 +60,364 @@
   @include close-button;
 
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
   width: 30px;
   height: 30px;
 
   @include vp-1024 {
-    width: 40px;
-    height: 40px;
+    top: 15px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+// стандартное модальное окно
+
+.modal-standard__header {
+  margin: 0 0 20px;
+
+  @include vp-1024 {
+    position: relative;
+    max-width: 690px;
+    margin: 0 auto 40px;
+    padding: 0 16px 16px;
+    text-align: center;
+  }
+
+  &::before {
+    @include vp-1024 {
+      position: absolute;
+      top: 0;
+      right: 0;
+      content: "";
+      border: 8px solid var(--transparent);
+      border-right: 8px solid var(--white);
+      border-top: 8px solid var(--white);
+    }
+  }
+
+  &::after {
+    @include vp-1024 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      content: "";
+      border: 8px solid var(--transparent);
+      border-left: 8px solid var(--white);
+      border-bottom: 8px solid var(--white);
+    }
+  }
+}
+
+.modal-standard__title {
+  margin: 0 0 20px;
+
+  @include vp-1024 {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  br {
+    @include vp-1280 {
+      display: block;
+    }
+  }
+}
+
+.modal-standard__text {
+  margin: 0;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--bg-light);
+
+  @include vp-1024 {
+    max-width: 375px;
+    margin: 0 auto;
+  }
+}
+
+.modal-standard__form {
+  margin: 0 0 20px;
+
+  @include vp-1024 {
+    margin: 0 auto;
+  }
+}
+
+.modal-standard__list {
+  --margin-item: 0 0 10px;
+
+  margin: 0 0 20px;
+  padding: 0;
+  list-style-type: none;
+
+  @include vp-1024 {
+    max-width: 376px;
+    margin: 0 auto 20px;
+  }
+
+  &--two-column {
+    --margin-item: 0;
+
+    @include vp-1024 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      grid-auto-flow: column;
+      gap: 12px 16px;
+      max-width: 690px;
+    }
+  }
+}
+
+.modal-standard__item {
+  &:not(:last-child) {
+    margin: 0 0 10px;
+
+    @include vp-1024 {
+      margin: var(--margin-item);
+    }
+  }
+}
+
+.modal-standard__field {
+  @include input;
+}
+
+.modal-standard__accept {
+  @include accept;
+
+  --color: var(--bg-light);
+
+  margin: 0 0 20px;
+  transition: opacity 0.3s;
+
+  @include vp-1024 {
+    max-width: 426px;
+    margin: 0 auto 20px;
+  }
+
+  &:has(input:focus),
+  &:has(input:focus-visible) {
+    --color: var(--bg-light);
+  }
+
+  @include hover {
+    --color: var(--bg-light);
+
+    opacity: 0.8;
+  }
+}
+
+.modal-standard__form-button {
+  width: 100%;
+
+  @include vp-1024 {
+    display: block;
+    min-width: 312px;
+    width: fit-content;
+    margin: 0 auto;
+  }
+}
+
+.modal-standard__tel {
+  margin: 0 0 20px;
+
+  @include vp-1024 {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    margin: 0;
+  }
+}
+
+.modal-standard__contacts-name {
+  margin: 0 0 9px;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--bg-light);
+}
+
+.modal-standard__contacts-link {
+  @include interactive-opacity;
+
+  margin: 0;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--text-extra-light);
+}
+
+.modal-standard__socials {
+  @include vp-1024 {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+  }
+}
+
+.modal-standard__socials-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.modal-standard__socials-link {
+  @include social-link;
+}
+
+.modal-standard__rating-title {
+  display: block;
+  font-size: 22px;
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.modal-standard__rating {
+  width: 180px;
+  margin: 0 auto 20px;
+}
+
+// модальное окно с полноразмерным изображением
+
+.modal-photo {
+  &__container {
+    max-width: calc(100% - 40px);
+    width: fit-content;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+
+    @include vp-768 {
+      max-width: calc(100% - 200px);
+      height: calc(100dvh - 80px);
+      padding: 0;
+    }
+
+    @include vp-1024 {
+      max-width: calc(100% - 300px);
+      padding: 0;
+    }
+  }
+
+  .modal__close-button {
+    right: unset;
+    top: 0;
+    left: 100%;
+
+    &::before,
+    &::after {
+      background-color: var(--text-basic);
+    }
+  }
+
+  &__img {
+    width: 100%;
+    max-width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+
+    img {
+      @include img-contain;
+    }
+  }
+
+  [data-full-photo] {
+    display: block;
+    aspect-ratio: 1280 / 720;
+    max-width: 100%;
+    height: 100%;
+  }
+
+  [data-full-photo].video {
+    display: grid;
+  }
+}
+
+// отбивка об успешной отправке
+
+.modal-success {
+  .modal__container {
+    position: relative;
+    width: 80%;
+    max-width: 372px;
+    padding: 80px 20px 20px;
+    color: var(--text-basic);
+    background-color: var(--bg-light);
+    text-align: center;
+
+    @include vp-1024 {
+      max-width: 512px;
+    }
+
+    &::before {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      content: "";
+      width: 40px;
+      height: 40px;
+      background-color: var(--green);
+    }
+
+    &::after {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      content: "";
+      width: 40px;
+      height: 40px;
+      background-color: var(--white);
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-image: url("../img/sprite.svg#tick");
+      mask-size: 80% 80%;
+    }
+  }
+
+  .modal__close-button {
+    &::before,
+    &::after {
+      background-color: var(--text-basic);
+    }
+  }
+
+  .modal-standard__text {
+    margin: 0 auto 20px;
+    color: var(--text-light);
+  }
+
+  .modal-standard__tel {
+    @include vp-1024 {
+      position: relative;
+      bottom: unset;
+      left: unset;
+      margin: 0 0 20px;
+    }
+  }
+
+  .modal-standard__contacts-name {
+    margin: 0 0 20px;
+    color: var(--text-light);
+  }
+
+  .modal-standard__contacts-link {
+    color: var(--text-basic);
+  }
+
+  .modal-standard__socials {
+    @include vp-1024 {
+      position: relative;
+      bottom: unset;
+      right: unset;
+    }
+  }
+
+  .modal-standard__socials-list {
+    justify-content: center;
   }
 }

@@ -99,8 +99,8 @@
           <a class="footer__contacts-mail" href="mailto:info@generatory-russia.ru" target="_blank" rel="noreferrer noopener">info@generatory-russia.ru</a>
           <p class="footer__contacts-title">Адрес офиса</p>
           <p class="footer__contacts-address">143080, Московская&nbsp;область, Одинцовский&nbsp;р-он, д.п.&nbsp;Лесной городок, ул.Молодёжная,&nbsp;д.6,&nbsp;п.13</p>
-          <button class="footer__contacts-callback button button--main button--dark" type="button" aria-label="Заказать обратный звонок" data-modal-button="callback">Запросить КП</button>
-          <p class="footer__contacts-title">Соцсети / мессенджеры</p>
+          <button class="footer__contacts-callback button button--main button--dark" type="button" aria-label="Открыть форму и заказать обратный звонок" data-modal-button="callback">Заказать звонок</button>
+          <p class="footer__contacts-title">Соцсети&nbsp;/ мессенджеры</p>
           <ul class="footer__socials">
             <li class="footer__socials-item">
               <a class="footer__socials-link footer__socials-link--mail" href="mailto:info@generatory-russia.ru" target="_blank" rel="noreferrer noopener">
@@ -154,4 +154,14 @@
     </div>
   </div>
 </footer>
-<!-- @include('modal-success.html') -->
+<button class="button-scroll-top" type="button">
+  <span class="visually-hidden">Прокрутить к началу страницы.</span>
+</button>
+@include('modal-request.html')
+@include('modal-selection.html')
+@include('modal-callback.html')
+@include('modal-kp.html')
+@include('modal-oneclick.html')
+@include('modal-review.html')
+@include('modal-cheap.html')
+@include('modal-success.html')

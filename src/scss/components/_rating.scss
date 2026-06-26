@@ -1,0 +1,28 @@
+@use "index" as *;
+
+.rating {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  opacity: 1;
+  transition: opacity 0.3s;
+  cursor: pointer;
+
+  @include active {
+    opacity: 0.8;
+  }
+}
+
+.rating__star {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  mask-image: url("../img/sprite.svg#star");
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  mask-position: center;
+  background-color: var(--white);
+
+  &--active {
+    background-color: var(--bg-primary);
+  }
+}

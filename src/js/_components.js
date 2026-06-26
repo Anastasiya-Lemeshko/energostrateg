@@ -7,6 +7,9 @@ import { setNavigationSwiper } from './components/_navigation-swiper.js';
 import { initCardsSwiper } from './components/_cards-swiper.js';
 import { moveHero } from './components/_move-hero.js';
 import { setTabs } from './components/_tabs.js';
+import { setModals } from './components/_modal.js';
+import { setRating } from './components/_rating.js';
+import { addScrollButton } from './components/_button-scroll-top.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCustomSelect();
@@ -17,4 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCardsSwiper();
   moveHero();
   setTabs();
+  setModals();
+  setRating();
+  addScrollButton();
 });

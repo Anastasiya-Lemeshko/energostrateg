@@ -54,6 +54,7 @@
   @include vp-768 {
     display: grid;
     grid-template-rows: auto 1fr;
+    height: 100%;
   }
 
   @include hover-focus {

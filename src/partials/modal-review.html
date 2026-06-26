@@ -1,0 +1,80 @@
+<div class="modal modal-standard" data-modal="review">
+  <div class="modal__container modal-standard__container">
+    <button class="modal__close-button modal-close">
+      <span class="visually-hidden">Закрыть.</span>
+    </button>
+    <div class="modal-standard__wrapper">
+      <div class="modal-standard__header">
+        <p class="modal-standard__title title">Оставить отзыв</p>
+        <p class="modal-standard__text">Поделитесь впечатлением о&nbsp;работе с&nbsp;нами&nbsp;&mdash; ваш отзыв поможет другим клиентам, а&nbsp;нам&nbsp;&mdash; становиться лучше.</p>
+      </div>
+      <form class="modal-standard__form" action="form.php" method="post">
+        <ul class="modal-standard__list">
+          <li class="modal-standard__item">
+            <span class="modal-standard__rating-title">Оценка</span>
+            <div class="modal-standard__rating rating" data-rating="0">
+              <span class="rating__star" data-value="1"></span>
+              <span class="rating__star" data-value="2"></span>
+              <span class="rating__star" data-value="3"></span>
+              <span class="rating__star" data-value="4"></span>
+              <span class="rating__star" data-value="5"></span>
+              <input type="hidden" name="rating" value="0">
+            </div>
+          </li>
+          <li class="modal-standard__item">
+            <label class="modal-standard__field">
+              <span class="visually-hidden">Ваше имя</span>
+              <input class="modal-standard__input" type="text" name="name" placeholder="Ваше имя*">
+            </label>
+          </li>
+          <li class="modal-standard__item">
+            <label class="modal-standard__field">
+              <span class="visually-hidden">Срок использования</span>
+              <input class="modal-standard__input" type="text" name="duration" placeholder="Срок использования">
+            </label>
+          </li>
+          <li class="modal-standard__item">
+            <label class="modal-standard__field">
+              <span class="visually-hidden">Текст</span>
+              <textarea class="modal-standard__input" name="text" rows="4" placeholder="Текст"></textarea>
+            </label>
+          </li>
+        </ul>
+        <label class="modal-standard__accept">
+          <span class="modal-standard__label">Я&nbsp;даю согласие на&nbsp;обработку персональных данных в соответствии с&nbsp;Политикой конфиденциальности.</span>
+          <input class="visually-hidden" type="checkbox" name="accept">
+        </label>
+        <div class="modal-standard__form-button-container">
+          <div class="modal-standard__form-error-wrapper form-error-message">
+            <p class="modal-standard__form-error hidden">Обязательные поля не заполнены</p>
+          </div>
+          <button class="modal-standard__form-button button button--main button--to-light" type="submit">Запросить КП</button>
+        </div>
+      </form>
+      <div class="modal-standard__tel">
+        <p class="modal-standard__contacts-name">Телефон</p>
+        <a class="modal-standard__contacts-link" href="tel:+7(495)7488890">+7&nbsp;(495)&nbsp;748&nbsp;88&nbsp;90</a>
+      </div>
+      <div class="modal-standard__socials">
+        <p class="modal-standard__contacts-name">Соцсети&nbsp;/ мессенджеры</p>
+        <ul class="modal-standard__socials-list">
+          <li class="modal-standard__socials-item">
+            <a class="modal-standard__socials-link modal-standard__socials-link--mail" href="mailto:info@generatory-russia.ru" target="_blank" rel="noreferrer noopener">
+              <span class="visually-hidden">Написать на почту.</span>
+            </a>
+          </li>
+          <li class="modal-standard__socials-item">
+            <a class="modal-standard__socials-link modal-standard__socials-link--tg" href="https://t.me/+79256484808" target="_blank" rel="noreferrer noopener">
+              <span class="visually-hidden">Телеграм.</span>
+            </a>
+          </li>
+          <li class="modal-standard__socials-item">
+            <a class="modal-standard__socials-link modal-standard__socials-link--max" href="#" target="_blank" rel="noreferrer noopener">
+              <span class="visually-hidden">Макс.</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

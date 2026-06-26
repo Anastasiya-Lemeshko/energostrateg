@@ -52,6 +52,8 @@
   }
 
   &--dark {
+    @include interactive-button-dark;
+
     background-color: var(--bg-dark);
   }
 
@@ -68,6 +70,11 @@
     color: var(--bg-primary);
     background-color: var(--white);
   }
+
+  &--to-light {
+    @include interactive-button-dark;
+  }
+
 
   &.hidden {
     display: none;
