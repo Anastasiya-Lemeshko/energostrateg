@@ -12,6 +12,12 @@
     gap: 0 20px;
     min-height: 495px;
   }
+
+  &--small {
+    @include vp-1024 {
+      grid-template-columns: 7fr 4fr;
+    }
+  }
 }
 
 .form__title {

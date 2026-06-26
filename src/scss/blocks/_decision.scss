@@ -138,13 +138,13 @@
   @include vp-1024 {
     position: relative;
     justify-self: start;
-    max-width: 80%;
+    width: 80%;
     background-color: var(--white);
     z-index: 1;
   }
 
   @include vp-1280 {
-    max-width: 411px;
+    width: 411px;
   }
 
   @include vp-2500 {
@@ -174,4 +174,8 @@
   font-weight: 400;
   font-size: 16px;
   color: var(-text-light);
+
+  @include vp-1024 {
+    max-width: 340px;
+  }
 }

@@ -20,6 +20,7 @@
     grid-template-columns: auto 1fr;
     align-items: start;
     gap: 60px;
+    margin: 0 0 18px;
     padding: 8px 20px;
   }
 
@@ -40,6 +41,10 @@
 
   @include vp-1366 {
     grid-template-columns: auto auto auto auto 1fr;
+  }
+
+  @include vp-1400 {
+    margin: 0 10px;
   }
 }
 
@@ -66,6 +71,8 @@
 }
 
 .header__menu-open {
+  font-size: 12px;
+
   @include vp-1024 {
     display: none;
   }
@@ -276,8 +283,20 @@
   color: inherit;
 }
 
+.header__nav-item {
+  &:not(:last-child) {
+    margin: 0 0 5px;
+
+    @include vp-768 {
+      margin: 0;
+    }
+  }
+}
+
 .header__nav-sublink {
   @include interactive-link;
+
+  font-size: 16px;
 }
 
 .header__address {

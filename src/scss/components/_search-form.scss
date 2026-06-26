@@ -8,26 +8,49 @@
 .search-form__field {
   @include input;
 
-  &::placeholder {
-    font-size: 12px;
+  &:has(span.visually-hidden) {
+    --placeholder-color: var(--text-basic);
   }
 
   input {
     height: 40px;
-    padding: 10px;
+    padding: 5px;
 
     @include vp-768 {
       height: 50px;
+      padding: 10px;
     }
+
+    @include vp-1024 {
+      padding: 10px 25px;
+    }
+
+    &::placeholder {
+      font-size: 12px;
+
+      @include vp-768 {
+        font-size: 16px;
+      }
+    }
+  }
+
+  &:has(input:hover),
+  &:has(textarea:hover) {
+    --placeholder-color: var(--text-light);
   }
 }
 
 .search-form__button {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background-color: var(--bg-light);
   border: none;
+
+  @include vp-768 {
+    width: 50px;
+    height: 50px;
+  }
 
   &::after {
     position: absolute;

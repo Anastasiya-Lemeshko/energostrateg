@@ -10,11 +10,15 @@
   }
 
   @include vp-1024 {
-    padding: 40px 0 60px;
+    padding: 60px 0;
+  }
+
+  @include vp-1366 {
+    padding: 90px 0 60px;
   }
 
   @include vp-1640 {
-    padding: 40px 0;
+    padding: 90px 0 40px;
   }
 }
 
@@ -29,7 +33,7 @@
   }
 
   @include vp-1024 {
-    margin: 0 0 80px;
+    margin: 0 0 57px;
   }
 
   @include vp-1280 {
@@ -101,6 +105,12 @@
   font-weight: 400;
   font-size: 12px;
   color: var(--bg-light);
+
+  &--secondary {
+    @include vp-1024 {
+      margin: 0 0 20px;
+    }
+  }
 }
 
 .footer__contacts-tel,
