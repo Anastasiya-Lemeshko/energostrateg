@@ -283,16 +283,6 @@
   color: inherit;
 }
 
-.header__nav-item {
-  &:not(:last-child) {
-    margin: 0 0 5px;
-
-    @include vp-768 {
-      margin: 0;
-    }
-  }
-}
-
 .header__nav-sublink {
   @include interactive-link;
 
