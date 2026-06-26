@@ -516,8 +516,8 @@ form {
 
 .button {
   opacity: 1;
-  -webkit-transition: background-color 0.3s, opacity 0.3s;
-  transition: background-color 0.3s, opacity 0.3s;
+  -webkit-transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 }
 @media (hover: hover) {
   .button:hover {
@@ -592,8 +592,8 @@ form {
 }
 .button--dark {
   opacity: 1;
-  -webkit-transition: background-color 0.3s, opacity 0.3s;
-  transition: background-color 0.3s, opacity 0.3s;
+  -webkit-transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 }
 @media (hover: hover) {
   .button--dark:hover {
@@ -633,8 +633,8 @@ form {
 }
 .button--to-light {
   opacity: 1;
-  -webkit-transition: background-color 0.3s, opacity 0.3s;
-  transition: background-color 0.3s, opacity 0.3s;
+  -webkit-transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 }
 @media (hover: hover) {
   .button--to-light:hover {
@@ -3025,6 +3025,7 @@ span.breadcrumbs__link {
   transform-origin: top;
   -webkit-transition: var(--transition);
   transition: var(--transition);
+  z-index: var(--z-select);
 }
 @media (min-width: 1366px) {
   .header__catalog-container {
@@ -3686,6 +3687,16 @@ span.breadcrumbs__link {
 .quick__subtablinks .quick__tablink {
   padding: 9px;
   color: var(--text-basic);
+}
+@media (hover: hover) {
+  .quick__subtablinks .quick__tablink:hover {
+    color: var(--white);
+    background-color: var(--bg-primary);
+  }
+}
+.quick__subtablinks .quick__tablink:focus-visible {
+  color: var(--white);
+  background-color: var(--bg-primary);
 }
 .quick__subtablinks .quick__tablink.tabs__tablink--active {
   color: var(--white);
@@ -6209,21 +6220,22 @@ ul.quick__subtabcontent.tabs__tabcontent--active {
 }
 
 .footer__link {
-  -webkit-transition: color 0.3s, opacity 0.3s;
-  transition: color 0.3s, opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  cursor: pointer;
 }
 @media (hover: hover) {
   .footer__link:hover {
-    color: var(--text-light);
+    opacity: 0.7;
     outline: none;
   }
 }
 .footer__link:focus-visible {
-  color: var(--text-light);
+  opacity: 0.7;
   outline: none;
 }
 .footer__link:active {
-  opacity: 0.8;
+  opacity: 0.5;
 }
 
 .footer__contacts {
@@ -6246,24 +6258,25 @@ ul.quick__subtabcontent.tabs__tabcontent--active {
 
 .footer__contacts-tel,
 .footer__contacts-mail {
-  -webkit-transition: color 0.3s, opacity 0.3s;
-  transition: color 0.3s, opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  cursor: pointer;
 }
 @media (hover: hover) {
   .footer__contacts-tel:hover,
   .footer__contacts-mail:hover {
-    color: var(--text-light);
+    opacity: 0.7;
     outline: none;
   }
 }
 .footer__contacts-tel:focus-visible,
 .footer__contacts-mail:focus-visible {
-  color: var(--text-light);
+  opacity: 0.7;
   outline: none;
 }
 .footer__contacts-tel:active,
 .footer__contacts-mail:active {
-  opacity: 0.8;
+  opacity: 0.5;
 }
 .footer__contacts-tel,
 .footer__contacts-mail {
@@ -6551,21 +6564,22 @@ ul.quick__subtabcontent.tabs__tabcontent--active {
 }
 
 .footer__policy-link {
-  -webkit-transition: color 0.3s, opacity 0.3s;
-  transition: color 0.3s, opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  cursor: pointer;
 }
 @media (hover: hover) {
   .footer__policy-link:hover {
-    color: var(--text-light);
+    opacity: 0.7;
     outline: none;
   }
 }
 .footer__policy-link:focus-visible {
-  color: var(--text-light);
+  opacity: 0.7;
   outline: none;
 }
 .footer__policy-link:active {
-  opacity: 0.8;
+  opacity: 0.5;
 }
 .footer__policy-link {
   font-size: 14px;

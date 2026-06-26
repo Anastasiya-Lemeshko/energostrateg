@@ -11248,6 +11248,7 @@ class ModalWindow {
     this.buttons = buttons || [];
     this.firstFocusableElement = null;
     this.lastFocusableElement = null;
+    this.openedByButton = null;
   }
   handleOpen() {
     if (this.buttons.length === 0) return;
@@ -11269,6 +11270,7 @@ class ModalWindow {
         const focusableElements = Array.from(this.modal.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'));
         this.firstFocusableElement = focusableElements[0];
         this.lastFocusableElement = focusableElements[focusableElements.length - 1];
+        this.openedByButton = button;
         this.addEventListeners();
         this.openModal(this.modal);
       });
@@ -11381,6 +11383,10 @@ class ModalWindow {
   }
   closeModal(modal) {
     if (!modal) return;
+    if (this.openedByButton) {
+      this.openedByButton.focus();
+      this.openedByButton = null;
+    }
     modal.classList.remove('open');
     this.removeEventListeners();
   }
@@ -11792,23 +11798,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   setPopup: () => (/* binding */ setPopup)
 /* harmony export */ });
 /* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_vars.js */ "./src/js/_vars.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../_utils.js */ "./src/js/_utils.js");
+
 
 const popups = document.querySelectorAll('.popup-item');
+
+// эти попапы появляется только на ширине вьюпорта выше 1024px
 const setPopup = () => {
   if (!popups || !popups.length) return;
   popups.forEach(popup => {
     const button = popup.querySelector('.popup-button');
+    const popupList = popup.querySelector('.popup-list');
     let isPopup = false;
     if (!button) return;
+    const popupLinks = popupList ? popupList.querySelectorAll('a, button') : null;
     const openPopup = () => {
       popup.classList.add('open');
       document.addEventListener('click', onDocumentClick);
       popup.addEventListener('focusout', onFocusOut);
+      if (popupLinks && popupLinks.length) {
+        (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__.setTabIndex)(popupLinks);
+      }
     };
     const closePopup = () => {
       popup.classList.remove('open');
       document.removeEventListener('click', onDocumentClick);
       popup.removeEventListener('focusout', onFocusOut);
+      if (popupLinks && popupLinks.length) {
+        (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__.removeTabIndex)(popupLinks);
+      }
     };
     const togglePopup = () => {
       if (popup.classList.contains('open')) {
@@ -11843,6 +11861,9 @@ const setPopup = () => {
       }
     }
     checkPopup();
+    if (popupLinks && popupLinks.length) {
+      (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__.removeTabIndex)(popupLinks);
+    }
     _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.addEventListener('change', checkPopup);
   });
 };
