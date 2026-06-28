@@ -92,6 +92,10 @@
     @include vp-768 {
       font-size: 16px;
     }
+
+    &[data-value=""] {
+      display: none;
+    }
   }
 
   &.select--open .select__button::after {
@@ -104,30 +108,36 @@
   }
 }
 
-@mixin select-dark {
+@mixin select-filter {
   @include select-standard;
 
   &-button {
-    --color: var(--text-basic);
+    --color: var(--bg-primary);
 
-    background-color: var(--grey-extra-light);
+    padding: 10px;
+    font-size: 16px;
+    background-color: var(--white);
 
     @include hover-focus {
-      --color: var(--bg-accent);
+      --color: var(--text-basic);
     }
 
-    @include active {
-      --color: var(--bg-accent-opacity);
+    &::after {
+      mask-image: url("../img/sprite.svg#filter-arrow");
     }
+
   }
 
   .select__list {
-    background-color: var(--grey-extra-light);
+    width: 100%;
+    padding: 10px;
+    background-color: var(--white);
   }
 
   .select__item {
-    @include interactive-link-accent;
+    @include interactive-link;
 
-    color: var(--text-basic);
+    font-size: 16px;
+    color: var(--bg-primary);
   }
 }

@@ -12,6 +12,7 @@ export const DESKTOP_WIDTH = window.matchMedia('(min-width: 1366px)');
 export const HEADER_FIXED_OFFSET = 500;
 
 export const COUNT_VISIBLE_TAGS = 12;
+export const COUNT_VISIBLE_FIELDS = 9;
 
 export const MODAL_TIMER = 3000000;
 

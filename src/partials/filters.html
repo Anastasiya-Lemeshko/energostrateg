@@ -1,0 +1,248 @@
+<section class="filters block-color">
+  <div class="container">
+    <div class="filters__wrapper">
+      <button class="filters__button-open accordion-button" type="button">Фильтр</button>
+      <form class="filters__form filter-form accordion-content accordion-content--opened" action="" method="get">
+        <div class="filters__form-groups">
+          <div class="filters__group">
+            <p class="filters__group-title">Производитель:</p>
+            <div class="filters__checkboxes custom-scrollbar-wrapper">
+              <ul class="filters__checkbox-list custom-scrollbar select-all">
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">Выбрать все</span>
+                    <input class="filters__input select-all-checkbox" type="checkbox" name="producer-all">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">Add<span>28</span></span>
+                    <input class="filters__input" type="checkbox" name="add">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">AGG<span>31</span></span>
+                    <input class="filters__input" type="checkbox" name="agg">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">BHF<span>42</span></span>
+                    <input class="filters__input" type="checkbox" name="bhf">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">CDE<span>53</span></span>
+                    <input class="filters__input" type="checkbox" name="cde">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">EHB<span>75</span></span>
+                    <input class="filters__input" type="checkbox" name="ehb">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">Add<span>28</span></span>
+                    <input class="filters__input" type="checkbox" name="add">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">AGG<span>31</span></span>
+                    <input class="filters__input" type="checkbox" name="agg">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">BHF<span>42</span></span>
+                    <input class="filters__input" type="checkbox" name="bhf">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">CDE<span>53</span></span>
+                    <input class="filters__input" type="checkbox" name="cde">
+                  </label>
+                </li>
+                <li class="filters__checkbox-item">
+                  <label class="filters__checkbox">
+                    <span class="filters__label">EHB<span>75</span></span>
+                    <input class="filters__input" type="checkbox" name="ehb">
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="filters__fields-list">
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Топливо</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть варианты топлива.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор топлива">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Исполнение</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть варианты исполнения.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор исполнения">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Функция</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть список функций.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор функции">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group">
+              <p class="filters__group-title">Мощность, кВт</p>
+              <div class="filters__group-inputs">
+                <label class="filters__field">
+                  <span class="visually-hidden">Минимальная мощность</span>
+                  <input class="filters__input" type="number" name="power-min" placeholder="от 0">
+                </label>
+                <label class="filters__field">
+                  <span class="visually-hidden">Максимальная мощность</span>
+                  <input class="filters__input" type="number" name="power-max" placeholder="до 4000">
+                </label>
+              </div>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Степень автоматизации</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть варианты степени автоматизации.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор степени автоматизации">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Страна</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть список стран.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор страны">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Напряжение</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть варианты напряжения.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор напряжения">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Двигатель</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть варианты двигателей.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор двигателя">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group">
+              <p class="filters__group-title">Цена, руб</p>
+              <div class="filters__group-inputs">
+                <label class="filters__field">
+                  <span class="visually-hidden">Минимальная цена</span>
+                  <input class="filters__input" type="number" name="price-min" placeholder="от">
+                </label>
+                <label class="filters__field">
+                  <span class="visually-hidden">Максимальная цена</span>
+                  <input class="filters__input" type="number" name="price-max" placeholder="до">
+                </label>
+              </div>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Инверторная модель</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть варианты моделей.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор модели">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Двигатель</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть варианты двигателей.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор двигателя">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Страна</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть список стран.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор страны">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Функция сварки</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть список функций сварки.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор функции сварки">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Двигатель</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть варианты двигателей.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор двигателя">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+            <div class="filters__group filters__select select">
+              <label class="filters__group-title" for="city">Страна</label>
+              <button class="filters__select-button select__button" type="button" aria-label="Открыть список стран.">Не важно</button>
+              <select class="select__original" id="city" name="city" aria-label="Выбор страны">
+                <option value="" disabled selected>Не важно</option>
+                <option value="one">Первый</option>
+                <option value="two">Второй</option>
+                <option value="three">Третий</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="filters__form-buttons">
+          <button class="filters__advanced-search" type="button">Расширенный поиск</button>
+          <button class="filters__button button button--main button--white" type="reset">Очистить фильтр</button>
+          <button class="filters__button button button--main button--dark" type="submit">Показать <span class="filters__count">(812)</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

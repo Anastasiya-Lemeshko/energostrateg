@@ -1,4 +1,4 @@
-import { showAllTags } from "./_show-more.js";
+import { showAllTags, onTabChange } from "./_show-more.js";
 
 const tabs = document.querySelectorAll('.tabs');
 
@@ -42,6 +42,7 @@ const setTabs = () => {
         if (listElement) {
           listElement.classList.add('js-show-more-list-active');
           showAllTags(listElement);
+          onTabChange(listElement);
         }
 
         newContent.classList.add('tabs__tabcontent--active');

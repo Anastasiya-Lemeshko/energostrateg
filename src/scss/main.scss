@@ -16,6 +16,8 @@
 @use "./components/block";
 @use "./components/stars";
 @use "./components/rating";
+@use "./components/page-header";
+@use "./components/custom-scrollbar";
 
 // подключения секций страницы
 @use "./blocks/header";
@@ -32,3 +34,4 @@
 @use "./blocks/blog";
 @use "./blocks/reviews";
 @use "./blocks/footer";
+@use './blocks/filters';

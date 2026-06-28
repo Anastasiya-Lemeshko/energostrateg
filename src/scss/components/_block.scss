@@ -16,6 +16,14 @@
   }
 }
 
+.page-header + .block {
+  margin: 20px 0 40px;
+
+  @include vp-1024 {
+    margin: 20px 0 100px;
+  }
+}
+
 .block-color+.block,
 .hero+.block {
   margin: 40px 0;

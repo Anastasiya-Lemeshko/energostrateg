@@ -1,0 +1,129 @@
+@use "index" as *;
+
+.filters {}
+
+.filters__button-open {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 10px 10px 0;
+  background-color: var(-transparent);
+  border: none;
+
+  &::after {
+    grid-area: 1 / 2 / 2 / 3;
+    content: "";
+    width: 12px;
+    height: 11px;
+    background-color: var(--bg-primary);
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-image: url("../img/sprite.svg#select-arrow");
+    mask-size: 12px 11px;
+    transform: scaleY(1);
+    transition: background-color 0.3s, transform 0.3s;
+  }
+
+  &.accordion-button--active {
+    &::after {
+      transform: scaleY(-1);
+    }
+  }
+}
+
+.filters__form {
+  padding: 20px 10px 10px;
+  color: var(--white);
+  background-color: var(--bg-primary);
+
+  &.accordion-content--opened {
+    overflow: visible;
+  }
+}
+
+.filters__fields-list {
+  overflow: hidden;
+  transition: max-height 0.6s;
+}
+
+.filters__group {
+  margin: 0 0 10px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.6s, opacity 0.6s;
+
+  &.field-hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.filters__group-title {
+  display: block;
+  margin: 0 0 7px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.filters__checkbox-list {
+  height: 218px;
+  margin: 0;
+  padding: 20px;
+  list-style-type: none;
+  background-color: var(--white);
+}
+
+.filters__checkbox-item {
+  &:not(:last-child) {
+    margin: 0 0 10px;
+  }
+}
+
+.filters__checkbox {
+  @include checkbox;
+
+  span {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+
+    span {
+      margin: 0;
+      color: var(--text-light);
+    }
+  }
+}
+
+.filters__select {
+  @include select-filter;
+}
+
+.filters__group-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.filters__field {
+  @include input-filter;
+}
+
+.filters__form-buttons {
+  margin: 35px 0 0;
+  padding: 0 0 10px;
+}
+
+.filters__button {
+  width: 100%;
+
+  &:not(:last-child) {
+    margin: 0 0 5px;
+
+    @include vp-768 {
+      margin: 0;
+    }
+  }
+}

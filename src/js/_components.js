@@ -1,4 +1,4 @@
-// import { openVisibleFontCardContent, setAccordeonToggles } from './components/_accordion.js';
+import { openVisibleContent, setAccordeonToggles } from './components/_accordion.js';
 import { renderCustomSelect } from './components/_custom-select.js';
 import { setMobileMenu } from './components/_open-mobile-menu.js';
 import { moveHeader } from './components/_move-header.js';
@@ -10,6 +10,9 @@ import { setTabs } from './components/_tabs.js';
 import { setModals } from './components/_modal.js';
 import { setRating } from './components/_rating.js';
 import { addScrollButton } from './components/_button-scroll-top.js';
+import { setAdvancedSearch } from './components/_advanced-search.js';
+import { initCustomScrollbar } from './components/_custom-scrollbar.js';
+import { initSelectAllCheckbox } from './components/_checkbox-select-all.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCustomSelect();
@@ -23,4 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
   setModals();
   setRating();
   addScrollButton();
+  openVisibleContent();
+  setAccordeonToggles();
+  setAdvancedSearch();
+  initCustomScrollbar();
+  initSelectAllCheckbox();
 });
+

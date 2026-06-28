@@ -101,7 +101,9 @@
   }
 }
 
+
 @mixin input-number-reset {
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     appearance: none;
@@ -110,6 +112,39 @@
 
   &[type='number'] {
     -moz-appearance: textfield;
+  }
+}
+
+@mixin input-filter {
+  @include input;
+
+  --field-color: var(--white);
+  --color: var(--bg-primary);
+
+  &:has(span.visually-hidden) {
+    --placeholder-color: var(--bg-primary);
+  }
+
+  span:not(.visually-hidden) {
+    padding: 0 10px;
+    font-size: 16px;
+  }
+
+  input,
+  textarea {
+    @include input-number-reset;
+
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
+
+  input {
+    height: unset;
   }
 }
 

@@ -2,6 +2,8 @@ import { TABLET_WIDTH, COUNT_VISIBLE_TAGS } from "../_vars.js";
 
 const activeLists = document.querySelectorAll('.js-show-more-list-active');
 
+// кнопка работает только на мобильной версии (на десктопе ее нет)
+
 const onButtonClick = (evt) => {
   const showButton = evt.target;
   const span = showButton.querySelector('span');
@@ -79,6 +81,22 @@ const showAllTags = (list) => {
   buttonMore.addEventListener('click', onButtonClick);
 };
 
+const onTabChange = (list) => {
+  const currentContainer = list.closest('.js-show-more');
+  const buttonMore = currentContainer ? currentContainer.querySelector('.js-show-more-button') : null;
+
+  if (buttonMore) {
+    const span = buttonMore.querySelector('span');
+
+    buttonMore.classList.remove('js-hide-all');
+    if (span) {
+      span.textContent = 'Показать еще';
+    } else {
+      buttonMore.textContent = 'Показать еще';
+    }
+  }
+};
+
 const onWindowChange = () => {
   const activeLists = document.querySelectorAll('.js-show-more-list-active');
 
@@ -123,4 +141,4 @@ if (activeLists && activeLists.length) {
 
 TABLET_WIDTH.addEventListener('change', onWindowChange);
 
-export { showAllTags };
+export { showAllTags, onTabChange };
