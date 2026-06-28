@@ -2,6 +2,1426 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/detect-browser/es/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/detect-browser/es/index.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BotInfo: () => (/* binding */ BotInfo),
+/* harmony export */   BrowserInfo: () => (/* binding */ BrowserInfo),
+/* harmony export */   NodeInfo: () => (/* binding */ NodeInfo),
+/* harmony export */   ReactNativeInfo: () => (/* binding */ ReactNativeInfo),
+/* harmony export */   SearchBotDeviceInfo: () => (/* binding */ SearchBotDeviceInfo),
+/* harmony export */   browserName: () => (/* binding */ browserName),
+/* harmony export */   detect: () => (/* binding */ detect),
+/* harmony export */   detectOS: () => (/* binding */ detectOS),
+/* harmony export */   getNodeVersion: () => (/* binding */ getNodeVersion),
+/* harmony export */   parseUserAgent: () => (/* binding */ parseUserAgent)
+/* harmony export */ });
+var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+var BrowserInfo = /** @class */ (function () {
+    function BrowserInfo(name, version, os) {
+        this.name = name;
+        this.version = version;
+        this.os = os;
+        this.type = 'browser';
+    }
+    return BrowserInfo;
+}());
+
+var NodeInfo = /** @class */ (function () {
+    function NodeInfo(version) {
+        this.version = version;
+        this.type = 'node';
+        this.name = 'node';
+        this.os = process.platform;
+    }
+    return NodeInfo;
+}());
+
+var SearchBotDeviceInfo = /** @class */ (function () {
+    function SearchBotDeviceInfo(name, version, os, bot) {
+        this.name = name;
+        this.version = version;
+        this.os = os;
+        this.bot = bot;
+        this.type = 'bot-device';
+    }
+    return SearchBotDeviceInfo;
+}());
+
+var BotInfo = /** @class */ (function () {
+    function BotInfo() {
+        this.type = 'bot';
+        this.bot = true; // NOTE: deprecated test name instead
+        this.name = 'bot';
+        this.version = null;
+        this.os = null;
+    }
+    return BotInfo;
+}());
+
+var ReactNativeInfo = /** @class */ (function () {
+    function ReactNativeInfo() {
+        this.type = 'react-native';
+        this.name = 'react-native';
+        this.version = null;
+        this.os = null;
+    }
+    return ReactNativeInfo;
+}());
+
+// tslint:disable-next-line:max-line-length
+var SEARCHBOX_UA_REGEX = /alexa|bot|crawl(er|ing)|facebookexternalhit|feedburner|google web preview|nagios|postrank|pingdom|slurp|spider|yahoo!|yandex/;
+var SEARCHBOT_OS_REGEX = /(nuhk|curl|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask\ Jeeves\/Teoma|ia_archiver)/;
+var REQUIRED_VERSION_PARTS = 3;
+var userAgentRules = [
+    ['aol', /AOLShield\/([0-9\._]+)/],
+    ['edge', /Edge\/([0-9\._]+)/],
+    ['edge-ios', /EdgiOS\/([0-9\._]+)/],
+    ['yandexbrowser', /YaBrowser\/([0-9\._]+)/],
+    ['kakaotalk', /KAKAOTALK\s([0-9\.]+)/],
+    ['samsung', /SamsungBrowser\/([0-9\.]+)/],
+    ['silk', /\bSilk\/([0-9._-]+)\b/],
+    ['miui', /MiuiBrowser\/([0-9\.]+)$/],
+    ['beaker', /BeakerBrowser\/([0-9\.]+)/],
+    ['edge-chromium', /EdgA?\/([0-9\.]+)/],
+    [
+        'chromium-webview',
+        /(?!Chrom.*OPR)wv\).*Chrom(?:e|ium)\/([0-9\.]+)(:?\s|$)/,
+    ],
+    ['chrome', /(?!Chrom.*OPR)Chrom(?:e|ium)\/([0-9\.]+)(:?\s|$)/],
+    ['phantomjs', /PhantomJS\/([0-9\.]+)(:?\s|$)/],
+    ['crios', /CriOS\/([0-9\.]+)(:?\s|$)/],
+    ['firefox', /Firefox\/([0-9\.]+)(?:\s|$)/],
+    ['fxios', /FxiOS\/([0-9\.]+)/],
+    ['opera-mini', /Opera Mini.*Version\/([0-9\.]+)/],
+    ['opera', /Opera\/([0-9\.]+)(?:\s|$)/],
+    ['opera', /OPR\/([0-9\.]+)(:?\s|$)/],
+    ['pie', /^Microsoft Pocket Internet Explorer\/(\d+\.\d+)$/],
+    ['pie', /^Mozilla\/\d\.\d+\s\(compatible;\s(?:MSP?IE|MSInternet Explorer) (\d+\.\d+);.*Windows CE.*\)$/],
+    ['netfront', /^Mozilla\/\d\.\d+.*NetFront\/(\d.\d)/],
+    ['ie', /Trident\/7\.0.*rv\:([0-9\.]+).*\).*Gecko$/],
+    ['ie', /MSIE\s([0-9\.]+);.*Trident\/[4-7].0/],
+    ['ie', /MSIE\s(7\.0)/],
+    ['bb10', /BB10;\sTouch.*Version\/([0-9\.]+)/],
+    ['android', /Android\s([0-9\.]+)/],
+    ['ios', /Version\/([0-9\._]+).*Mobile.*Safari.*/],
+    ['safari', /Version\/([0-9\._]+).*Safari/],
+    ['facebook', /FB[AS]V\/([0-9\.]+)/],
+    ['instagram', /Instagram\s([0-9\.]+)/],
+    ['ios-webview', /AppleWebKit\/([0-9\.]+).*Mobile/],
+    ['ios-webview', /AppleWebKit\/([0-9\.]+).*Gecko\)$/],
+    ['curl', /^curl\/([0-9\.]+)$/],
+    ['searchbot', SEARCHBOX_UA_REGEX],
+];
+var operatingSystemRules = [
+    ['iOS', /iP(hone|od|ad)/],
+    ['Android OS', /Android/],
+    ['BlackBerry OS', /BlackBerry|BB10/],
+    ['Windows Mobile', /IEMobile/],
+    ['Amazon OS', /Kindle/],
+    ['Windows 3.11', /Win16/],
+    ['Windows 95', /(Windows 95)|(Win95)|(Windows_95)/],
+    ['Windows 98', /(Windows 98)|(Win98)/],
+    ['Windows 2000', /(Windows NT 5.0)|(Windows 2000)/],
+    ['Windows XP', /(Windows NT 5.1)|(Windows XP)/],
+    ['Windows Server 2003', /(Windows NT 5.2)/],
+    ['Windows Vista', /(Windows NT 6.0)/],
+    ['Windows 7', /(Windows NT 6.1)/],
+    ['Windows 8', /(Windows NT 6.2)/],
+    ['Windows 8.1', /(Windows NT 6.3)/],
+    ['Windows 10', /(Windows NT 10.0)/],
+    ['Windows ME', /Windows ME/],
+    ['Windows CE', /Windows CE|WinCE|Microsoft Pocket Internet Explorer/],
+    ['Open BSD', /OpenBSD/],
+    ['Sun OS', /SunOS/],
+    ['Chrome OS', /CrOS/],
+    ['Linux', /(Linux)|(X11)/],
+    ['Mac OS', /(Mac_PowerPC)|(Macintosh)/],
+    ['QNX', /QNX/],
+    ['BeOS', /BeOS/],
+    ['OS/2', /OS\/2/],
+];
+function detect(userAgent) {
+    if (!!userAgent) {
+        return parseUserAgent(userAgent);
+    }
+    if (typeof document === 'undefined' &&
+        typeof navigator !== 'undefined' &&
+        navigator.product === 'ReactNative') {
+        return new ReactNativeInfo();
+    }
+    if (typeof navigator !== 'undefined') {
+        return parseUserAgent(navigator.userAgent);
+    }
+    return getNodeVersion();
+}
+function matchUserAgent(ua) {
+    // opted for using reduce here rather than Array#first with a regex.test call
+    // this is primarily because using the reduce we only perform the regex
+    // execution once rather than once for the test and for the exec again below
+    // probably something that needs to be benchmarked though
+    return (ua !== '' &&
+        userAgentRules.reduce(function (matched, _a) {
+            var browser = _a[0], regex = _a[1];
+            if (matched) {
+                return matched;
+            }
+            var uaMatch = regex.exec(ua);
+            return !!uaMatch && [browser, uaMatch];
+        }, false));
+}
+function browserName(ua) {
+    var data = matchUserAgent(ua);
+    return data ? data[0] : null;
+}
+function parseUserAgent(ua) {
+    var matchedRule = matchUserAgent(ua);
+    if (!matchedRule) {
+        return null;
+    }
+    var name = matchedRule[0], match = matchedRule[1];
+    if (name === 'searchbot') {
+        return new BotInfo();
+    }
+    // Do not use RegExp for split operation as some browser do not support it (See: http://blog.stevenlevithan.com/archives/cross-browser-split)
+    var versionParts = match[1] && match[1].split('.').join('_').split('_').slice(0, 3);
+    if (versionParts) {
+        if (versionParts.length < REQUIRED_VERSION_PARTS) {
+            versionParts = __spreadArray(__spreadArray([], versionParts, true), createVersionParts(REQUIRED_VERSION_PARTS - versionParts.length), true);
+        }
+    }
+    else {
+        versionParts = [];
+    }
+    var version = versionParts.join('.');
+    var os = detectOS(ua);
+    var searchBotMatch = SEARCHBOT_OS_REGEX.exec(ua);
+    if (searchBotMatch && searchBotMatch[1]) {
+        return new SearchBotDeviceInfo(name, version, os, searchBotMatch[1]);
+    }
+    return new BrowserInfo(name, version, os);
+}
+function detectOS(ua) {
+    for (var ii = 0, count = operatingSystemRules.length; ii < count; ii++) {
+        var _a = operatingSystemRules[ii], os = _a[0], regex = _a[1];
+        var match = regex.exec(ua);
+        if (match) {
+            return os;
+        }
+    }
+    return null;
+}
+function getNodeVersion() {
+    var isNode = typeof process !== 'undefined' && process.version;
+    return isNode ? new NodeInfo(process.version.slice(1)) : null;
+}
+function createVersionParts(count) {
+    var output = [];
+    for (var ii = 0; ii < count; ii++) {
+        output.push('0');
+    }
+    return output;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/bezier/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/bezier/index.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   easingByBezier: () => (/* binding */ easingByBezier)
+/* harmony export */ });
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-plusplus */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+function easingByBezier(progress, bezier) {
+    const [x1, y1, x2, y2] = bezier;
+    if (x1 === y1 && x2 === y2) {
+        return progress;
+    }
+    const val = [];
+    for (let i = 0; i < 11; ++i) {
+        val[i] = bezierCalc(i * 0.1, x1, x2);
+    }
+    if (progress === 0) {
+        return 0;
+    }
+    if (progress === 1) {
+        return 1;
+    }
+    return bezierCalc(bezierX(bezier, progress, val), y1, y2);
+}
+function bezierCalc(progress, x1, x2) {
+    return (((bezierA(x1, x2) * progress + bezierB(x1, x2)) * progress + bezierC(x1)) *
+        progress);
+}
+function bezierA(x1, x2) {
+    return 1.0 - 3.0 * x2 + 3.0 * x1;
+}
+function bezierB(x1, x2) {
+    return 3.0 * x2 - 6.0 * x1;
+}
+function bezierC(x1) {
+    return 3.0 * x1;
+}
+function bezierX(bezier, progress, val) {
+    // eslint-disable-next-line no-unused-vars
+    const x1 = bezier[0];
+    const x2 = bezier[2];
+    let start = 0;
+    let current = 1;
+    for (; current !== 10 && val[current] <= progress; ++current) {
+        start += 0.1;
+    }
+    --current;
+    const dist = (progress - val[current]) / (val[current + 1] - val[current]);
+    const guessForT = start + dist * 0.1;
+    const initialSlope = bezierSlope(guessForT, x1, x2);
+    if (initialSlope >= 0.001) {
+        return bezierNewtonRaphsonIterate(progress, guessForT, x1, x2);
+    }
+    if (initialSlope === 0.0) {
+        return guessForT;
+    }
+    return bezierBinarySubdivide(progress, start, start + 0.1, x1, x2);
+}
+function bezierSlope(progress, x1, x2) {
+    return (3.0 * bezierA(x1, x2) * progress * progress +
+        2.0 * bezierB(x1, x2) * progress +
+        bezierC(x1));
+}
+function bezierNewtonRaphsonIterate(progress, guessForT, x1, x2) {
+    for (let i = 0; i < 4; ++i) {
+        const currentSlope = bezierSlope(guessForT, x1, x2);
+        if (currentSlope === 0.0) {
+            return guessForT;
+        }
+        const currentX = bezierCalc(guessForT, x1, x2) - progress;
+        guessForT -= currentX / currentSlope;
+    }
+    return guessForT;
+}
+function bezierBinarySubdivide(progress, a, b, x1, x2) {
+    let currentX;
+    let currentT;
+    let i = 0;
+    do {
+        currentT = a + (b - a) / 2.0;
+        currentX = bezierCalc(currentT, x1, x2) - progress;
+        if (currentX > 0.0) {
+            b = currentT;
+        }
+        else {
+            a = currentT;
+        }
+    } while (Math.abs(currentX) > 0.0000001 && ++i < 10);
+    return currentT;
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.js":
+/*!********************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   easing: () => (/* binding */ easing)
+/* harmony export */ });
+/* harmony import */ var _bezier__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bezier */ "./node_modules/easing-progress/lib/esm/bezier/index.js");
+
+/**
+ * Calculate easing value
+ */
+function easing(progress, easingType = false) {
+    if (Array.isArray(easingType)) {
+        return (0,_bezier__WEBPACK_IMPORTED_MODULE_0__.easingByBezier)(progress, easingType);
+    }
+    if (typeof easingType === 'function') {
+        return easingType(progress);
+    }
+    return progress;
+}
+//# sourceMappingURL=easing.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInBack.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInBack.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInBack: () => (/* binding */ EaseInBack)
+/* harmony export */ });
+const EaseInBack = (x) => {
+    const c1 = 1.70158;
+    const c3 = c1 + 1;
+    return c3 * x * x * x - c1 * x * x;
+};
+//# sourceMappingURL=easeInBack.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInBounce.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInBounce.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInBounce: () => (/* binding */ EaseInBounce)
+/* harmony export */ });
+/* harmony import */ var _easeOutBounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./easeOutBounce */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutBounce.js");
+
+const EaseInBounce = (x) => 1 - (0,_easeOutBounce__WEBPACK_IMPORTED_MODULE_0__.EaseOutBounce)(1 - x);
+//# sourceMappingURL=easeInBounce.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInCirc.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInCirc.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInCirc: () => (/* binding */ EaseInCirc)
+/* harmony export */ });
+const EaseInCirc = (x) => 1 - Math.sqrt(1 - Math.pow(x, 2));
+//# sourceMappingURL=easeInCirc.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInCubic.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInCubic.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInCubic: () => (/* binding */ EaseInCubic)
+/* harmony export */ });
+const EaseInCubic = (x) => Math.pow(x, 3);
+//# sourceMappingURL=easeInCubic.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInElastic.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInElastic.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInElastic: () => (/* binding */ EaseInElastic)
+/* harmony export */ });
+const EaseInElastic = (x) => {
+    const c4 = (2 * Math.PI) / 3;
+    return x === 0
+        ? 0
+        : x === 1
+            ? 1
+            : -(Math.pow(2, (10 * x - 10))) * Math.sin((x * 10 - 10.75) * c4);
+};
+//# sourceMappingURL=easeInElastic.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInExpo.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInExpo.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInExpo: () => (/* binding */ EaseInExpo)
+/* harmony export */ });
+const EaseInExpo = (x) => x === 0 ? 0 : Math.pow(2, (10 * x - 10));
+//# sourceMappingURL=easeInExpo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutBack.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutBack.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutBack: () => (/* binding */ EaseInOutBack)
+/* harmony export */ });
+const EaseInOutBack = (x) => {
+    const c1 = 1.70158;
+    const c2 = c1 * 1.525;
+    return x < 0.5
+        ? (Math.pow((2 * x), 2) * ((c2 + 1) * 2 * x - c2)) / 2
+        : (Math.pow((2 * x - 2), 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2;
+};
+//# sourceMappingURL=easeInOutBack.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutBounce.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutBounce.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutBounce: () => (/* binding */ EaseInOutBounce)
+/* harmony export */ });
+/* harmony import */ var _easeOutBounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./easeOutBounce */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutBounce.js");
+
+const EaseInOutBounce = (x) => x < 0.5
+    ? (1 - (0,_easeOutBounce__WEBPACK_IMPORTED_MODULE_0__.EaseOutBounce)(1 - 2 * x)) / 2
+    : (1 + (0,_easeOutBounce__WEBPACK_IMPORTED_MODULE_0__.EaseOutBounce)(2 * x - 1)) / 2;
+//# sourceMappingURL=easeInOutBounce.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutCirc.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutCirc.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutCirc: () => (/* binding */ EaseInOutCirc)
+/* harmony export */ });
+const EaseInOutCirc = (x) => x < 0.5
+    ? (1 - Math.sqrt(1 - Math.pow((2 * x), 2))) / 2
+    : (Math.sqrt(1 - Math.pow((-2 * x + 2), 2)) + 1) / 2;
+//# sourceMappingURL=easeInOutCirc.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutCubic.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutCubic.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutCubic: () => (/* binding */ EaseInOutCubic)
+/* harmony export */ });
+const EaseInOutCubic = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow((-2 * x + 2), 3) / 2;
+//# sourceMappingURL=easeInOutCubic.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutElastic.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutElastic.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutElastic: () => (/* binding */ EaseInOutElastic)
+/* harmony export */ });
+const EaseInOutElastic = (x) => {
+    const c5 = (2 * Math.PI) / 4.5;
+    return x === 0
+        ? 0
+        : x === 1
+            ? 1
+            : x < 0.5
+                ? -(Math.pow(2, (20 * x - 10)) * Math.sin((20 * x - 11.125) * c5)) / 2
+                : (Math.pow(2, (-20 * x + 10)) * Math.sin((20 * x - 11.125) * c5)) / 2 + 1;
+};
+//# sourceMappingURL=easeInOutElastic.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutExpo.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutExpo.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutExpo: () => (/* binding */ EaseInOutExpo)
+/* harmony export */ });
+const EaseInOutExpo = (x) => x === 0
+    ? 0
+    : x === 1
+        ? 1
+        : x < 0.5
+            ? Math.pow(2, (20 * x - 10)) / 2
+            : (2 - Math.pow(2, (-20 * x + 10))) / 2;
+//# sourceMappingURL=easeInOutExpo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutQuad.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutQuad.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutQuad: () => (/* binding */ EaseInOutQuad)
+/* harmony export */ });
+const EaseInOutQuad = (x) => x < 0.5 ? 2 * x * x : 1 - Math.pow((-2 * x + 2), 2) / 2;
+//# sourceMappingURL=easeInOutQuad.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutQuart.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutQuart.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutQuart: () => (/* binding */ EaseInOutQuart)
+/* harmony export */ });
+const EaseInOutQuart = (x) => x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow((-2 * x + 2), 4) / 2;
+//# sourceMappingURL=easeInOutQuart.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutQuint.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutQuint.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutQuint: () => (/* binding */ EaseInOutQuint)
+/* harmony export */ });
+const EaseInOutQuint = (x) => x < 0.5 ? 16 * x * x * x * x * x : 1 - Math.pow((-2 * x + 2), 5) / 2;
+//# sourceMappingURL=easeInOutQuint.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutSine.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInOutSine.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInOutSine: () => (/* binding */ EaseInOutSine)
+/* harmony export */ });
+const EaseInOutSine = (x) => -(Math.cos(Math.PI * x) - 1) / 2;
+//# sourceMappingURL=easeInOutSine.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInQuad.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInQuad.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInQuad: () => (/* binding */ EaseInQuad)
+/* harmony export */ });
+const EaseInQuad = (x) => Math.pow(x, 2);
+//# sourceMappingURL=easeInQuad.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInQuart.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInQuart.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInQuart: () => (/* binding */ EaseInQuart)
+/* harmony export */ });
+const EaseInQuart = (x) => Math.pow(x, 4);
+//# sourceMappingURL=easeInQuart.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInQuint.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInQuint.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInQuint: () => (/* binding */ EaseInQuint)
+/* harmony export */ });
+const EaseInQuint = (x) => Math.pow(x, 5);
+//# sourceMappingURL=easeInQuint.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeInSine.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeInSine.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInSine: () => (/* binding */ EaseInSine)
+/* harmony export */ });
+const EaseInSine = (x) => 1 - Math.cos((x * Math.PI) / 2);
+//# sourceMappingURL=easeInSine.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutBack.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutBack.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutBack: () => (/* binding */ EaseOutBack)
+/* harmony export */ });
+const EaseOutBack = (x) => {
+    const c1 = 1.70158;
+    const c3 = c1 + 1;
+    return 1 + c3 * Math.pow((x - 1), 3) + c1 * Math.pow((x - 1), 2);
+};
+//# sourceMappingURL=easeOutBack.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutBounce.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutBounce.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutBounce: () => (/* binding */ EaseOutBounce)
+/* harmony export */ });
+const EaseOutBounce = (x) => {
+    const n1 = 7.5625;
+    const d1 = 2.75;
+    if (x < 1 / d1) {
+        return n1 * x * x;
+    }
+    if (x < 2 / d1) {
+        return n1 * (x -= 1.5 / d1) * x + 0.75;
+    }
+    if (x < 2.5 / d1) {
+        return n1 * (x -= 2.25 / d1) * x + 0.9375;
+    }
+    return n1 * (x -= 2.625 / d1) * x + 0.984375;
+};
+//# sourceMappingURL=easeOutBounce.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutCirc.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutCirc.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutCirc: () => (/* binding */ EaseOutCirc)
+/* harmony export */ });
+const EaseOutCirc = (x) => Math.sqrt(1 - Math.pow((x - 1), 2));
+//# sourceMappingURL=easeOutCirc.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutCubic.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutCubic.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutCubic: () => (/* binding */ EaseOutCubic)
+/* harmony export */ });
+const EaseOutCubic = (x) => 1 - Math.pow((1 - x), 3);
+//# sourceMappingURL=easeOutCubic.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutElastic.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutElastic.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutElastic: () => (/* binding */ EaseOutElastic)
+/* harmony export */ });
+const EaseOutElastic = (x) => {
+    const c4 = (2 * Math.PI) / 3;
+    return x === 0
+        ? 0
+        : x === 1
+            ? 1
+            : Math.pow(2, (-10 * x)) * Math.sin((x * 10 - 0.75) * c4) + 1;
+};
+//# sourceMappingURL=easeOutElastic.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutExpo.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutExpo.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutExpo: () => (/* binding */ EaseOutExpo)
+/* harmony export */ });
+const EaseOutExpo = (x) => x === 1 ? 1 : 1 - Math.pow(2, (-10 * x));
+//# sourceMappingURL=easeOutExpo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutQuad.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutQuad.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutQuad: () => (/* binding */ EaseOutQuad)
+/* harmony export */ });
+const EaseOutQuad = (x) => 1 - Math.pow((1 - x), 2);
+//# sourceMappingURL=easeOutQuad.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutQuart.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutQuart.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutQuart: () => (/* binding */ EaseOutQuart)
+/* harmony export */ });
+const EaseOutQuart = (x) => 1 - Math.pow((1 - x), 4);
+//# sourceMappingURL=easeOutQuart.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutQuint.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutQuint.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutQuint: () => (/* binding */ EaseOutQuint)
+/* harmony export */ });
+const EaseOutQuint = (x) => 1 - Math.pow((1 - x), 5);
+//# sourceMappingURL=easeOutQuint.js.map
+
+/***/ }),
+
+/***/ "./node_modules/easing-progress/lib/esm/easing.net/easeOutSine.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/easing-progress/lib/esm/easing.net/easeOutSine.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseOutSine: () => (/* binding */ EaseOutSine)
+/* harmony export */ });
+const EaseOutSine = (x) => Math.sin((x * Math.PI) / 2);
+//# sourceMappingURL=easeOutSine.js.map
+
+/***/ }),
+
+/***/ "./node_modules/inapp-spy/dist/index.mjs":
+/*!***********************************************!*\
+  !*** ./node_modules/inapp-spy/dist/index.mjs ***!
+  \***********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SFSVCExperimental: () => (/* binding */ SFSVCExperimental),
+/* harmony export */   "default": () => (/* binding */ index_default)
+/* harmony export */ });
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __async = (__this, __arguments, generator) => {
+  return new Promise((resolve, reject) => {
+    var fulfilled = (value) => {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var rejected = (value) => {
+      try {
+        step(generator.throw(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+    step((generator = generator.apply(__this, __arguments)).next());
+  });
+};
+
+// src/utils.ts
+var WIN_ERROR = "Window is not available and no user agent was provided.";
+var getUA = () => {
+  var _a, _b;
+  if (typeof window !== "undefined") {
+    const ua = ((_a = window == null ? void 0 : window.navigator) == null ? void 0 : _a.userAgent) || ((_b = window == null ? void 0 : window.navigator) == null ? void 0 : _b.vendor) || // @ts-ignore
+    (window == null ? void 0 : window.opera);
+    if (ua) return ua;
+  }
+  console.error(WIN_ERROR);
+  return "";
+};
+var empty = {
+  isInApp: false,
+  appKey: void 0,
+  appName: void 0,
+  skipped: false
+};
+var getIsAppleDevice = (ua) => {
+  return ua.match(/(iPhone|iPad|iPod|Macintosh)/) !== null;
+};
+var checkSkip = ({
+  skip,
+  appKey,
+  ua
+}) => {
+  if (!skip || skip.length === 0) return false;
+  const isApple = getIsAppleDevice(ua);
+  return skip.some(
+    ({ appKey: excludeAppKey, platform }) => appKey === excludeAppKey && (!platform || isApple && platform === "apple" || !isApple && platform === "android")
+  );
+};
+var isSafariRegex = new RegExp(
+  /Mozilla\/5\.0 \([^\)]+\) AppleWebKit\/[^\s]+ \(KHTML, like Gecko\) Version\/[^\s]+ (Mobile\/[^\s]+ )?Safari\/[^\s]+$/
+);
+var getIsSafariUA = (ua) => {
+  return isSafariRegex.test(ua);
+};
+var isiOS = (ua) => {
+  return [
+    "iPad Simulator",
+    "iPhone Simulator",
+    "iPod Simulator",
+    "iPad",
+    "iPhone",
+    "iPod"
+  ].includes(ua) || // iPad on iOS 13 detection
+  window && window.document && ua.includes("Mac") && "ontouchend" in window.document;
+};
+var getSafariVersion = (ua) => {
+  const match = [...ua.matchAll(/Version\/([^\s]+)/g)];
+  return match[0][1];
+};
+function waitForPageLoad() {
+  return __async(this, null, function* () {
+    return new Promise((resolve) => {
+      if (window.document.readyState === "complete") {
+        resolve(true);
+      } else {
+        const onLoad = () => {
+          resolve(true);
+          window.removeEventListener("load", onLoad);
+        };
+        window.addEventListener("load", onLoad);
+      }
+    });
+  });
+}
+var pollForProperties = (_0) => __async(null, [_0], function* ({
+  maxTime,
+  properties,
+  interval
+}) {
+  let elapsed = 0;
+  return new Promise((resolve) => {
+    const intervalId = setInterval(() => {
+      elapsed += interval;
+      for (const property of properties) {
+        if (property in window) {
+          clearInterval(intervalId);
+          resolve(true);
+          return;
+        }
+      }
+      if (elapsed >= maxTime) {
+        clearInterval(intervalId);
+        resolve(false);
+      }
+    }, interval);
+  });
+});
+
+// src/detectTelegram.ts
+var getIsTelegram = () => {
+  return "TelegramWebview" in window || // Android
+  "TelegramWebviewProxy" in window || // iPhone
+  "TelegramWebviewProxyProto" in window;
+};
+
+// src/detectClientSide.ts
+var appNameCustom = {
+  telegram: {
+    name: "Telegram"
+  }
+};
+var getDetectClientSide = () => {
+  if (typeof window === "undefined") return;
+  if (getIsTelegram()) return "telegram";
+  return;
+};
+var appKeysDetectByCustom = Object.keys(
+  appNameCustom
+);
+
+// src/regexAppName.ts
+var appNameRegExps = {
+  messenger: {
+    regex: /(\bFB[\w_]+\/(Messenger))|(^(?!.*\buseragents)(?!.*\bIABMV).*(FB_IAB|FBAN).*)/i,
+    // Experimental for newer UAs - don't have `"useragents:" or end in "IABMV"
+    name: "Facebook Messenger"
+  },
+  instagram: {
+    regex: /\bInstagram/i,
+    name: "Instagram"
+  },
+  facebook: {
+    regex: /\bFB[\w_]+\/|\bFacebook/i,
+    name: "Facebook"
+  },
+  twitter: {
+    regex: /\bTwitter/i,
+    name: "Twitter"
+  },
+  line: {
+    regex: /\bLine\//i,
+    name: "Line"
+  },
+  wechat: {
+    regex: /\bMicroMessenger\//i,
+    name: "WeChat"
+  },
+  threads: {
+    regex: /\bBarcelona/i,
+    name: "Threads"
+  },
+  tiktok: {
+    regex: /musical_ly|Bytedance/i,
+    name: "TikTok"
+  },
+  snapchat: {
+    regex: /Snapchat/i,
+    name: "Snapchat"
+  },
+  linkedin: {
+    regex: /LinkedInApp/i,
+    name: "LinkedIn"
+  },
+  gsa: {
+    regex: /GSA/i,
+    name: "Google Search App"
+  },
+  whatsapp: {
+    regex: /\b(WAiOS|WA4A)\//i,
+    name: "WhatsApp"
+  },
+  reddit: {
+    regex: /\bReddit\//i,
+    name: "Reddit"
+  }
+};
+var appKeysDetectByUA = Object.keys(
+  appNameRegExps
+);
+var getAppKey = (ua) => {
+  return appKeysDetectByUA.find(
+    (appName) => appNameRegExps[appName].regex.test(ua)
+  );
+};
+
+// src/regexInApp.ts
+var inAppRegExps = [
+  "WebView",
+  // Apple devices but not with "Safari/" following
+  "(iPhone|iPod|iPad)(?!.*Safari/)",
+  // Android webview
+  "Android.*wv\\)"
+];
+var inappRegex = new RegExp(
+  `${inAppRegExps.map((reg) => `(${reg})`).join("|")}`,
+  "i"
+);
+
+// src/detectSafariPrivate.ts
+var currentSafariTest = () => __async(null, null, function* () {
+  try {
+    yield navigator.storage.getDirectory();
+    return false;
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    return msg.toLowerCase().includes("unknown transient reason");
+  }
+});
+var safari13to18Test = () => {
+  let settled = false;
+  return new Promise((resolve) => {
+    const name = `idb${Math.random()}`;
+    const openReq = indexedDB.open(name, 1);
+    const finish = (isPrivate, db) => {
+      if (settled) return;
+      settled = true;
+      if (db) db.close();
+      indexedDB.deleteDatabase(name);
+      resolve(isPrivate);
+    };
+    openReq.onupgradeneeded = (ev) => {
+      const db = ev.target.result;
+      const putReq = db.createObjectStore("t", { autoIncrement: true }).put(new Blob());
+      putReq.onerror = (event) => {
+        var _a;
+        const req = event.target;
+        const message = ((_a = req.error) == null ? void 0 : _a.message) || "";
+        finish(message.includes("are not yet supported"), db);
+      };
+      putReq.onsuccess = () => finish(false, db);
+    };
+    openReq.onerror = () => finish(false);
+    openReq.onsuccess = () => finish(false, openReq.result);
+  });
+};
+var getIsSafariPrivate = () => __async(null, null, function* () {
+  var _a;
+  if (typeof navigator === "undefined") return false;
+  if (((_a = navigator.storage) == null ? void 0 : _a.getDirectory) !== void 0) {
+    return yield currentSafariTest();
+  } else if (navigator.maxTouchPoints !== void 0) {
+    return yield safari13to18Test();
+  }
+  return false;
+});
+
+// src/detectSFSVC.ts
+var compare = (a, b) => {
+  return a.localeCompare(b, void 0, { numeric: true, sensitivity: "base" });
+};
+var consoleDebug = ({
+  note,
+  debug,
+  last
+}) => {
+  if (debug) {
+    console.log(
+      note,
+      "SchemaDataExtractor" in window || "MicrodataExtractor" in window ? "This is Safari" : last ? "Did not detect Safari - assuming SFSVC" : "Still checking if Safari",
+      performance.now()
+    );
+  }
+};
+var minSafariVersion = "17";
+var getSFSVCExperimental = (..._0) => __async(null, [..._0], function* ({
+  debug = false,
+  maxVersion,
+  maxTime = 300
+  // Max time to figure out if it is Safari (ie not SFSVC)
+} = {}) {
+  const ua = getUA();
+  if (!ua) return false;
+  if (!isiOS(ua)) return false;
+  if (!getIsSafariUA(ua)) return false;
+  if ("clearAppBadge" in ((window == null ? void 0 : window.navigator) || {})) return false;
+  if (getIsTelegram()) return false;
+  const version = getSafariVersion(ua);
+  if (compare(version, minSafariVersion) < 0) return false;
+  if (maxVersion !== void 0 && (compare(maxVersion, minSafariVersion) < 0 || compare(version, maxVersion) > 0))
+    return false;
+  if (compare(version, "26.4") >= 0) {
+    return !("browser" in window) || !window.browser;
+  }
+  const isSafariPrivate = yield getIsSafariPrivate();
+  if (isSafariPrivate) return false;
+  yield waitForPageLoad();
+  if (debug) consoleDebug({ note: "Page loaded", debug });
+  const isSafari = yield pollForProperties({
+    interval: 60,
+    maxTime,
+    properties: ["SchemaDataExtractor", "MicrodataExtractor"]
+  });
+  if (debug) consoleDebug({ note: "Extra polling done", debug, last: true });
+  return !isSafari;
+});
+
+// src/index.ts
+var InAppSpy = (options = {}) => {
+  var _a, _b;
+  const { skip, ua = "" } = options;
+  const userAgent = ua || getUA();
+  if (!userAgent)
+    return __spreadProps(__spreadValues({}, empty), {
+      ua: userAgent
+    });
+  const skipFn = (key) => checkSkip({ skip, appKey: key, ua: userAgent });
+  const uaAppKey = getAppKey(userAgent);
+  if (uaAppKey || userAgent.match(inappRegex) !== null) {
+    if (skipFn(uaAppKey)) return __spreadProps(__spreadValues({}, empty), { ua: userAgent, skipped: true });
+    return {
+      isInApp: true,
+      appKey: uaAppKey,
+      appName: uaAppKey ? appNameRegExps[uaAppKey].name : void 0,
+      ua: userAgent,
+      skipped: false
+    };
+  }
+  const clientAppKey = getDetectClientSide();
+  if (clientAppKey) {
+    if (skipFn(clientAppKey)) return __spreadProps(__spreadValues({}, empty), { ua: userAgent, skipped: true });
+    return {
+      isInApp: true,
+      appKey: clientAppKey,
+      appName: (_b = (_a = appNameCustom) == null ? void 0 : _a[clientAppKey]) == null ? void 0 : _b.name,
+      ua: userAgent,
+      skipped: false
+    };
+  }
+  return __spreadProps(__spreadValues({}, empty), {
+    ua: userAgent
+  });
+};
+var SFSVCExperimental = getSFSVCExperimental;
+var index_default = InAppSpy;
+if (typeof window !== "undefined" && false) // removed by dead control flow
+{}
+
+//# sourceMappingURL=index.mjs.map
+
+/***/ }),
+
+/***/ "./node_modules/ismobilejs/esm/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/ismobilejs/esm/index.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _isMobile__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _isMobile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isMobile */ "./node_modules/ismobilejs/esm/isMobile.js");
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ismobilejs/esm/isMobile.js":
+/*!*************************************************!*\
+  !*** ./node_modules/ismobilejs/esm/isMobile.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ isMobile)
+/* harmony export */ });
+var appleIphone = /iPhone/i;
+var appleIpod = /iPod/i;
+var appleTablet = /iPad/i;
+var appleUniversal = /\biOS-universal(?:.+)Mac\b/i;
+var androidPhone = /\bAndroid(?:.+)Mobile\b/i;
+var androidTablet = /Android/i;
+var amazonPhone = /(?:SD4930UR|\bSilk(?:.+)Mobile\b)/i;
+var amazonTablet = /Silk/i;
+var windowsPhone = /Windows Phone/i;
+var windowsTablet = /\bWindows(?:.+)ARM\b/i;
+var otherBlackBerry = /BlackBerry/i;
+var otherBlackBerry10 = /BB10/i;
+var otherOpera = /Opera Mini/i;
+var otherChrome = /\b(CriOS|Chrome)(?:.+)Mobile/i;
+var otherFirefox = /Mobile(?:.+)Firefox\b/i;
+var isAppleTabletOnIos13 = function (navigator) {
+    return (typeof navigator !== 'undefined' &&
+        navigator.platform === 'MacIntel' &&
+        typeof navigator.maxTouchPoints === 'number' &&
+        navigator.maxTouchPoints > 1 &&
+        typeof MSStream === 'undefined');
+};
+function createMatch(userAgent) {
+    return function (regex) { return regex.test(userAgent); };
+}
+function isMobile(param) {
+    var nav = {
+        userAgent: '',
+        platform: '',
+        maxTouchPoints: 0
+    };
+    if (!param && typeof navigator !== 'undefined') {
+        nav = {
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            maxTouchPoints: navigator.maxTouchPoints || 0
+        };
+    }
+    else if (typeof param === 'string') {
+        nav.userAgent = param;
+    }
+    else if (param && param.userAgent) {
+        nav = {
+            userAgent: param.userAgent,
+            platform: param.platform,
+            maxTouchPoints: param.maxTouchPoints || 0
+        };
+    }
+    var userAgent = nav.userAgent;
+    var tmp = userAgent.split('[FBAN');
+    if (typeof tmp[1] !== 'undefined') {
+        userAgent = tmp[0];
+    }
+    tmp = userAgent.split('Twitter');
+    if (typeof tmp[1] !== 'undefined') {
+        userAgent = tmp[0];
+    }
+    var match = createMatch(userAgent);
+    var result = {
+        apple: {
+            phone: match(appleIphone) && !match(windowsPhone),
+            ipod: match(appleIpod),
+            tablet: !match(appleIphone) &&
+                (match(appleTablet) || isAppleTabletOnIos13(nav)) &&
+                !match(windowsPhone),
+            universal: match(appleUniversal),
+            device: (match(appleIphone) ||
+                match(appleIpod) ||
+                match(appleTablet) ||
+                match(appleUniversal) ||
+                isAppleTabletOnIos13(nav)) &&
+                !match(windowsPhone)
+        },
+        amazon: {
+            phone: match(amazonPhone),
+            tablet: !match(amazonPhone) && match(amazonTablet),
+            device: match(amazonPhone) || match(amazonTablet)
+        },
+        android: {
+            phone: (!match(windowsPhone) && match(amazonPhone)) ||
+                (!match(windowsPhone) && match(androidPhone)),
+            tablet: !match(windowsPhone) &&
+                !match(amazonPhone) &&
+                !match(androidPhone) &&
+                (match(amazonTablet) || match(androidTablet)),
+            device: (!match(windowsPhone) &&
+                (match(amazonPhone) ||
+                    match(amazonTablet) ||
+                    match(androidPhone) ||
+                    match(androidTablet))) ||
+                match(/\bokhttp\b/i)
+        },
+        windows: {
+            phone: match(windowsPhone),
+            tablet: match(windowsTablet),
+            device: match(windowsPhone) || match(windowsTablet)
+        },
+        other: {
+            blackberry: match(otherBlackBerry),
+            blackberry10: match(otherBlackBerry10),
+            opera: match(otherOpera),
+            firefox: match(otherFirefox),
+            chrome: match(otherChrome),
+            device: match(otherBlackBerry) ||
+                match(otherBlackBerry10) ||
+                match(otherOpera) ||
+                match(otherFirefox) ||
+                match(otherChrome)
+        },
+        any: false,
+        phone: false,
+        tablet: false
+    };
+    result.any =
+        result.apple.device ||
+            result.android.device ||
+            result.windows.device ||
+            result.other.device;
+    result.phone =
+        result.apple.phone || result.android.phone || result.windows.phone;
+    result.tablet =
+        result.apple.tablet || result.android.tablet || result.windows.tablet;
+    return result;
+}
+//# sourceMappingURL=isMobile.js.map
+
+/***/ }),
+
 /***/ "./node_modules/swiper/modules/a11y.mjs":
 /*!**********************************************!*\
   !*** ./node_modules/swiper/modules/a11y.mjs ***!
@@ -10581,6 +12001,4163 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/vevet/lib/esm/base/Callbacks/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/base/Callbacks/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Callbacks: () => (/* binding */ Callbacks)
+/* harmony export */ });
+/* harmony import */ var _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../internal/noopIfDestroyed */ "./node_modules/vevet/lib/esm/internal/noopIfDestroyed.js");
+/* harmony import */ var _internal_safeAction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../internal/safeAction */ "./node_modules/vevet/lib/esm/internal/safeAction.js");
+/* harmony import */ var _utils_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/common */ "./node_modules/vevet/lib/esm/utils/common/uid.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+
+
+
+
+/**
+ * Manages event callbacks with features like one-time execution, protection, and delays.
+ *
+ * @group Base
+ */
+class Callbacks {
+    constructor(_props = {}) {
+        this._props = _props;
+        /** Whether the instance has been destroyed. */
+        this._isDestroyed = false;
+        /** Storage for registered callbacks. */
+        this._list = [];
+    }
+    /** Returns the list of all registered callbacks. */
+    get list() {
+        return this._list;
+    }
+    /**
+     * Registers a callback for an event.
+     * @param target - Event name to associate the callback with.
+     * @param action - Function to execute on the event.
+     * @param settings - Optional callback settings (e.g., timeout, one-time).
+     * @returns Callback ID and a removal function.
+     */
+    add(target, action, settings = {}) {
+        const id = (0,_utils_common__WEBPACK_IMPORTED_MODULE_2__.uid)('callback');
+        this._list.push(Object.assign(Object.assign({}, settings), { id,
+            target, action: action }));
+        return { id, remove: () => this.remove(id) };
+    }
+    /**
+     * Adds a callback and returns a destructor to remove it.
+     * @param target - Event name to associate the callback with.
+     * @param action - Function to execute on the event.
+     * @param settings - Optional callback settings (e.g., timeout, one-time).
+     * @returns A function to remove the callback.
+     */
+    on(target, action, settings = {}) {
+        const callback = this.add(target, action, settings);
+        return () => {
+            callback.remove();
+        };
+    }
+    /**
+     * Removes a callback by its ID.
+     * @param id - ID of the callback to remove.
+     * @returns `true` if the callback was removed, `false` otherwise.
+     */
+    remove(id) {
+        return this._remove(id);
+    }
+    /**
+     * Removes a callback, with an option to force removal of protected callbacks.
+     * @param callbackId - ID of the callback to remove.
+     * @param canRemoveProtected - Whether to forcibly remove protected callbacks.
+     * @returns `true` if the callback was removed, `false` otherwise.
+     */
+    _remove(callbackId, canRemoveProtected = false) {
+        this._list = this._list.filter((callback) => {
+            if (callback.id !== callbackId) {
+                return true;
+            }
+            if (callback.protected && !canRemoveProtected) {
+                return true;
+            }
+            return false;
+        });
+        const hasCallback = this._list.some(({ id }) => id === callbackId);
+        return !hasCallback;
+    }
+    /** Removes all callbacks, including protected ones. */
+    _removeAll() {
+        while (this._list.length > 0) {
+            this._remove(this._list[0].id, true);
+        }
+    }
+    /**
+     * Executes a callback and removes it if marked as `isOnce`.
+     * @param callback - Callback to execute.
+     * @param parameter - Argument to pass to the callback.
+     */
+    _callAction(_a, parameter) {
+        var { id, timeout, action } = _a, callback = __rest(_a, ["id", "timeout", "action"]);
+        const { ctx } = this._props;
+        if (timeout) {
+            setTimeout(() => (0,_internal_safeAction__WEBPACK_IMPORTED_MODULE_1__.safeAction)(() => action(parameter, ctx)), timeout);
+        }
+        else {
+            (0,_internal_safeAction__WEBPACK_IMPORTED_MODULE_1__.safeAction)(() => action(parameter, ctx));
+        }
+        if (callback.once) {
+            this._remove(id, true);
+        }
+    }
+    /**
+     * Triggers all callbacks for a given event.
+     * @param target - Event name to trigger.
+     * @param arg - Argument to pass to the callbacks.
+     */
+    emit(target, arg) {
+        this._list.forEach((callback) => {
+            if (callback.target === target) {
+                this._callAction(callback, arg);
+            }
+        });
+    }
+    /** Removes all registered callbacks. */
+    destroy() {
+        this._removeAll();
+        this._isDestroyed = true;
+    }
+}
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_0__.noopIfDestroyed
+], Callbacks.prototype, "add", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_0__.noopIfDestroyed
+], Callbacks.prototype, "on", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_0__.noopIfDestroyed
+], Callbacks.prototype, "remove", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_0__.noopIfDestroyed
+], Callbacks.prototype, "emit", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_0__.noopIfDestroyed
+], Callbacks.prototype, "destroy", null);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/base/Module/index.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/base/Module/index.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Module: () => (/* binding */ Module)
+/* harmony export */ });
+/* harmony import */ var _global_initVevet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../global/initVevet */ "./node_modules/vevet/lib/esm/global/initVevet.js");
+/* harmony import */ var _internal_cn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../internal/cn */ "./node_modules/vevet/lib/esm/internal/cn.js");
+/* harmony import */ var _internal_mergeWithNoUndefined__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../internal/mergeWithNoUndefined */ "./node_modules/vevet/lib/esm/internal/mergeWithNoUndefined.js");
+/* harmony import */ var _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../internal/noopIfDestroyed */ "./node_modules/vevet/lib/esm/internal/noopIfDestroyed.js");
+/* harmony import */ var _Callbacks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Callbacks */ "./node_modules/vevet/lib/esm/base/Callbacks/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+// todo: jsdoc
+
+/**
+ * A base class for modules that handle responsive properties, event listeners, and custom callbacks.
+ *
+ * @group Base
+ */
+class Module {
+    /** Get default static props */
+    _getStatic() {
+        return { __staticProp: true };
+    }
+    /** Set default mutable props */
+    _getMutable() {
+        return { __mutableProp: true };
+    }
+    /**
+     * Current properties. Do not mutate these directly, use {@linkcode updateProps} instead.
+     */
+    get props() {
+        return this._props;
+    }
+    /** Optional prefix for classnames used by the module */
+    get prefix() {
+        return (0,_global_initVevet__WEBPACK_IMPORTED_MODULE_0__.initVevet)().prefix;
+    }
+    /** The name of the module, derived from the class name */
+    get name() {
+        return this.constructor.name;
+    }
+    /**
+     * Checks if the module has been destroyed.
+     */
+    get isDestroyed() {
+        return this._isDestroyed;
+    }
+    /**
+     * Retrieves the module's callbacks instance.
+     */
+    get callbacks() {
+        return this._callbacks;
+    }
+    /**
+     * Creates a new instance of the Module class.
+     */
+    constructor(props, onCallbacksProp) {
+        /** Tracks whether the module has been destroyed */
+        this._isDestroyed = false;
+        /** Stores actions that need to be executed when the module is destroyed */
+        this._destroyable = [];
+        this._callbacks = new _Callbacks__WEBPACK_IMPORTED_MODULE_4__.Callbacks({ ctx: this });
+        this._props = (0,_internal_mergeWithNoUndefined__WEBPACK_IMPORTED_MODULE_2__.mergeWithNoUndefined)(Object.assign(Object.assign({}, this._getStatic()), this._getMutable()), Object.assign({}, props));
+        // Initialize callbacks
+        const onCallbacks = Object.assign(Object.assign({}, props), onCallbacksProp);
+        if (onCallbacks) {
+            const callbacksProps = Object.keys(onCallbacks).filter((key) => key.startsWith('on') &&
+                typeof onCallbacks[key] === 'function');
+            callbacksProps.forEach((key) => {
+                let target = key.slice(2);
+                target = target.charAt(0).toLowerCase() + target.slice(1);
+                this._callbacks.on(target, onCallbacks[key]);
+            });
+        }
+    }
+    /**
+     * Method that is called when the module's properties mutate. In most cases, used to handle callbacks.
+     */
+    _handleProps(diff) {
+        this.callbacks.emit('props', diff);
+    }
+    /** Change module's mutable properties */
+    updateProps(props) {
+        const prevProps = Object.assign({}, this._props);
+        const keys = Object.keys(this.props);
+        this._props = Object.assign(Object.assign({}, this._props), props);
+        const diff = {};
+        keys.forEach((key) => {
+            // @ts-ignore
+            const prevValue = prevProps[key];
+            // @ts-ignore
+            const newValue = this._props[key];
+            if (prevValue !== newValue) {
+                diff[key] = newValue;
+            }
+        });
+        this._handleProps(diff);
+    }
+    /**
+     * Adds a callback on the module's destruction.
+     *
+     * @param action - The function to execute during destruction.
+     */
+    onDestroy(action) {
+        if (this.isDestroyed) {
+            action();
+            return;
+        }
+        this._destroyable.push(action);
+    }
+    /**
+     * Adds a custom callback to the module.
+     *
+     * @param target - The event type to listen for (e.g., 'props', 'destroy').
+     * @param listener - The function to execute when the event is triggered.
+     * @param settings - Additional settings for the callback.
+     */
+    on(target, listener, settings = {}) {
+        return this.callbacks.on(target, listener, settings);
+    }
+    /**
+     * Helper function to generate classnames with the module's prefix.
+     *
+     * @param classNames - The class names to generate.
+     * @returns A string of class names with the module's prefix applied.
+     */
+    _cn(...classNames) {
+        return classNames.map((value) => `${this.prefix}${value}`).join(' ');
+    }
+    /**
+     * Adds a class name on an element, and keeps track of it for removal when the module is destroyed.
+     *
+     * @param element - The target DOM element.
+     * @param className - The class name to toggle.
+     */
+    _addTempClassName(element, className) {
+        const isAlreadyExists = (0,_internal_cn__WEBPACK_IMPORTED_MODULE_1__.cnHas)(element, className);
+        if (!isAlreadyExists) {
+            (0,_internal_cn__WEBPACK_IMPORTED_MODULE_1__.cnAdd)(element, className);
+            this.onDestroy(() => (0,_internal_cn__WEBPACK_IMPORTED_MODULE_1__.cnRemove)(element, className));
+        }
+    }
+    /**
+     * Destroys the module, cleaning up resources, callbacks, and event listeners.
+     */
+    destroy() {
+        this._destroy();
+    }
+    /**
+     * Internal method to handle the destruction of the module.
+     * It removes all callbacks, destroys properties, and cleans up event listeners and class names.
+     */
+    _destroy() {
+        this._callbacks.emit('destroy', undefined);
+        this._callbacks.destroy();
+        this._destroyable.forEach((action) => action());
+        this._isDestroyed = true;
+    }
+}
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_3__.noopIfDestroyed
+], Module.prototype, "updateProps", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_3__.noopIfDestroyed
+], Module.prototype, "on", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_3__.noopIfDestroyed
+], Module.prototype, "destroy", null);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Pointers/index.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Pointers/index.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Pointers: () => (/* binding */ Pointers)
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../base */ "./node_modules/vevet/lib/esm/base/Module/index.js");
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+/* harmony import */ var _internal_isNumber__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../internal/isNumber */ "./node_modules/vevet/lib/esm/internal/isNumber.js");
+/* harmony import */ var _internal_unwrapAngle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../internal/unwrapAngle */ "./node_modules/vevet/lib/esm/internal/unwrapAngle.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils */ "./node_modules/vevet/lib/esm/utils/math/clamp.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils */ "./node_modules/vevet/lib/esm/utils/listeners/addEventListener.js");
+/* harmony import */ var _props__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./props */ "./node_modules/vevet/lib/esm/components/Pointers/props.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styles */ "./node_modules/vevet/lib/esm/components/Pointers/styles.js");
+
+
+
+
+
+
+
+
+/**
+ * Manages pointer events, including tracking multiple pointers,
+ * and emitting callbacks for pointer interactions.
+ *
+ * For proper functionality, ensure the container has an appropriate
+ * [touch-action](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
+ *
+ * [Documentation](https://vevetjs.com/docs/Pointers)
+ *
+ * @group Components
+ */
+class Pointers extends _base__WEBPACK_IMPORTED_MODULE_0__.Module {
+    /**
+     * Returns the default static properties.
+     */
+    _getStatic() {
+        return Object.assign(Object.assign({}, super._getStatic()), _props__WEBPACK_IMPORTED_MODULE_6__.STATIC_PROPS);
+    }
+    /**
+     * Returns the default mutable properties.
+     */
+    _getMutable() {
+        return Object.assign(Object.assign({}, super._getMutable()), _props__WEBPACK_IMPORTED_MODULE_6__.MUTABLE_PROPS);
+    }
+    constructor(props, onCallbacks) {
+        super(props, onCallbacks);
+        /**
+         * Stores active event listeners for runtime interactions.
+         */
+        this._listeners = [];
+        /** Indicates whether the `start` event has been triggered. */
+        this._isStarted = false;
+        /** Save minPointers value */
+        this._saveMinPointers = 1;
+        /** Move data. */
+        this._moveData = null;
+        /** Whether a microtask `move` emit is scheduled. */
+        this._moveScheduled = false;
+        /** Angle data */
+        this._angle = { raw: 0, unwrapped: 0, unwrappedStart: 0 };
+        // Defaults
+        this._pointersMap = new Map();
+        // Setup base events
+        this._setBaseEvents();
+    }
+    /** Indicates whether the `start` event has been triggered. */
+    get isStarted() {
+        return this._isStarted;
+    }
+    /** Returns the map of active pointers. */
+    get pointersMap() {
+        return this._pointersMap;
+    }
+    /** Returns the container element handling events. */
+    get container() {
+        return this.props.container;
+    }
+    /** Move data */
+    get move() {
+        return this._moveData;
+    }
+    /** Get buttons */
+    _getButtons(type) {
+        const { buttons } = this.props;
+        return Array.isArray(buttons) ? buttons : buttons(type);
+    }
+    /** Get max pointers */
+    _getMinPointers(type) {
+        const { minPointers } = this.props;
+        return (0,_utils__WEBPACK_IMPORTED_MODULE_4__.clamp)((0,_internal_isNumber__WEBPACK_IMPORTED_MODULE_2__.isNumber)(minPointers) ? minPointers : minPointers(type), 1, Infinity);
+    }
+    /** Get max pointers */
+    _getMaxPointers(type) {
+        const { maxPointers } = this.props;
+        return (0,_utils__WEBPACK_IMPORTED_MODULE_4__.clamp)((0,_internal_isNumber__WEBPACK_IMPORTED_MODULE_2__.isNumber)(maxPointers) ? maxPointers : maxPointers(type), this._getMinPointers(type), Infinity);
+    }
+    /** Normalize pointer event type */
+    _getPointerType(event) {
+        const types = ['mouse', 'touch'];
+        if (types.includes(event.pointerType)) {
+            return event.pointerType;
+        }
+        return 'mouse';
+    }
+    /**
+     * Attaches base event listeners to the container.
+     */
+    _setBaseEvents() {
+        const { container } = this;
+        const pointerdown = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addEventListener)(container, 'pointerdown', (event) => this._handlePointerDown(event));
+        const dragstart = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addEventListener)(container, 'dragstart', (event) => event.preventDefault(), { passive: false });
+        const centralMouseDown = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addEventListener)(container, 'mousedown', (event) => {
+            if (this._getButtons('mouse').includes(1)) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+        const contextmenu = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addEventListener)(container, 'contextmenu', (event) => {
+            if (this._getButtons('mouse').includes(2)) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+        this.onDestroy(() => {
+            pointerdown();
+            dragstart();
+            centralMouseDown();
+            contextmenu();
+        });
+    }
+    /**
+     * Attaches runtime event listeners for active pointer interactions.
+     */
+    _setRuntimeEvents() {
+        const listeners = this._listeners;
+        if (listeners.length > 0) {
+            return;
+        }
+        const pointermove = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addEventListener)(window, 'pointermove', (event) => this._handlePointerMove(event), { passive: false });
+        const pointerup = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addEventListener)(window, 'pointerup', (event) => this._handlePointerUp(event), { passive: false });
+        const pointercancel = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addEventListener)(window, 'pointercancel', () => this._handleCancel(), { passive: false });
+        const blur = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addEventListener)(window, 'blur', () => this._handleCancel());
+        this._listeners = [pointermove, pointerup, pointercancel, blur];
+    }
+    /**
+     * Handles pointer down events (`pointerdown`).
+     * Adds a new pointer if conditions are met and triggers the `pointerdown` callback.
+     */
+    _handlePointerDown(event) {
+        const { props } = this;
+        const { x, y } = this._decodeCoords(event);
+        const pointerType = this._getPointerType(event);
+        const buttons = this._getButtons(pointerType);
+        const minPointers = this._getMinPointers(pointerType);
+        this._saveMinPointers = minPointers;
+        const maxPointers = this._getMaxPointers(pointerType);
+        if (!props.enabled) {
+            return;
+        }
+        // check if button type is allowed
+        if (!buttons.includes(event.button)) {
+            return;
+        }
+        // Check if pointer already exists or no more pointers allowed
+        const hasPointer = this.pointersMap.get(event.pointerId);
+        if (hasPointer || this.pointersMap.size >= maxPointers) {
+            return;
+        }
+        // Add new pointer
+        const pointer = {
+            id: event.pointerId,
+            index: this.pointersMap.size,
+            start: { x, y },
+            prev: { x, y },
+            current: { x, y },
+            diff: { x: 0, y: 0 },
+            step: { x: 0, y: 0 },
+            accum: { x: 0, y: 0 },
+        };
+        this.pointersMap.set(event.pointerId, pointer);
+        // update indices
+        let index = 0;
+        this.pointersMap.forEach((currentPointer) => {
+            currentPointer.index = index;
+            index += 1;
+        });
+        // Start callback
+        if (this.pointersMap.size === minPointers) {
+            this._isStarted = true;
+            this.callbacks.emit('start', undefined);
+        }
+        // Add runtime events
+        this._setRuntimeEvents();
+        // Apply styles to prevent user-select
+        if (props.disableUserSelect) {
+            _internal_env__WEBPACK_IMPORTED_MODULE_1__.body.append(_styles__WEBPACK_IMPORTED_MODULE_7__.styles);
+        }
+        // Trigger start callback
+        this.callbacks.emit('pointerdown', { event, pointer });
+    }
+    /**
+     * Handles pointer movement (`pointermove`).
+     * Updates pointer positions and triggers the `pointermove` callback.
+     */
+    _handlePointerMove(event) {
+        const pointer = this.pointersMap.get(event.pointerId);
+        if (!pointer) {
+            return;
+        }
+        if (!this.props.enabled) {
+            return;
+        }
+        const { x, y } = this._decodeCoords(event);
+        // Update previous and current coordinates
+        pointer.prev = Object.assign({}, pointer.current);
+        pointer.current = { x, y };
+        // Update diff
+        pointer.diff.x = pointer.current.x - pointer.start.x;
+        pointer.diff.y = pointer.current.y - pointer.start.y;
+        // Update step
+        pointer.step.x = pointer.current.x - pointer.prev.x;
+        pointer.step.y = pointer.current.y - pointer.prev.y;
+        // Update total movement
+        pointer.accum.x += Math.abs(pointer.step.x);
+        pointer.accum.y += Math.abs(pointer.step.y);
+        // Trigger 'move' callback with relevant data
+        this.callbacks.emit('pointermove', { event, pointer });
+        if (this._isStarted) {
+            this._updateMove();
+            this._scheduleMove();
+        }
+    }
+    /**
+     * Handles pointer release (`pointerup`).
+     * Removes the pointer and triggers the `pointerup` callback.
+     * If no active pointers remain, fires the `end` callback.
+     */
+    _handlePointerUp(event) {
+        // check if pointer exists
+        const pointer = this.pointersMap.get(event.pointerId);
+        // Get min-pointers
+        const minPointers = this._getMinPointers(this._getPointerType(event));
+        if (!pointer) {
+            return;
+        }
+        // Trigger callbacks
+        this.callbacks.emit('pointerup', { pointer });
+        // delete pointer
+        this.pointersMap.delete(event.pointerId);
+        // end if no pointers left
+        if (this.pointersMap.size < minPointers && this._isStarted) {
+            this._isStarted = false;
+            this._moveData = null;
+            this._angle = { raw: 0, unwrapped: 0, unwrappedStart: 0 };
+            this.callbacks.emit('end', undefined);
+        }
+        // cancel
+        if (this.pointersMap.size === 0) {
+            this._cleanup();
+        }
+    }
+    /**
+     * Handles event cancellations (`pointercancel`, `blur`).
+     * Triggers the `end` callback and cleans up all pointers.
+     */
+    _handleCancel() {
+        this.callbacks.emit('end', undefined);
+        // Trigger callbacks for all pointers
+        this.pointersMap.forEach((pointer) => {
+            this.callbacks.emit('pointerup', { pointer });
+        });
+        this._cleanup();
+    }
+    /**
+     * Prevents text selection during pointer interactions.
+     */
+    _resetSelection() {
+        var _a, _b;
+        (_a = window.getSelection()) === null || _a === void 0 ? void 0 : _a.empty();
+        (_b = window.getSelection()) === null || _b === void 0 ? void 0 : _b.removeAllRanges();
+    }
+    /**
+     * Returns pointer coordinates relative to the container.
+     */
+    _decodeCoords(event) {
+        const { container, props } = this;
+        if (!props.relative) {
+            return { x: event.clientX, y: event.clientY };
+        }
+        const bounding = container.getBoundingClientRect();
+        const x = event.clientX - bounding.left;
+        const y = event.clientY - bounding.top;
+        return { x, y };
+    }
+    /** Update move data */
+    _updateMove() {
+        const pointers = Array.from(this.pointersMap.values()).sort((a, b) => a.index - b.index);
+        const currents = pointers.map(({ current }) => current);
+        const center = this._getAverageCenter(currents);
+        const distance = Math.max(this._getAverageDistance(currents), 0.001);
+        const rawAngle = this._getAngle(currents);
+        if (!this._moveData) {
+            this._angle = {
+                raw: rawAngle,
+                unwrapped: rawAngle,
+                unwrappedStart: rawAngle,
+            };
+            this._moveData = {
+                center,
+                prevCenter: Object.assign({}, center),
+                startCenter: Object.assign({}, center),
+                distance,
+                prevDistance: distance,
+                startDistance: distance,
+                scale: 1,
+                prevScale: 1,
+                angle: 0,
+                prevAngle: 0,
+            };
+            return;
+        }
+        this._moveData.prevCenter = Object.assign({}, this._moveData.center);
+        this._moveData.center = Object.assign({}, center);
+        this._moveData.prevDistance = this._moveData.distance;
+        this._moveData.distance = distance;
+        if (pointers.length >= 2) {
+            this._moveData.prevScale = this._moveData.scale;
+            this._moveData.scale = distance / this._moveData.startDistance;
+            this._angle.unwrapped += (0,_internal_unwrapAngle__WEBPACK_IMPORTED_MODULE_3__.unwrapAngleDelta)(rawAngle, this._angle.raw);
+            this._angle.raw = rawAngle;
+            this._moveData.prevAngle = this._moveData.angle;
+            this._moveData.angle = this._angle.unwrapped - this._angle.unwrappedStart;
+        }
+    }
+    /** Returns the angle between the first two pointers (deg). */
+    _getAngle(points) {
+        if (points.length < 2) {
+            return 0;
+        }
+        const [first, second] = points;
+        return (Math.atan2(second.y - first.y, second.x - first.x) * 180) / Math.PI;
+    }
+    /** Returns the average center position of points. */
+    _getAverageCenter(points) {
+        if (points.length === 1) {
+            return points[0];
+        }
+        const sum = points.reduce((acc, p) => ({
+            x: acc.x + p.x,
+            y: acc.y + p.y,
+        }), { x: 0, y: 0 });
+        return {
+            x: sum.x / points.length,
+            y: sum.y / points.length,
+        };
+    }
+    /** Returns the average distance between points */
+    _getAverageDistance(points) {
+        if (points.length <= 1) {
+            return 0;
+        }
+        const center = this._getAverageCenter(points);
+        const total = points.reduce((sum, p) => sum + Math.hypot(p.x - center.x, p.y - center.y), 0);
+        return total / points.length;
+    }
+    /** Schedules a deduplicated `move` callback for the current microtask. */
+    _scheduleMove() {
+        if (this._moveScheduled) {
+            return;
+        }
+        this._moveScheduled = true;
+        queueMicrotask(() => {
+            this._moveScheduled = false;
+            if (!this._isStarted ||
+                this.pointersMap.size < this._saveMinPointers ||
+                !this._moveData) {
+                return;
+            }
+            this.callbacks.emit('move', this._moveData);
+        });
+    }
+    /**
+     * Cleans up event listeners, pointers, and injected styles.
+     */
+    _cleanup() {
+        this._listeners.forEach((listener) => listener());
+        this._listeners = [];
+        this._isStarted = false;
+        this._moveScheduled = false;
+        this._moveData = null;
+        this._angle = { raw: 0, unwrapped: 0, unwrappedStart: 0 };
+        this.pointersMap.clear();
+        if (this.props.disableUserSelect) {
+            this._resetSelection();
+            _styles__WEBPACK_IMPORTED_MODULE_7__.styles === null || _styles__WEBPACK_IMPORTED_MODULE_7__.styles === void 0 ? void 0 : _styles__WEBPACK_IMPORTED_MODULE_7__.styles.remove();
+        }
+    }
+    /**
+     * Destroys the component and removes all event listeners.
+     */
+    _destroy() {
+        this._cleanup();
+        super._destroy();
+    }
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Pointers/props.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Pointers/props.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MUTABLE_PROPS: () => (/* binding */ MUTABLE_PROPS),
+/* harmony export */   STATIC_PROPS: () => (/* binding */ STATIC_PROPS)
+/* harmony export */ });
+const STATIC_PROPS = {
+    __staticProp: true,
+    container: null,
+    buttons: [0],
+    relative: false,
+    minPointers: 1,
+    maxPointers: 5,
+    disableUserSelect: true,
+};
+const MUTABLE_PROPS = {
+    __mutableProp: true,
+    enabled: true,
+};
+//# sourceMappingURL=props.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Pointers/styles.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Pointers/styles.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   styles: () => (/* binding */ styles)
+/* harmony export */ });
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+
+const styles = _internal_env__WEBPACK_IMPORTED_MODULE_0__.isBrowser ? _internal_env__WEBPACK_IMPORTED_MODULE_0__.doc.createElement('style') : null;
+if (styles) {
+    styles.innerHTML = '* { user-select: none !important; }';
+}
+//# sourceMappingURL=styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Raf/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Raf/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Raf: () => (/* binding */ Raf)
+/* harmony export */ });
+/* harmony import */ var _base_Module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../base/Module */ "./node_modules/vevet/lib/esm/base/Module/index.js");
+/* harmony import */ var _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../internal/noopIfDestroyed */ "./node_modules/vevet/lib/esm/internal/noopIfDestroyed.js");
+/* harmony import */ var _props__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./props */ "./node_modules/vevet/lib/esm/components/Raf/props.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+/**
+ * Manages an animation frame loop with configurable FPS and playback controls.
+ *
+ * [Documentation](https://vevetjs.com/docs/Raf)
+ *
+ * @group Components
+ */
+class Raf extends _base_Module__WEBPACK_IMPORTED_MODULE_0__.Module {
+    /** Get default static properties */
+    _getStatic() {
+        return Object.assign(Object.assign({}, super._getStatic()), _props__WEBPACK_IMPORTED_MODULE_2__.STATIC_PROPS);
+    }
+    /** Get default mutable properties */
+    _getMutable() {
+        return Object.assign(Object.assign({}, super._getMutable()), _props__WEBPACK_IMPORTED_MODULE_2__.MUTABLE_PROPS);
+    }
+    constructor(props, onCallbacks) {
+        super(props, onCallbacks);
+        /** Indicates if the animation frame is currently running */
+        this._isPlaying = false;
+        /** Active requestAnimationFrame ID, or `null` if not running */
+        this._raf = null;
+        /** Timestamp of the last frame */
+        this._lastTimestamp = null;
+        /** Timestamp of the current frame */
+        this._timestamp = null;
+        /** Current frame index */
+        this._index = 0;
+        /** Real-time FPS */
+        this._fps = 60;
+        /** Duration of the last frame in ms */
+        this._duration = 0;
+        // Initialize FPS
+        this._fps = this.props.fps === 'auto' ? this._fps : this.props.fps;
+        // Play on init
+        if (this.props.enabled) {
+            this._play();
+        }
+    }
+    /** Playback state of the animation frame */
+    get isPlaying() {
+        return this._isPlaying;
+    }
+    /** Timestamp of the current frame */
+    get timestamp() {
+        var _a;
+        return (_a = this._timestamp) !== null && _a !== void 0 ? _a : 0;
+    }
+    /** Current frame index */
+    get index() {
+        return this._index;
+    }
+    /** Real-time FPS */
+    get fps() {
+        return this._fps;
+    }
+    /** Duration of the last frame in ms */
+    get duration() {
+        return this._duration;
+    }
+    /** Scaling coefficient based on a 60 FPS target */
+    get fpsFactor() {
+        return 60 / this.fps;
+    }
+    /** Handle property mutations */
+    _handleProps(props) {
+        super._handleProps(props);
+        this._lastTimestamp = null;
+        if (this.props.enabled) {
+            this._play();
+        }
+        else {
+            this._pause();
+        }
+    }
+    /** Start the animation loop */
+    play() {
+        if (this.props.enabled) {
+            return;
+        }
+        this.updateProps({ enabled: true });
+    }
+    /** Internal method to start the loop */
+    _play() {
+        if (this.isPlaying) {
+            return;
+        }
+        this._isPlaying = true;
+        this.callbacks.emit('play', undefined);
+        this.callbacks.emit('toggle', undefined);
+        this._raf = window.requestAnimationFrame(this._animate.bind(this));
+    }
+    /** Pause the animation loop */
+    pause() {
+        if (!this.props.enabled) {
+            return;
+        }
+        this.updateProps({ enabled: false });
+    }
+    /** Internal method to pause the loop */
+    _pause() {
+        if (!this.isPlaying) {
+            return;
+        }
+        if (this._raf) {
+            window.cancelAnimationFrame(this._raf);
+            this._raf = null;
+        }
+        this._isPlaying = false;
+        this.callbacks.emit('pause', undefined);
+        this.callbacks.emit('toggle', undefined);
+    }
+    /** Animation loop handler, calculates FPS, and triggers callbacks */
+    _animate() {
+        var _a, _b;
+        if (!this._isPlaying) {
+            return;
+        }
+        this._raf = window.requestAnimationFrame(this._animate.bind(this));
+        const minFrameDuration = this.props.fps === 'auto' ? 1 : 1000 / this.props.fps;
+        this._timestamp = performance.now();
+        (_a = this._lastTimestamp) !== null && _a !== void 0 ? _a : (this._lastTimestamp = this._timestamp);
+        const duration = this._timestamp - ((_b = this._lastTimestamp) !== null && _b !== void 0 ? _b : this._timestamp);
+        if (duration < minFrameDuration) {
+            return;
+        }
+        this._duration = duration;
+        this._lastTimestamp = this._timestamp;
+        this._index += 1;
+        this._computeFPS();
+        this.callbacks.emit('frame', {
+            fps: this.fps,
+            fpsFactor: this.fpsFactor,
+            duration: this.duration,
+            lerpFactor: this.lerpFactor.bind(this),
+        });
+    }
+    /** Calculate linear interpolation factor to make animations run the same regardless of FPS */
+    lerpFactor(ease) {
+        return 1 - Math.exp(-ease * 60 * (this.duration / 1000));
+    }
+    /** Compute real-time FPS from frame durations */
+    _computeFPS() {
+        const { duration, index, props } = this;
+        if ((index > 10 && index % props.fpsRecalcFrames !== 0) ||
+            duration <= 0 ||
+            duration > 250) {
+            return;
+        }
+        const standardFps = 60;
+        const standardFrameTime = 1000 / standardFps;
+        const fpsMultiplier = standardFrameTime / duration;
+        this._fps = Math.round(60 * fpsMultiplier) || 1;
+    }
+    /** Destroy the animation frame and stop the loop */
+    _destroy() {
+        this.pause();
+        super._destroy();
+    }
+}
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_1__.noopIfDestroyed
+], Raf.prototype, "play", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_1__.noopIfDestroyed
+], Raf.prototype, "pause", null);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Raf/props.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Raf/props.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MUTABLE_PROPS: () => (/* binding */ MUTABLE_PROPS),
+/* harmony export */   STATIC_PROPS: () => (/* binding */ STATIC_PROPS)
+/* harmony export */ });
+const STATIC_PROPS = {
+    __staticProp: true,
+};
+const MUTABLE_PROPS = {
+    __mutableProp: true,
+    fps: 'auto',
+    enabled: false,
+    fpsRecalcFrames: 10,
+};
+//# sourceMappingURL=props.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Scrollbar/index.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Scrollbar/index.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Scrollbar: () => (/* binding */ Scrollbar)
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../base */ "./node_modules/vevet/lib/esm/base/Module/index.js");
+/* harmony import */ var _global_initVevet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../global/initVevet */ "./node_modules/vevet/lib/esm/global/initVevet.js");
+/* harmony import */ var _internal_cn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../internal/cn */ "./node_modules/vevet/lib/esm/internal/cn.js");
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+/* harmony import */ var _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../internal/noopIfDestroyed */ "./node_modules/vevet/lib/esm/internal/noopIfDestroyed.js");
+/* harmony import */ var _internal_textDirection__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../internal/textDirection */ "./node_modules/vevet/lib/esm/internal/textDirection.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils */ "./node_modules/vevet/lib/esm/utils/listeners/addEventListener.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils */ "./node_modules/vevet/lib/esm/utils/math/clamp.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils */ "./node_modules/vevet/lib/esm/utils/common/toPixels.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils */ "./node_modules/vevet/lib/esm/utils/listeners/onResize.js");
+/* harmony import */ var _Swipe__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Swipe */ "./node_modules/vevet/lib/esm/components/Swipe/index.js");
+/* harmony import */ var _props__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./props */ "./node_modules/vevet/lib/esm/components/Scrollbar/props.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./styles */ "./node_modules/vevet/lib/esm/components/Scrollbar/styles.js");
+/* harmony import */ var _utils_isSnap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./utils/isSnap */ "./node_modules/vevet/lib/esm/components/Scrollbar/utils/isSnap.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * A custom scrollbar component. Supports both `window` and `HTMLElement` containers.
+ *
+ * [Documentation](https://vevetjs.com/docs/Scrollbar)
+ *
+ * @group Components
+ */
+class Scrollbar extends _base__WEBPACK_IMPORTED_MODULE_0__.Module {
+    /** Get default static properties */
+    _getStatic() {
+        return Object.assign(Object.assign({}, super._getStatic()), _props__WEBPACK_IMPORTED_MODULE_11__.STATIC_PROPS);
+    }
+    /** Get default mutable properties */
+    _getMutable() {
+        return Object.assign(Object.assign({}, super._getMutable()), _props__WEBPACK_IMPORTED_MODULE_11__.MUTABLE_PROPS);
+    }
+    constructor(props, onCallbacks) {
+        super(props, onCallbacks);
+        /** Save scroll value on swipe start */
+        this._valueOnSwipeStart = 0;
+        /** Previous scroll value */
+        this._prevScrollValue = 0;
+        /** Detects if the container is RTL */
+        this._isRtl = false;
+        // detect features
+        this._isRtl = (0,_internal_textDirection__WEBPACK_IMPORTED_MODULE_5__.getTextDirection)(this.parent) === 'rtl' && this.axis === 'x';
+        // No need to remove styles on destroy
+        (0,_styles__WEBPACK_IMPORTED_MODULE_12__.createScrollbarStyles)(this.prefix);
+        // Create elements
+        this._create();
+        // Set events
+        this._setResize();
+        this._setOnscroll();
+        this._setSwipe();
+        // Initialize
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnAdd)(this.outer, this._cn('_inited'));
+    }
+    get prefix() {
+        return `${(0,_global_initVevet__WEBPACK_IMPORTED_MODULE_1__.initVevet)().prefix}scrollbar`;
+    }
+    /**
+     * Scrollbar outer element
+     */
+    get outer() {
+        return this._outer;
+    }
+    /**
+     * The element to which the scrollbar is applied.
+     */
+    get container() {
+        return this.props.container;
+    }
+    /**
+     * Scrollbar track element (the container of the thumb).
+     */
+    get track() {
+        return this._track;
+    }
+    /**
+     * Scrollbar thumb element (draggable handle).
+     */
+    get thumb() {
+        return this._thumb;
+    }
+    /** Scroll axis */
+    get axis() {
+        return this.props.axis;
+    }
+    /**
+     * The element where the scrollbar is appended.
+     * If `parent` is not set, it defaults to `container` or `document.body` (if applied to `window`).
+     */
+    get parent() {
+        const { parent, container } = this.props;
+        if (parent) {
+            return parent;
+        }
+        if (container instanceof Window) {
+            return _internal_env__WEBPACK_IMPORTED_MODULE_3__.body;
+        }
+        if ((0,_utils_isSnap__WEBPACK_IMPORTED_MODULE_13__.isSnap)(container)) {
+            return container.container;
+        }
+        return container;
+    }
+    /**
+     * The actual scrollable element.
+     * Returns `document.documentElement` for `window`, otherwise the `container` itself.
+     */
+    get scrollElement() {
+        return this.container instanceof Window ? _internal_env__WEBPACK_IMPORTED_MODULE_3__.html : this.container;
+    }
+    /**
+     * Returns the total scroll width/height of the content.
+     */
+    get scrollSize() {
+        const { scrollElement } = this;
+        if ((0,_utils_isSnap__WEBPACK_IMPORTED_MODULE_13__.isSnap)(scrollElement)) {
+            return scrollElement.max - scrollElement.min;
+        }
+        return this.axis === 'x'
+            ? scrollElement.scrollWidth
+            : scrollElement.scrollHeight;
+    }
+    /**
+     * Returns the total scrollable distance.
+     */
+    get scrollableSize() {
+        const { scrollElement } = this;
+        if ((0,_utils_isSnap__WEBPACK_IMPORTED_MODULE_13__.isSnap)(scrollElement)) {
+            return scrollElement.max - scrollElement.min;
+        }
+        return this.axis === 'x'
+            ? this.scrollSize - scrollElement.clientWidth
+            : this.scrollSize - scrollElement.clientHeight;
+    }
+    /**
+     * Returns scrollTop or scrollLeft of the scrollable element.
+     */
+    get scrollValue() {
+        const { axis } = this;
+        if ((0,_utils_isSnap__WEBPACK_IMPORTED_MODULE_13__.isSnap)(this.container)) {
+            return this.container.loopedCurrent;
+        }
+        if (this.container instanceof Window) {
+            return axis === 'x' ? window.scrollX : window.scrollY;
+        }
+        return axis === 'x' ? this.container.scrollLeft : this.container.scrollTop;
+    }
+    /** Returns the current track size. */
+    get trackSize() {
+        return this.axis === 'x'
+            ? this._track.offsetWidth
+            : this._track.offsetHeight;
+    }
+    /** Returns the current thumb size. */
+    get thumbSize() {
+        return this.axis === 'x'
+            ? this._thumb.offsetWidth
+            : this._thumb.offsetHeight;
+    }
+    /** Handles property mutations */
+    _handleProps(props) {
+        super._handleProps(props);
+        this.resize();
+    }
+    /** Create elements */
+    _create() {
+        const isInWindow = this.container instanceof Window;
+        const { scrollElement } = this;
+        this._outer = this._createOuter();
+        this.parent.appendChild(this._outer);
+        this._track = this._createTrack();
+        this._outer.appendChild(this._track);
+        this._thumb = this._createThumb();
+        this._track.appendChild(this._thumb);
+        // Apply global styles
+        if (isInWindow) {
+            this._addTempClassName(_internal_env__WEBPACK_IMPORTED_MODULE_3__.html, this._cn('-scrollable'));
+            this._addTempClassName(_internal_env__WEBPACK_IMPORTED_MODULE_3__.body, this._cn('-scrollable'));
+        }
+        else if (scrollElement instanceof HTMLElement) {
+            this._addTempClassName(scrollElement, this._cn('-scrollable'));
+        }
+        this.onDestroy(() => this._outer.remove());
+    }
+    /** Create outer element */
+    _createOuter() {
+        const cn = this._cn.bind(this);
+        const { props, axis } = this;
+        const element = _internal_env__WEBPACK_IMPORTED_MODULE_3__.doc.createElement('div');
+        element.setAttribute('data-scrollbar', 'true');
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnAdd)(element, cn(''));
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnAdd)(element, cn(`_${axis}`));
+        if (props.class) {
+            (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnAdd)(element, props.class);
+        }
+        if (this.container instanceof Window) {
+            this._addTempClassName(element, this._cn('_in-window'));
+        }
+        if (props.autoHide) {
+            this._addTempClassName(element, this._cn('_auto-hide'));
+        }
+        return element;
+    }
+    /** Create track element */
+    _createTrack() {
+        const cn = this._cn.bind(this);
+        const { axis } = this;
+        const element = _internal_env__WEBPACK_IMPORTED_MODULE_3__.doc.createElement('div');
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnAdd)(element, cn('__track'));
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnAdd)(element, cn(`__track_${axis}`));
+        return element;
+    }
+    /** Create thumb element */
+    _createThumb() {
+        const cn = this._cn.bind(this);
+        const element = _internal_env__WEBPACK_IMPORTED_MODULE_3__.doc.createElement('div');
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnAdd)(element, cn('__thumb'));
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnAdd)(element, cn(`__thumb_${this.axis}`));
+        return element;
+    }
+    /** Set resize events */
+    _setResize() {
+        const { scrollElement } = this;
+        // Snap
+        if ((0,_utils_isSnap__WEBPACK_IMPORTED_MODULE_13__.isSnap)(scrollElement)) {
+            const destruct = scrollElement.on('resize', () => this.resize());
+            this.onDestroy(() => destruct());
+            return;
+        }
+        // DOM
+        const createResizeHandler = () => {
+            const children = Array.from(scrollElement.children);
+            return (0,_utils__WEBPACK_IMPORTED_MODULE_9__.onResize)({
+                element: [this.track, this.parent, scrollElement, ...children],
+                viewportTarget: 'width',
+                resizeDebounce: this.props.resizeDebounce,
+                callback: () => this.resize(),
+            });
+        };
+        let resizeHandler = createResizeHandler();
+        resizeHandler.resize();
+        const childrenObserver = new MutationObserver(() => {
+            resizeHandler.remove();
+            resizeHandler = createResizeHandler();
+            resizeHandler.debounceResize();
+        });
+        childrenObserver.observe(scrollElement, { childList: true });
+        this.onDestroy(() => {
+            resizeHandler.remove();
+            childrenObserver.disconnect();
+        });
+    }
+    /** Set scroll events */
+    _setOnscroll() {
+        const { container } = this;
+        if ((0,_utils_isSnap__WEBPACK_IMPORTED_MODULE_13__.isSnap)(container)) {
+            const destruct = container.on('update', () => this._onScroll());
+            this.onDestroy(() => destruct());
+            return;
+        }
+        const handler = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.addEventListener)(container, 'scroll', () => this._onScroll(), { passive: true });
+        this.onDestroy(() => handler());
+    }
+    /** Set swipe events */
+    _setSwipe() {
+        if (!this.props.draggable) {
+            return;
+        }
+        const swipe = new _Swipe__WEBPACK_IMPORTED_MODULE_10__.Swipe({ container: this.thumb, grabCursor: true });
+        swipe.on('start', (coord) => this._handleSwipeStart(coord));
+        swipe.on('move', (coord) => this._handleSwipeMove(coord));
+        swipe.on('end', (coord) => this._handleSwipeEnd(coord));
+        swipe.on('touchmove', (event) => this._handleSwipeTouchMove(event));
+        swipe.on('mousemove', (event) => this._handleSwipeMouseMove(event));
+        this.onDestroy(() => swipe.destroy());
+    }
+    /** Handles swipe start */
+    _handleSwipeStart(coords) {
+        const { container } = this;
+        if ((0,_utils_isSnap__WEBPACK_IMPORTED_MODULE_13__.isSnap)(container)) {
+            this._valueOnSwipeStart = container.target;
+        }
+        else {
+            this._valueOnSwipeStart = this.scrollValue;
+        }
+        this.callbacks.emit('swipeStart', coords);
+    }
+    /** Handle swipe move */
+    _handleSwipeMove(coords) {
+        this._onSwipeMove(coords);
+        this.callbacks.emit('swipe', coords);
+    }
+    /** Handle swipe end */
+    _handleSwipeEnd(coords) {
+        this.callbacks.emit('swipeEnd', coords);
+    }
+    /** Handle swipe touchmove */
+    _handleSwipeTouchMove(event) {
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+    }
+    /** Handle swipe mousemove */
+    _handleSwipeMouseMove(event) {
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+    }
+    /** Resize the scrollbar. */
+    resize() {
+        const { scrollableSize, scrollSize, outer, track, thumb, props, axis } = this;
+        const { autoSize: shouldAutoSize } = props;
+        const isHorizontal = axis === 'x';
+        // Define if the scrollbar is empty
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnToggle)(outer, this._cn('_empty'), scrollableSize === 0);
+        // Save sizes
+        const trackSize = isHorizontal ? track.offsetWidth : track.offsetHeight;
+        // Calculate minimum thumb size
+        const minThumbSize = (0,_utils__WEBPACK_IMPORTED_MODULE_8__.toPixels)(props.minSize);
+        let newThumbSize = minThumbSize;
+        // Calculate thumb sizes if auto-size is enabled
+        if (shouldAutoSize) {
+            newThumbSize = (0,_utils__WEBPACK_IMPORTED_MODULE_7__.clamp)(trackSize / (scrollSize / trackSize), minThumbSize, Infinity);
+        }
+        // Apply sizes
+        const { style } = thumb;
+        if (isHorizontal) {
+            style.width = `${newThumbSize}px`;
+        }
+        else {
+            style.height = `${newThumbSize}px`;
+        }
+        // Reset timeouts
+        if (this._addInActionTimeout) {
+            clearTimeout(this._addInActionTimeout);
+        }
+        // Render the scrollbar
+        this._render();
+        // Emit callbacks
+        this.callbacks.emit('resize', undefined);
+    }
+    /** Render the scrollbar. */
+    _render() {
+        const { scrollValue, scrollableSize, axis, thumbSize, trackSize } = this;
+        const isRtl = this._isRtl;
+        const normalizedScrollValue = isRtl ? Math.abs(scrollValue) : scrollValue;
+        let scrollProgress = (0,_utils__WEBPACK_IMPORTED_MODULE_7__.clamp)(normalizedScrollValue / scrollableSize);
+        if (isRtl) {
+            scrollProgress = 1 - scrollProgress;
+        }
+        const translate = (trackSize - thumbSize) * scrollProgress;
+        const x = axis === 'x' ? translate : 0;
+        const y = axis === 'y' ? translate : 0;
+        this._thumb.style.transform = `translate(${x}px, ${y}px)`;
+        // Emit callbacks
+        this.callbacks.emit('update', undefined);
+    }
+    /** Handle scroll update */
+    _onScroll() {
+        const { scrollValue, outer } = this;
+        const inActionClass = this._cn('_in-action');
+        if (scrollValue !== this._prevScrollValue) {
+            this._addInActionTimeout = setTimeout(() => {
+                if (!(0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnHas)(outer, inActionClass)) {
+                    (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnAdd)(outer, inActionClass);
+                    this.callbacks.emit('show', undefined);
+                }
+            }, 50);
+        }
+        else {
+            this._prevScrollValue = scrollValue;
+        }
+        this._render();
+        if (this._removeInActionTimeout) {
+            clearTimeout(this._removeInActionTimeout);
+        }
+        this._removeInActionTimeout = setTimeout(() => {
+            (0,_internal_cn__WEBPACK_IMPORTED_MODULE_2__.cnRemove)(outer, inActionClass);
+            this.callbacks.emit('hide', undefined);
+        }, 500);
+    }
+    /** Handle swipe move */
+    _onSwipeMove(data) {
+        const { scrollElement, axis, trackSize, thumbSize, scrollableSize } = this;
+        const valueOnStart = this._valueOnSwipeStart;
+        const diff = axis === 'x' ? data.diff.x : data.diff.y;
+        let iterator = (diff / (trackSize - thumbSize)) * scrollableSize;
+        if ((0,_utils_isSnap__WEBPACK_IMPORTED_MODULE_13__.isSnap)(scrollElement)) {
+            iterator = this._isRtl ? -iterator : iterator;
+            const { min, max } = scrollElement;
+            const trackLength = scrollElement.max - scrollElement.min;
+            const loopCount = scrollElement.props.loop ? scrollElement.loopCount : 0;
+            const target = (0,_utils__WEBPACK_IMPORTED_MODULE_7__.clamp)(valueOnStart + iterator, min + trackLength * loopCount, max + trackLength * loopCount);
+            scrollElement.setTarget(target);
+        }
+        else {
+            const target = valueOnStart + iterator;
+            scrollElement.scrollTo({
+                top: axis === 'y' ? target : undefined,
+                left: axis === 'x' ? target : undefined,
+                behavior: 'instant',
+            });
+        }
+    }
+    /**
+     * Destroys the component and cleans up resources.
+     */
+    _destroy() {
+        super._destroy();
+        if (this._addInActionTimeout) {
+            clearTimeout(this._addInActionTimeout);
+        }
+        if (this._removeInActionTimeout) {
+            clearTimeout(this._removeInActionTimeout);
+        }
+    }
+}
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_4__.noopIfDestroyed
+], Scrollbar.prototype, "resize", null);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Scrollbar/props.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Scrollbar/props.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MUTABLE_PROPS: () => (/* binding */ MUTABLE_PROPS),
+/* harmony export */   STATIC_PROPS: () => (/* binding */ STATIC_PROPS)
+/* harmony export */ });
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+
+const STATIC_PROPS = {
+    __staticProp: true,
+    container: _internal_env__WEBPACK_IMPORTED_MODULE_0__.isBrowser ? window : null,
+    parent: false,
+    class: false,
+    axis: 'y',
+    draggable: true,
+    autoHide: true,
+    resizeDebounce: 50,
+};
+const MUTABLE_PROPS = {
+    __mutableProp: true,
+    minSize: 50,
+    autoSize: true,
+};
+//# sourceMappingURL=props.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Scrollbar/styles.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Scrollbar/styles.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createScrollbarStyles: () => (/* binding */ createScrollbarStyles)
+/* harmony export */ });
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+/* harmony import */ var _internal_prependStyles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../internal/prependStyles */ "./node_modules/vevet/lib/esm/internal/prependStyles.js");
+
+
+let style = null;
+function createScrollbarStyles(prefix) {
+    if (style) {
+        return style;
+    }
+    style = _internal_env__WEBPACK_IMPORTED_MODULE_0__.doc.createElement('style');
+    (0,_internal_prependStyles__WEBPACK_IMPORTED_MODULE_1__.prependStyles)(style);
+    style.innerHTML = `
+    .${prefix}-scrollable {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .${prefix}-scrollable::-webkit-scrollbar {
+      display: none;
+      appearance: none;
+      width: 0;
+      height: 0;
+    }
+
+    .${prefix} {
+      position: absolute;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s linear, visibility 0.25s linear;
+    }
+
+    .${prefix}.${prefix}_in-window {
+      position: fixed;
+      z-index: 9;
+    }
+
+    .${prefix}.${prefix}_inited {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .${prefix}.${prefix}_empty {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .${prefix}.${prefix}_auto-hide {
+      opacity: 0;
+    }
+
+    .${prefix}.${prefix}_auto-hide:hover,
+    .${prefix}.${prefix}_auto-hide:active,
+    .${prefix}.${prefix}_in-action {
+      opacity: 1;
+    }
+
+    .${prefix}_y {
+      top: 0;
+      right: 0;
+      width: 10px;
+      height: 100%;
+    }
+
+    .${prefix}_x {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 10px;
+    }
+
+    .${prefix}__track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #ccc;
+    }
+
+    .${prefix}__thumb {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #333;
+    }
+  `;
+    return style;
+}
+//# sourceMappingURL=styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Scrollbar/utils/isSnap.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Scrollbar/utils/isSnap.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isSnap: () => (/* binding */ isSnap)
+/* harmony export */ });
+function isSnap(instance) {
+    return (typeof instance === 'object' &&
+        instance !== null &&
+        'slides' in instance &&
+        'toCoord' in instance);
+}
+//# sourceMappingURL=isSnap.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Swipe/Coords/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Swipe/Coords/index.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SwipeCoords: () => (/* binding */ SwipeCoords)
+/* harmony export */ });
+/* harmony import */ var _global_initVevet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../global/initVevet */ "./node_modules/vevet/lib/esm/global/initVevet.js");
+/* harmony import */ var _internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../internal/isFiniteNumber */ "./node_modules/vevet/lib/esm/internal/isFiniteNumber.js");
+/* harmony import */ var _internal_unwrapAngle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../internal/unwrapAngle */ "./node_modules/vevet/lib/esm/internal/unwrapAngle.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utils */ "./node_modules/vevet/lib/esm/utils/common/closest.js");
+
+
+
+
+const START_VEC3 = { x: 0, y: 0, angle: 0 };
+const START_STATE = Object.assign(Object.assign({}, START_VEC3), { time: 0 });
+class SwipeCoords {
+    constructor(ctx) {
+        this.ctx = ctx;
+        /** Event timestamp. */
+        this._timestamp = 0;
+        /** Start position. */
+        this._start = Object.assign({}, START_STATE);
+        /** Previous position. */
+        this._prev = Object.assign({}, START_STATE);
+        /** Current position. */
+        this._current = Object.assign({}, START_STATE);
+        /** Movement offset from start. */
+        this._diff = Object.assign({}, START_STATE);
+        /** Movement offset from previous position. */
+        this._step = Object.assign({}, START_STATE);
+        /** Total accumulated movement since swipe start. */
+        this._accum = Object.assign({}, START_VEC3);
+        /** Movement with rubber and snap applied (movement space). */
+        this._movement = Object.assign({}, START_VEC3);
+        /** Previous movement with rubber and snap applied (movement space). */
+        this._prevMovement = Object.assign({}, START_VEC3);
+        /** Raw accumulated displacement (before rubber). */
+        this._rawMovement = Object.assign({}, START_VEC3);
+        /** Raw atan2 angle and unwrapped cumulative angle. */
+        this._tempAngle = { raw: 0, unwrapped: 0 };
+        /** Active snap target per axis, if any. */
+        this._snap = {};
+        /** Cached normalized bounds (refreshed on swipe start). */
+        this._bounds = null;
+        /** Current scale modifier. */
+        this._scale = 1;
+    }
+    get timestamp() {
+        return this._timestamp;
+    }
+    get start() {
+        return this._start;
+    }
+    get prev() {
+        return this._prev;
+    }
+    get current() {
+        return this._current;
+    }
+    get diff() {
+        return this._diff;
+    }
+    get step() {
+        return this._step;
+    }
+    get accum() {
+        return this._accum;
+    }
+    /** Displacement in movement space (rubber + snap). */
+    get movement() {
+        return this._movement;
+    }
+    set movement(value) {
+        const newValue = Object.assign(Object.assign({}, this.movement), value);
+        this._movement.x = newValue.x;
+        this._movement.y = newValue.y;
+        this._movement.angle = newValue.angle;
+        this._rawMovement.x = newValue.x;
+        this._rawMovement.y = newValue.y;
+        this._rawMovement.angle = newValue.angle;
+    }
+    /** Previous displacement in movement space (rubber + snap). */
+    get prevMovement() {
+        return this._prevMovement;
+    }
+    /** Raw movement before rubber (same space as `bounds`). */
+    get rawMovement() {
+        return this._rawMovement;
+    }
+    /** Normalized movement limits (`[min, max]` per defined axis). */
+    get bounds() {
+        if (this._bounds) {
+            return this._bounds;
+        }
+        return this.calculateBounds();
+    }
+    get overflow() {
+        return this.ctx.props.overflow ? Math.abs(this.ctx.props.overflow()) : 0;
+    }
+    /** Current scale modifier */
+    get scale() {
+        return this._scale;
+    }
+    get coords() {
+        const { timestamp, start, prev, current, diff, step, accum, movement, prevMovement, scale, } = this;
+        return {
+            timestamp,
+            start,
+            prev,
+            current,
+            diff,
+            step,
+            accum,
+            movement,
+            prevMovement,
+            scale,
+        };
+    }
+    /** Resolved snap target per axis during the current gesture. */
+    get snap() {
+        return this._snap;
+    }
+    /**
+     * Overflow past `bounds` per axis in movement space.
+     * Zero when inside limits; used for bounce-back.
+     */
+    get exceeds() {
+        const { _rawMovement: movement, bounds } = this;
+        if (!bounds) {
+            return null;
+        }
+        let xDiff = 0;
+        let yDiff = 0;
+        let aDiff = 0;
+        if (bounds.x) {
+            if (movement.x < bounds.x[0]) {
+                xDiff = movement.x - bounds.x[0];
+            }
+            else if (movement.x > bounds.x[1]) {
+                xDiff = movement.x - bounds.x[1];
+            }
+        }
+        if (bounds.y) {
+            if (movement.y < bounds.y[0]) {
+                yDiff = movement.y - bounds.y[0];
+            }
+            else if (movement.y > bounds.y[1]) {
+                yDiff = movement.y - bounds.y[1];
+            }
+        }
+        if (bounds.angle) {
+            if (movement.angle < bounds.angle[0]) {
+                aDiff = movement.angle - bounds.angle[0];
+            }
+            else if (movement.angle > bounds.angle[1]) {
+                aDiff = movement.angle - bounds.angle[1];
+            }
+        }
+        return {
+            x: xDiff,
+            y: yDiff,
+            angle: aDiff,
+        };
+    }
+    /** Parses pointer coordinates relative to the container */
+    decode(event) {
+        const vevet = (0,_global_initVevet__WEBPACK_IMPORTED_MODULE_0__.initVevet)();
+        const { props, container } = this.ctx;
+        let clientX = 0;
+        let clientY = 0;
+        if ('touches' in event) {
+            clientX = event.touches[0].clientX;
+            clientY = event.touches[0].clientY;
+        }
+        else if ('type' in event) {
+            clientX = event.clientX;
+            clientY = event.clientY;
+        }
+        else {
+            clientX = event.x;
+            clientY = event.y;
+        }
+        let x = clientX;
+        let y = clientY;
+        let centerX = vevet.width / 2;
+        let centerY = vevet.height / 2;
+        if (props.relative) {
+            const bounding = container.getBoundingClientRect();
+            x = clientX - bounding.left;
+            y = clientY - bounding.top;
+            centerX = bounding.left + bounding.width / 2;
+            centerY = bounding.top + bounding.height / 2;
+        }
+        const angleRad = Math.atan2(clientY - centerY, clientX - centerX);
+        const angle = (angleRad * 180) / Math.PI;
+        return {
+            x: x,
+            y: y,
+            angle,
+            time: performance.now(),
+        };
+    }
+    /** Apply scale and optionally zoom toward an origin in movement space. */
+    applyScale(value, originProp) {
+        if (this._scale === value) {
+            return;
+        }
+        if (originProp) {
+            const origin = this.decode(originProp);
+            const ratio = value / this._scale;
+            this.movement = {
+                x: origin.x - (origin.x - this._movement.x) * ratio,
+                y: origin.y - (origin.y - this._movement.y) * ratio,
+            };
+        }
+        this._scale = value;
+    }
+    /** Set start coordinates */
+    setStart(state) {
+        this._tempAngle = { raw: state.angle, unwrapped: state.angle };
+        this._timestamp = performance.now();
+        this._start = Object.assign({}, state);
+        this._prev = Object.assign({}, state);
+        this._current = Object.assign({}, state);
+        this._diff = Object.assign(Object.assign({}, START_VEC3), { time: 0 });
+        this._step = Object.assign(Object.assign({}, START_VEC3), { time: 0 });
+        this._accum = Object.assign({}, START_VEC3);
+    }
+    /** Sync temp angle */
+    syncTempAngle() {
+        this._tempAngle.raw = this._current.angle;
+        this._tempAngle.unwrapped = this._current.angle;
+    }
+    /** Update coordinates */
+    update({ x, y, angle, time }, applyRatio = true) {
+        // Vars
+        const { start, ctx } = this;
+        const stepRatio = applyRatio ? ctx.props.ratio : 1;
+        // Update bounds
+        if ((ctx.hasInertia() && ctx.recalculateBoundsOnInertia()) ||
+            !ctx.hasInertia()) {
+            this.calculateBounds();
+        }
+        // Save
+        this._timestamp = performance.now();
+        this._prev = Object.assign({}, this.current);
+        this._current = { x, y, angle, time };
+        const { _current: current, _prev: prev, overflow } = this;
+        // Update angle
+        this._updateTempAngle(angle);
+        current.angle = this._tempAngle.unwrapped;
+        // Update coords
+        this._step = {
+            x: current.x - prev.x,
+            y: current.y - prev.y,
+            angle: current.angle - prev.angle,
+            time: current.time - prev.time,
+        };
+        this._diff = {
+            x: current.x - start.x,
+            y: current.y - start.y,
+            angle: this._diff.angle + this._step.angle,
+            time: current.time - start.time,
+        };
+        this._accum = {
+            x: this._accum.x + Math.abs(this._step.x),
+            y: this._accum.y + Math.abs(this._step.y),
+            angle: this._accum.angle + Math.abs(this._step.angle),
+        };
+        this._rawMovement = {
+            x: this._rawMovement.x + this._step.x * stepRatio,
+            y: this._rawMovement.y + this._step.y * stepRatio,
+            angle: this._rawMovement.angle + this._step.angle * stepRatio,
+        };
+        this._prevMovement.x = this._movement.x;
+        this._prevMovement.y = this._movement.y;
+        this._prevMovement.angle = this._movement.angle;
+        this._movement.x = this._applyRubber('x', overflow);
+        this._movement.y = this._applyRubber('y', overflow);
+        this._movement.angle = this._applyRubber('angle', overflow);
+        this._snapMovementAxis('x');
+        this._snapMovementAxis('y');
+        this._snapMovementAxis('angle');
+    }
+    /** Snap movement axis */
+    _snapMovementAxis(axis) {
+        var _a;
+        const { props, hasInertia } = this.ctx;
+        const snap = (_a = props.snap) === null || _a === void 0 ? void 0 : _a.call(props);
+        if (!snap) {
+            this._snap[axis] = undefined;
+            return;
+        }
+        const snaps = snap[axis];
+        if (!(snaps === null || snaps === void 0 ? void 0 : snaps.length)) {
+            this._snap[axis] = undefined;
+            return;
+        }
+        const value = this._movement[axis];
+        const target = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.closest)(value, snaps);
+        const radius = props.snapRadius;
+        if ((0,_internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__.isFiniteNumber)(radius) && Math.abs(target - value) > Math.abs(radius)) {
+            this._snap[axis] = undefined;
+            return;
+        }
+        this._snap[axis] = target;
+        if (!hasInertia()) {
+            this._movement[axis] = target;
+        }
+    }
+    /** Calculate bounds */
+    calculateBounds() {
+        const { props } = this.ctx;
+        if (!props.bounds) {
+            this._bounds = null;
+            return;
+        }
+        const bounds = props.bounds(this.coords);
+        const d = [-Infinity, Infinity];
+        const x = (bounds === null || bounds === void 0 ? void 0 : bounds.x)
+            ? [Math.min(...bounds.x), Math.max(...bounds.x)]
+            : [...d];
+        const y = (bounds === null || bounds === void 0 ? void 0 : bounds.y)
+            ? [Math.min(...bounds.y), Math.max(...bounds.y)]
+            : [...d];
+        const a = (bounds === null || bounds === void 0 ? void 0 : bounds.angle)
+            ? [Math.min(...bounds.angle), Math.max(...bounds.angle)]
+            : [...d];
+        this._bounds = { x, y, angle: a };
+        return this._bounds;
+    }
+    /** Unwrap raw atan2 angle and accumulate into _angle */
+    _updateTempAngle(rawAngle) {
+        this._tempAngle.unwrapped += (0,_internal_unwrapAngle__WEBPACK_IMPORTED_MODULE_2__.unwrapAngleDelta)(rawAngle, this._tempAngle.raw);
+        this._tempAngle.raw = rawAngle;
+    }
+    /** Apply rubber-band past movement bounds. */
+    _applyRubber(axis, overflow) {
+        var _a;
+        const temp = this._rawMovement[axis];
+        const bounds = (_a = this.bounds) === null || _a === void 0 ? void 0 : _a[axis];
+        if (!bounds) {
+            return temp;
+        }
+        const [min, max] = bounds;
+        if (temp >= min && temp <= max) {
+            return temp;
+        }
+        if (temp < min) {
+            return min - this._rubberDistance(min - temp, overflow);
+        }
+        return max + this._rubberDistance(temp - max, overflow);
+    }
+    /**
+     * Overscroll → rubber displacement
+     */
+    _rubberDistance(overscroll, limit) {
+        if (overscroll <= 0 || limit <= 0) {
+            return 0;
+        }
+        return (limit * overscroll) / (limit + overscroll);
+    }
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Swipe/Inertia/index.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Swipe/Inertia/index.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SwipeInertia: () => (/* binding */ SwipeInertia)
+/* harmony export */ });
+/* harmony import */ var _components_Raf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Raf */ "./node_modules/vevet/lib/esm/components/Raf/index.js");
+/* harmony import */ var _internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../internal/isFiniteNumber */ "./node_modules/vevet/lib/esm/internal/isFiniteNumber.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils */ "./node_modules/vevet/lib/esm/utils/math/clamp.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utils */ "./node_modules/vevet/lib/esm/utils/math/lerp.js");
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+
+
+
+const IDLE_VEC3 = { x: 0, y: 0, angle: 0 };
+const IDLE_STATE = Object.assign(Object.assign({}, IDLE_VEC3), { time: 0 });
+const LERP_APPROX = 0.01;
+const BELOW_THRESHOLD = 0.1;
+class SwipeInertia {
+    constructor(ctx) {
+        this.ctx = ctx;
+        this._velocity = Object.assign({}, IDLE_STATE);
+        this._initialVelocity = Object.assign({}, IDLE_STATE);
+        this._saveRawMovement = Object.assign({}, IDLE_VEC3);
+        this._rawMovement = Object.assign({}, IDLE_VEC3);
+        this._saveStep = Object.assign({}, IDLE_STATE);
+        this._saveCurrent = Object.assign({}, IDLE_STATE);
+    }
+    /** Check if inertia is active */
+    get has() {
+        return !!this._raf;
+    }
+    /** Apply inertia-based movement */
+    release(onUpdate) {
+        const { ctx } = this;
+        const { props } = ctx;
+        this._modifiedDistance = undefined;
+        this._saveCurrent = Object.assign({}, ctx.coords.current);
+        this._saveStep = Object.assign({}, ctx.coords.step);
+        this._saveRawMovement = Object.assign({}, ctx.coords.rawMovement);
+        this._rawMovement = Object.assign({}, ctx.coords.rawMovement);
+        const data = this._calcVelocity();
+        if (!data || !(0,_internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__.isFiniteNumber)(data.dt) || data.dt <= 0) {
+            ctx.onFail();
+            return false;
+        }
+        const { linearSpeed, angularSpeed, vx, vy, va, threshold } = data;
+        if (!(0,_internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__.isFiniteNumber)(linearSpeed) ||
+            !(0,_internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__.isFiniteNumber)(angularSpeed) ||
+            (linearSpeed < threshold && angularSpeed < threshold)) {
+            ctx.onFail();
+            return false;
+        }
+        this._onUpdate = onUpdate;
+        this._velocity = { x: vx, y: vy, angle: va, time: performance.now() };
+        this._initialVelocity = Object.assign({}, this._velocity);
+        if (props.inertiaDistanceModifier) {
+            this._modifiedDistance = props.inertiaDistanceModifier({
+                x: this._predictDistance(vx, props.inertiaDecay),
+                y: this._predictDistance(vy, props.inertiaDecay),
+                angle: this._predictDistance(va, props.inertiaDecay),
+            });
+        }
+        this._raf = new _components_Raf__WEBPACK_IMPORTED_MODULE_0__.Raf({
+            enabled: true,
+            onFrame: this._handleRaf.bind(this),
+        });
+        this.ctx.onStart();
+        return true;
+    }
+    /** Calculate velocity */
+    _calcVelocity() {
+        const { _saveCurrent: current, _saveStep: step } = this;
+        const _a = this.ctx.props, { inertiaRatio, ratio, maxVelocity } = _a, props = __rest(_a, ["inertiaRatio", "ratio", "maxVelocity"]);
+        if (!current || !step) {
+            return null;
+        }
+        const gap = performance.now() - current.time;
+        const dt = Math.max(step.time, gap, 1);
+        const iRatio = (0,_internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__.isFiniteNumber)(inertiaRatio) ? inertiaRatio : 1;
+        const sRatio = (0,_internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__.isFiniteNumber)(ratio) ? ratio : 1;
+        const finalRatio = sRatio * iRatio;
+        const maxVX = maxVelocity.x ? Math.abs(maxVelocity.x) : 0;
+        let vx = (step.x / dt) * finalRatio;
+        vx = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.clamp)(vx, -maxVX, maxVX);
+        const maxVY = maxVelocity.y ? Math.abs(maxVelocity.y) : 0;
+        let vy = (step.y / dt) * finalRatio;
+        vy = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.clamp)(vy, -maxVY, maxVY);
+        const maxVA = maxVelocity.angle ? Math.abs(maxVelocity.angle) : 0;
+        let va = (step.angle / dt) * finalRatio;
+        va = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.clamp)(va, -maxVA, maxVA);
+        const linearSpeed = Math.hypot(vx, vy) * 1000;
+        const angularSpeed = Math.abs(va) * 1000;
+        const threshold = props.inertiaThreshold;
+        return { dt, vx, vy, va, linearSpeed, angularSpeed, threshold };
+    }
+    /** Handle RAF update */
+    _handleRaf() {
+        var _a;
+        if (!this._raf) {
+            return;
+        }
+        const { _raf: raf } = this;
+        const duration = this._raf.duration;
+        const { coords, props } = this.ctx;
+        const { _velocity: velocity, _saveCurrent: startCurrent, _saveRawMovement: startRawMovement, _rawMovement: rawMovement, _modifiedDistance: distance, _initialVelocity: initial, } = this;
+        const frameMs = duration;
+        // Delta
+        const dx = velocity.x * frameMs;
+        const dy = velocity.y * frameMs;
+        const dAngle = velocity.angle * frameMs;
+        // Friction
+        const frictionEase = raf.lerpFactor(props.inertiaDecay);
+        velocity.x = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.lerp)(velocity.x, 0, frictionEase);
+        velocity.y = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.lerp)(velocity.y, 0, frictionEase);
+        velocity.angle = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.lerp)(velocity.angle, 0, frictionEase);
+        // Movement
+        if (distance) {
+            const xP = this._getVelocityProgress(velocity.x, initial.x);
+            const yP = this._getVelocityProgress(velocity.y, initial.y);
+            const aP = this._getVelocityProgress(velocity.angle, initial.angle);
+            rawMovement.x = startRawMovement.x + distance.x * xP;
+            rawMovement.y = startRawMovement.y + distance.y * yP;
+            rawMovement.angle = startRawMovement.angle + distance.angle * aP;
+        }
+        else {
+            rawMovement.x += dx;
+            rawMovement.y += dy;
+            rawMovement.angle += dAngle;
+        }
+        // Bounce
+        let isBouncing = false;
+        const rawBounceEase = props.inertiaBounceEase;
+        const bounceEase = rawBounceEase >= 1 ? 1 : raf.lerpFactor(rawBounceEase);
+        // Bounce within bounds
+        const { bounds } = coords;
+        if (bounds === null || bounds === void 0 ? void 0 : bounds.x) {
+            const bx = this._applyAxisBounce('x', rawMovement.x, velocity.x, bounds.x, bounceEase);
+            rawMovement.x = bx.value;
+            velocity.x = bx.velocity;
+            isBouncing = 'bounceFinished' in bx ? true : isBouncing;
+        }
+        if (bounds === null || bounds === void 0 ? void 0 : bounds.y) {
+            const by = this._applyAxisBounce('y', rawMovement.y, velocity.y, bounds.y, bounceEase);
+            rawMovement.y = by.value;
+            velocity.y = by.velocity;
+            isBouncing = 'bounceFinished' in by ? true : isBouncing;
+        }
+        if (bounds === null || bounds === void 0 ? void 0 : bounds.angle) {
+            const ba = this._applyAxisBounce('angle', rawMovement.angle, velocity.angle, bounds.angle, bounceEase);
+            rawMovement.angle = ba.value;
+            velocity.angle = ba.velocity;
+            isBouncing = 'bounceFinished' in ba ? true : isBouncing;
+        }
+        // Callbacks
+        const totalX = rawMovement.x - startRawMovement.x;
+        const totalY = rawMovement.y - startRawMovement.y;
+        const totalA = rawMovement.angle - startRawMovement.angle;
+        const x = startCurrent.x + totalX;
+        const y = startCurrent.y + totalY;
+        const angle = startCurrent.angle + totalA;
+        (_a = this._onUpdate) === null || _a === void 0 ? void 0 : _a.call(this, { x, y, angle });
+        // Stop
+        const linearStep = Math.hypot(dx, dy);
+        const angularStep = Math.abs(dAngle);
+        let shouldStop = linearStep < BELOW_THRESHOLD && angularStep < BELOW_THRESHOLD;
+        if (distance) {
+            shouldStop =
+                Math.abs(totalX - distance.x) < LERP_APPROX &&
+                    Math.abs(totalY - distance.y) < LERP_APPROX &&
+                    Math.abs(totalA - distance.angle) < LERP_APPROX;
+        }
+        if (!isBouncing && shouldStop) {
+            this.ctx.onEnd();
+            this._clear();
+        }
+    }
+    /** Calculate velocity progress */
+    _getVelocityProgress(v, initial) {
+        if (Math.abs(initial) < BELOW_THRESHOLD) {
+            return 1;
+        }
+        const p = 1 - Math.abs(v / initial);
+        if (Math.abs(1 - p) < LERP_APPROX / 10) {
+            return 1;
+        }
+        return p;
+    }
+    _predictDistance(velocity, decay, frameMs = 1000 / 60) {
+        const k = (decay * 60) / 1000;
+        const r = Math.exp(-k * frameMs);
+        return (velocity * frameMs) / (1 - r);
+    }
+    /** Apply exponential axis bounce overflow */
+    _applyAxisBounce(axis, value, velocity, bounds, ease) {
+        if (!bounds.length) {
+            return { value, velocity };
+        }
+        const snappy = this.ctx.coords.snap[axis];
+        const lo = typeof snappy === 'number' ? snappy : Math.min(...bounds);
+        const hi = typeof snappy === 'number' ? snappy : Math.max(...bounds);
+        if (value < lo || value > hi) {
+            const target = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.clamp)(value, lo, hi);
+            const val = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.lerp)(value, target, ease, LERP_APPROX);
+            const vel = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.lerp)(velocity, 0, ease, LERP_APPROX);
+            return {
+                value: val,
+                velocity: vel,
+                bounceFinished: val === target && vel === 0,
+            };
+        }
+        return { value, velocity };
+    }
+    /** Clear data and stop animation */
+    _clear() {
+        var _a;
+        (_a = this._raf) === null || _a === void 0 ? void 0 : _a.destroy();
+        this._raf = undefined;
+        this._velocity = Object.assign({}, IDLE_STATE);
+    }
+    /** Stop inertia animation */
+    cancel() {
+        if (this._raf) {
+            this.ctx.onCancel();
+        }
+        this._clear();
+    }
+    /** Destroy instance */
+    destroy() {
+        this._clear();
+    }
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Swipe/Styles/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Swipe/Styles/index.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SwipeStyles: () => (/* binding */ SwipeStyles)
+/* harmony export */ });
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles */ "./node_modules/vevet/lib/esm/components/Swipe/Styles/styles.js");
+
+
+class SwipeStyles {
+    constructor(_ctx) {
+        this._ctx = _ctx;
+        this._styles = _styles__WEBPACK_IMPORTED_MODULE_1__.cursorStyles === null || _styles__WEBPACK_IMPORTED_MODULE_1__.cursorStyles === void 0 ? void 0 : _styles__WEBPACK_IMPORTED_MODULE_1__.cursorStyles.cloneNode(true);
+        this.setInline();
+    }
+    /** Applies touch-action and cursor styles */
+    setInline() {
+        const { props } = this._ctx;
+        const target = props.thumb || props.container;
+        const { axis, enabled, grabCursor: hasGrabCursor } = props;
+        const { style } = target;
+        const cursor = enabled && hasGrabCursor ? 'grab' : '';
+        let touchAction = 'none';
+        if (axis === 'x') {
+            touchAction = 'pan-y';
+        }
+        else if (axis === 'y') {
+            touchAction = 'pan-x';
+        }
+        style.cursor = cursor;
+        style.touchAction = touchAction;
+    }
+    /** Appends styles */
+    append() {
+        const swipe = this._ctx;
+        if (swipe.props.grabCursor && this._styles) {
+            _internal_env__WEBPACK_IMPORTED_MODULE_0__.body.append(this._styles);
+        }
+    }
+    /** Remove styles */
+    remove() {
+        var _a;
+        (_a = this._styles) === null || _a === void 0 ? void 0 : _a.remove();
+    }
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Swipe/Styles/styles.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Swipe/Styles/styles.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cursorStyles: () => (/* binding */ cursorStyles)
+/* harmony export */ });
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+
+const cursorStyles = _internal_env__WEBPACK_IMPORTED_MODULE_0__.isBrowser ? _internal_env__WEBPACK_IMPORTED_MODULE_0__.doc.createElement('style') : null;
+if (cursorStyles) {
+    cursorStyles.innerHTML = '* { cursor: grabbing !important; }';
+}
+//# sourceMappingURL=styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Swipe/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Swipe/index.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Swipe: () => (/* binding */ Swipe)
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../base */ "./node_modules/vevet/lib/esm/base/Module/index.js");
+/* harmony import */ var _global_initVevet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../global/initVevet */ "./node_modules/vevet/lib/esm/global/initVevet.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils */ "./node_modules/vevet/lib/esm/utils/listeners/addEventListener.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutCubic.js");
+/* harmony import */ var _Pointers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Pointers */ "./node_modules/vevet/lib/esm/components/Pointers/index.js");
+/* harmony import */ var _Timeline__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Timeline */ "./node_modules/vevet/lib/esm/components/Timeline/index.js");
+/* harmony import */ var _Coords__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Coords */ "./node_modules/vevet/lib/esm/components/Swipe/Coords/index.js");
+/* harmony import */ var _Inertia__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Inertia */ "./node_modules/vevet/lib/esm/components/Swipe/Inertia/index.js");
+/* harmony import */ var _props__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./props */ "./node_modules/vevet/lib/esm/components/Swipe/props.js");
+/* harmony import */ var _Styles__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Styles */ "./node_modules/vevet/lib/esm/components/Swipe/Styles/index.js");
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Manages swipe interactions:
+ * - Tracks movement and detects direction
+ * - Emits events on start, move, and end
+ * - Supports exponential inertia
+ * - Optional bounds with rubber-band overflow and bounce-back
+ *
+ * Notes:
+ * - Does not transform elements, only computes coordinates.
+ *
+ * [Documentation](https://vevetjs.com/docs/Swipe)
+ *
+ * @group Components
+ */
+class Swipe extends _base__WEBPACK_IMPORTED_MODULE_0__.Module {
+    /**
+     * Returns default static properties.
+     */
+    _getStatic() {
+        return Object.assign(Object.assign({}, super._getStatic()), _props__WEBPACK_IMPORTED_MODULE_8__.STATIC_PROPS);
+    }
+    /**
+     * Returns default mutable properties.
+     */
+    _getMutable() {
+        return Object.assign(Object.assign({}, super._getMutable()), _props__WEBPACK_IMPORTED_MODULE_8__.MUTABLE_PROPS);
+    }
+    constructor(props, onCallbacks) {
+        super(props, onCallbacks);
+        /** If swiping has started */
+        this._isSwiping = false;
+        /** If swiping has been aborted */
+        this._isAborted = false;
+        const { container, thumb, buttons, pointers } = this.props;
+        this._coords = new _Coords__WEBPACK_IMPORTED_MODULE_6__.SwipeCoords({
+            container,
+            props: this.props,
+            hasInertia: () => this.hasInertia,
+            recalculateBoundsOnInertia: () => this.props.recalculateBoundsOnInertia,
+        });
+        this._styles = new _Styles__WEBPACK_IMPORTED_MODULE_9__.SwipeStyles(this);
+        this._inertia = new _Inertia__WEBPACK_IMPORTED_MODULE_7__.SwipeInertia({
+            props: this.props,
+            coords: this._coords,
+            onStart: () => {
+                this._coords.syncTempAngle();
+                this.callbacks.emit('inertiaStart', undefined);
+            },
+            onFail: () => this.callbacks.emit('inertiaFail', undefined),
+            onCancel: () => this.callbacks.emit('inertiaCancel', undefined),
+            onEnd: () => this.callbacks.emit('inertiaEnd', undefined),
+        });
+        // create pointers
+        this._pointers = new _Pointers__WEBPACK_IMPORTED_MODULE_4__.Pointers({
+            container: thumb || container,
+            buttons,
+            minPointers: pointers,
+            maxPointers: pointers,
+            relative: false,
+            enabled: this.props.enabled,
+            disableUserSelect: this.props.disableUserSelect,
+        });
+        // Set Events
+        this._setEvents();
+    }
+    /** Full coordinate snapshot (pointer space + `movement`). */
+    get coords() {
+        return this._coords.coords;
+    }
+    /** Coordinate reference element. */
+    get container() {
+        return this.props.container;
+    }
+    /** Whether release inertia is running. */
+    get hasInertia() {
+        return this._inertia.has;
+    }
+    /** Whether overflow bounce-back timeline is running. */
+    get hasBounce() {
+        return !!this._bounceTm;
+    }
+    /** Whether a swipe gesture is in progress. */
+    get isSwiping() {
+        return this._isSwiping;
+    }
+    /** Handles property updates */
+    _handleProps(props) {
+        super._handleProps(props);
+        this._pointers.updateProps({ enabled: this.props.enabled });
+        this._styles.setInline();
+        if (!this.props.inertia || !this.props.enabled) {
+            this.cancelInertia();
+        }
+        if (!this.props.enabled) {
+            this.cancelBounce();
+        }
+    }
+    /** Sets event listeners */
+    _setEvents() {
+        const { callbacks } = this;
+        const { container } = this.props;
+        this._pointers.on('start', () => this._handlePointersStart());
+        this._pointers.on('pointerdown', (data) => callbacks.emit('pointerdown', data));
+        this._pointers.on('pointermove', (data) => callbacks.emit('pointermove', data));
+        this._pointers.on('pointerup', (data) => callbacks.emit('pointerup', data));
+        this._pointers.on('end', () => this._handlePointersEnd());
+        const touchstart = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.addEventListener)(container, 'touchstart', (event) => this._handleTouchStart(event), { passive: false });
+        this.onDestroy(() => touchstart());
+    }
+    /** Handles `touchstart` events */
+    _handleTouchStart(event) {
+        if (!this.props.enabled) {
+            return;
+        }
+        this._preventEdgeSwipe(event);
+        this.callbacks.emit('touchstart', event);
+    }
+    /** Prevents edge swipes if enabled */
+    _preventEdgeSwipe(event) {
+        const { props } = this;
+        if (!props.preventEdgeSwipe) {
+            return;
+        }
+        const threshold = props.edgeSwipeThreshold;
+        const x = event.targetTouches[0].pageX;
+        const shouldPrevent = x <= threshold || x >= (0,_global_initVevet__WEBPACK_IMPORTED_MODULE_1__.initVevet)().width - threshold;
+        if (event.cancelable && shouldPrevent) {
+            event.preventDefault();
+            this.callbacks.emit('preventEdgeSwipe', undefined);
+        }
+    }
+    /** Handles pointers start */
+    _handlePointersStart() {
+        this.cancelBounce();
+        this.cancelInertia();
+        const touchmove = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.addEventListener)(window, 'touchmove', this._handleTouchMove.bind(this), { passive: false });
+        const mousemove = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.addEventListener)(window, 'mousemove', this._handleMouseMove.bind(this));
+        const end = this._pointers.on('end', () => {
+            this._handleEnd();
+            end();
+            touchmove();
+            mousemove();
+        });
+        this.onDestroy(() => {
+            end();
+            touchmove();
+            mousemove();
+        });
+    }
+    /** Handles pointers end */
+    _handlePointersEnd() {
+        if (!this._isSwiping) {
+            this.releaseBounce();
+        }
+    }
+    /** Handles `touchmove` event */
+    _handleTouchMove(event) {
+        this.callbacks.emit('touchmove', event);
+        if (this._isSwiping && this.props.preventTouchMove && event.cancelable) {
+            event.preventDefault();
+        }
+        this._handleMove('touch');
+    }
+    /** Handles `mousemove` event */
+    _handleMouseMove(event) {
+        if (this.props.requireCtrlKey && !event.ctrlKey) {
+            return;
+        }
+        this.callbacks.emit('mousemove', event);
+        this._handleMove('mouse');
+    }
+    /** Handles move events */
+    _handleMove(type) {
+        if (!this._pointers.move || !this.props.enabled) {
+            return;
+        }
+        const data = this._coords;
+        const state = data.decode(this._pointers.move.center);
+        if (this._isAborted) {
+            return;
+        }
+        // Save start coordinates
+        if (!this._startCoord) {
+            this._startCoord = Object.assign({}, state);
+        }
+        // Update start time
+        if (!this._startTime) {
+            this._startTime = +Date.now();
+        }
+        // check if can start
+        if (!this._isSwiping && !this._canStart(state, type)) {
+            return;
+        }
+        // start
+        if (!this._isSwiping) {
+            this.cancelInertia();
+            this.cancelBounce();
+            this._isSwiping = true;
+            this._startCoord = Object.assign({}, state);
+            data.setStart(state);
+            this.callbacks.emit('start', this.coords);
+            this._styles.append();
+        }
+        // move
+        this._move(state);
+    }
+    /** Checks if swipe can start */
+    _canStart(state, type) {
+        const { _startCoord: startCoord, _startTime: startTime } = this;
+        if (!startCoord || !startTime) {
+            return false;
+        }
+        const { threshold, minTime, axis, willAbort } = this.props;
+        const diff = {
+            x: state.x - startCoord.x,
+            y: state.y - startCoord.y,
+        };
+        // check threshold
+        const distX = diff.x;
+        const distY = diff.y;
+        const dist = Math.sqrt(Math.pow(distX, 2) + Math.pow(distY, 2));
+        if (dist < threshold) {
+            return false;
+        }
+        // check time
+        if (+new Date() - startTime < minTime) {
+            return false;
+        }
+        // check axis
+        if (axis) {
+            const rawAngle = (Math.atan2(Math.abs(diff.y), Math.abs(diff.x)) * 180) / Math.PI;
+            const normalizedAngle = axis === 'x' ? rawAngle : 90 - rawAngle;
+            if (normalizedAngle > 45) {
+                this._reset();
+                this._isAborted = true;
+                this.callbacks.emit('abort', undefined);
+                return false;
+            }
+        }
+        // Check if should abort
+        const shouldAbort = willAbort({
+            type,
+            state,
+            start: startCoord,
+            diff,
+        });
+        if (shouldAbort) {
+            this._reset();
+            this._isAborted = true;
+            this.callbacks.emit('abort', undefined);
+            return false;
+        }
+        return true;
+    }
+    /** Handles move events */
+    _move(state, applyRatio = true) {
+        const coords = this._coords;
+        // Update coords
+        coords.update(state, applyRatio);
+        // trigger callbacks
+        this.callbacks.emit('move', this.coords);
+    }
+    /** Handles swipe end */
+    _handleEnd() {
+        // reset
+        this._startTime = undefined;
+        this._isAborted = false;
+        // check swiping
+        if (!this.isSwiping) {
+            return;
+        }
+        // reset
+        this._reset();
+        // reset styles
+        this._styles.remove();
+        // calculate direction
+        const { x: diffX, y: diffY } = this._coords.diff;
+        const absDiffX = Math.abs(diffX);
+        const absDiffY = Math.abs(diffY);
+        const { directionThreshold } = this.props;
+        const endAxis = absDiffX > absDiffY ? 'x' : 'y';
+        if (endAxis === 'x' && absDiffX > directionThreshold) {
+            if (diffX > 0) {
+                this.callbacks.emit('toRight', undefined);
+            }
+            else if (diffX < 0) {
+                this.callbacks.emit('toLeft', undefined);
+            }
+        }
+        if (endAxis === 'y' && absDiffY > directionThreshold) {
+            if (diffY > 0) {
+                this.callbacks.emit('toBottom', undefined);
+            }
+            else if (diffY < 0) {
+                this.callbacks.emit('toTop', undefined);
+            }
+        }
+        // end callback
+        this.callbacks.emit('end', this.coords);
+        // end with inertia or bounce
+        let hasInertia = false;
+        if (this.props.inertia) {
+            hasInertia = this._releaseInertia();
+        }
+        if (!hasInertia) {
+            this.releaseBounce();
+        }
+    }
+    /** Reset swipe states */
+    _reset() {
+        this._startCoord = undefined;
+        this._isSwiping = false;
+    }
+    /** Apply inertia-based movement */
+    _releaseInertia() {
+        return this._inertia.release(({ x, y, angle }) => {
+            this.callbacks.emit('inertia', undefined);
+            this._move({ x, y, angle, time: performance.now() }, false);
+        });
+    }
+    /** Apply bounce overflow animation */
+    releaseBounce(targetDuration) {
+        this.cancelBounce();
+        const { exceeds } = this._coords;
+        const canBounce = this.props.canBounce();
+        if (!exceeds ||
+            (!exceeds.x && !exceeds.y && !exceeds.angle) ||
+            !canBounce) {
+            return;
+        }
+        const start = Object.assign({}, this.current);
+        const duration = targetDuration !== null && targetDuration !== void 0 ? targetDuration : this.props.bounceDuration;
+        const tm = new _Timeline__WEBPACK_IMPORTED_MODULE_5__.Timeline({ duration, easing: _utils__WEBPACK_IMPORTED_MODULE_3__.EaseOutCubic });
+        this._bounceTm = tm;
+        this._coords.syncTempAngle();
+        tm.on('update', ({ eased }) => {
+            this._move({
+                x: start.x - exceeds.x * eased,
+                y: start.y - exceeds.y * eased,
+                angle: start.angle - exceeds.angle * eased,
+                time: performance.now(),
+            }, false);
+        });
+        tm.on('end', this.cancelBounce.bind(this));
+        tm.play();
+    }
+    /** Cancel inertia */
+    cancelInertia() {
+        this._inertia.cancel();
+    }
+    /** Cancel bounce */
+    cancelBounce() {
+        var _a;
+        (_a = this._bounceTm) === null || _a === void 0 ? void 0 : _a.destroy();
+        this._bounceTm = undefined;
+    }
+    /** Calculate swipe bounds */
+    calculateBounds() {
+        return this._coords.calculateBounds();
+    }
+    /** Pointer position at swipe start. */
+    get start() {
+        return this._coords.start;
+    }
+    /** Previous pointer position. */
+    get prev() {
+        return this._coords.prev;
+    }
+    /** Current pointer position. */
+    get current() {
+        return this._coords.current;
+    }
+    /** Offset from swipe start to current pointer position. */
+    get diff() {
+        return this._coords.diff;
+    }
+    /** Offset from previous to current pointer position. */
+    get step() {
+        return this._coords.step;
+    }
+    /** Absolute path length since swipe start. */
+    get accum() {
+        return this._coords.accum;
+    }
+    /** Total displacement in movement space (use for element transforms). */
+    get movement() {
+        return this._coords.movement;
+    }
+    /** Current scale modifier. */
+    get scale() {
+        return this._coords.scale;
+    }
+    /**
+     * Sets programmatic scale in movement space.
+     * Optionally zooms toward an origin point and emits `move`.
+     */
+    setScale(value, origin) {
+        this._coords.applyScale(value, origin);
+        this._move(Object.assign(Object.assign({}, this.current), { time: performance.now() }));
+        if (!this._inertia.has) {
+            this.releaseBounce(0);
+        }
+    }
+    /**
+     * Sets programmatic displacement in movement space.
+     * Reapplies rubber, snap, emits `move`, and cancels overflow bounce.
+     */
+    setMovement(value) {
+        this._coords.movement = value;
+        this._move(Object.assign(Object.assign({}, this.current), { time: performance.now() }));
+        this.releaseBounce(0);
+    }
+    /**
+     * Destroys the component
+     */
+    _destroy() {
+        super._destroy();
+        this.cancelBounce();
+        this._pointers.destroy();
+        this._inertia.destroy();
+        this._styles.remove();
+    }
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Swipe/props.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Swipe/props.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MUTABLE_PROPS: () => (/* binding */ MUTABLE_PROPS),
+/* harmony export */   STATIC_PROPS: () => (/* binding */ STATIC_PROPS)
+/* harmony export */ });
+const STATIC_PROPS = {
+    __staticProp: true,
+    container: null,
+    thumb: null,
+    buttons: [0],
+    pointers: 1,
+    disableUserSelect: true,
+};
+const MUTABLE_PROPS = {
+    __mutableProp: true,
+    enabled: true,
+    relative: false,
+    axis: null,
+    ratio: 1,
+    grabCursor: false,
+    willAbort: () => false,
+    threshold: 5,
+    minTime: 0,
+    directionThreshold: 50,
+    preventEdgeSwipe: true,
+    edgeSwipeThreshold: 20,
+    preventTouchMove: true,
+    requireCtrlKey: false,
+    bounceDuration: 250,
+    overflow: () => 50,
+    inertia: false,
+    inertiaDecay: 0.05,
+    inertiaBounceEase: 0.3,
+    inertiaRatio: 1,
+    inertiaThreshold: 1,
+    maxVelocity: { x: 7, y: 7, angle: 3 },
+    bounds: null,
+    recalculateBoundsOnInertia: true,
+    snap: null,
+    canBounce: () => true,
+    snapRadius: null,
+    inertiaDuration: null,
+    inertiaEasing: null,
+    velocityModifier: null,
+    inertiaDistanceThreshold: null,
+    inertiaDistanceModifier: null,
+};
+//# sourceMappingURL=props.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Timeline/index.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Timeline/index.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Timeline: () => (/* binding */ Timeline)
+/* harmony export */ });
+/* harmony import */ var _base_Module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../base/Module */ "./node_modules/vevet/lib/esm/base/Module/index.js");
+/* harmony import */ var _internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../internal/isFiniteNumber */ "./node_modules/vevet/lib/esm/internal/isFiniteNumber.js");
+/* harmony import */ var _internal_isUndefined__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../internal/isUndefined */ "./node_modules/vevet/lib/esm/internal/isUndefined.js");
+/* harmony import */ var _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../internal/noopIfDestroyed */ "./node_modules/vevet/lib/esm/internal/noopIfDestroyed.js");
+/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/math */ "./node_modules/vevet/lib/esm/utils/math/clamp.js");
+/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/math */ "./node_modules/vevet/lib/esm/utils/math/easing.js");
+/* harmony import */ var _props__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./props */ "./node_modules/vevet/lib/esm/components/Timeline/props.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+/**
+ * A timeline class for managing animations with easing and precise progress control.
+ * It provides methods for playing, reversing, pausing, and resetting the timeline.
+ *
+ * [Documentation](https://vevetjs.com/docs/Timeline)
+ *
+ * @group Components
+ */
+class Timeline extends _base_Module__WEBPACK_IMPORTED_MODULE_0__.Module {
+    /** Get default static properties. */
+    _getStatic() {
+        return Object.assign(Object.assign({}, super._getStatic()), _props__WEBPACK_IMPORTED_MODULE_6__.STATIC_PROPS);
+    }
+    /** Get default mutable properties. */
+    _getMutable() {
+        return Object.assign(Object.assign({}, super._getMutable()), _props__WEBPACK_IMPORTED_MODULE_6__.MUTABLE_PROPS);
+    }
+    constructor(props, onCallbacks) {
+        super(props, onCallbacks);
+        // Initialize default values
+        this._progress = 0;
+        this._eased = 0;
+        this._raf = undefined;
+        this._time = 0;
+        this._isReversed = false;
+        this._isPaused = false;
+    }
+    /**
+     * Get or set the linear progress of the timeline.
+     * Setting this triggers an update and associated callbacks.
+     */
+    get progress() {
+        return this._progress;
+    }
+    set progress(val) {
+        this._progress = (0,_utils_math__WEBPACK_IMPORTED_MODULE_4__.clamp)(val);
+        this._onUpdate();
+    }
+    /**
+     * Get the eased progress of the timeline, derived from the easing function.
+     */
+    get eased() {
+        return this._eased;
+    }
+    /**
+     * Whether the timeline is currently playing.
+     */
+    get isPlaying() {
+        return !(0,_internal_isUndefined__WEBPACK_IMPORTED_MODULE_2__.isUndefined)(this._raf);
+    }
+    /**
+     * Whether the timeline is reversed (progress decreases over time).
+     */
+    get isReversed() {
+        return this._isReversed;
+    }
+    /**
+     * Whether the timeline is paused.
+     */
+    get isPaused() {
+        return this._isPaused;
+    }
+    /**
+     * Get the timeline duration, ensuring it is at least 0 ms.
+     */
+    get duration() {
+        const source = this.props.duration;
+        if (!(0,_internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_1__.isFiniteNumber)(source) || source < 0) {
+            return 0;
+        }
+        return this.props.duration;
+    }
+    /**
+     * Play the timeline, advancing progress toward completion.
+     * Does nothing if the timeline is destroyed or already completed.
+     */
+    play() {
+        if (this.progress === 1) {
+            return;
+        }
+        this._isReversed = false;
+        this._isPaused = false;
+        if (!this.isPlaying) {
+            this._time = Date.now();
+            this._animate();
+        }
+    }
+    /**
+     * Reverse the timeline, moving progress toward the start.
+     * Does nothing if the timeline is destroyed or already at the start.
+     */
+    reverse() {
+        if (this.progress === 0) {
+            return;
+        }
+        this._isReversed = true;
+        this._isPaused = false;
+        if (!this.isPlaying) {
+            this._time = Date.now();
+            this._animate();
+        }
+    }
+    /**
+     * Pause the timeline, halting progress without resetting it.
+     */
+    pause() {
+        this._isPaused = true;
+        if (this._raf) {
+            window.cancelAnimationFrame(this._raf);
+        }
+        this._raf = undefined;
+    }
+    /**
+     * Reset the timeline to the beginning (progress = 0).
+     */
+    reset() {
+        this.pause();
+        this.progress = 0;
+    }
+    /**
+     * Animate the timeline, updating progress based on elapsed time.
+     */
+    _animate() {
+        if (this.isPaused) {
+            return;
+        }
+        const { isReversed, duration } = this;
+        if (duration <= 0) {
+            this.progress = isReversed ? 1 : 0;
+            this.progress = isReversed ? 0 : 1;
+            return;
+        }
+        const currentTime = Date.now();
+        const frameDiff = Math.abs(this._time - currentTime);
+        this._time = currentTime;
+        const progressIterator = frameDiff / duration / (isReversed ? -1 : 1);
+        const progressTarget = this.progress + progressIterator;
+        this.progress = progressTarget;
+        if ((this.progress === 1 && !isReversed) ||
+            (this.progress === 0 && isReversed)) {
+            this._isReversed = false;
+            this._isPaused = false;
+            this._raf = undefined;
+            return;
+        }
+        this._raf = window.requestAnimationFrame(() => this._animate());
+    }
+    /**
+     * Handle progress updates and trigger callbacks.
+     */
+    _onUpdate() {
+        this._eased = (0,_utils_math__WEBPACK_IMPORTED_MODULE_5__.easing)(this._progress, this.props.easing);
+        this.callbacks.emit('update', {
+            progress: this._progress,
+            eased: this._eased,
+        });
+        if (this.progress === 0) {
+            this.callbacks.emit('start', undefined);
+            return;
+        }
+        if (this.progress === 1) {
+            this.callbacks.emit('end', undefined);
+        }
+    }
+    /**
+     * Destroy the timeline, stopping any active animation and cleaning up resources.
+     */
+    _destroy() {
+        this.pause();
+        super._destroy();
+    }
+}
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_3__.noopIfDestroyed
+], Timeline.prototype, "play", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_3__.noopIfDestroyed
+], Timeline.prototype, "reverse", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_3__.noopIfDestroyed
+], Timeline.prototype, "pause", null);
+__decorate([
+    _internal_noopIfDestroyed__WEBPACK_IMPORTED_MODULE_3__.noopIfDestroyed
+], Timeline.prototype, "reset", null);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/components/Timeline/props.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/components/Timeline/props.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MUTABLE_PROPS: () => (/* binding */ MUTABLE_PROPS),
+/* harmony export */   STATIC_PROPS: () => (/* binding */ STATIC_PROPS)
+/* harmony export */ });
+/* harmony import */ var _global_initVevet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../global/initVevet */ "./node_modules/vevet/lib/esm/global/initVevet.js");
+var _a, _b;
+
+const STATIC_PROPS = {
+    __staticProp: true,
+};
+const MUTABLE_PROPS = {
+    __mutableProp: true,
+    easing: (_b = (_a = (0,_global_initVevet__WEBPACK_IMPORTED_MODULE_0__.initVevet)()) === null || _a === void 0 ? void 0 : _a.props) === null || _b === void 0 ? void 0 : _b.easing,
+    duration: 1000,
+};
+//# sourceMappingURL=props.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/core/handlers/createPageLoad/index.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/core/handlers/createPageLoad/index.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createPageLoad: () => (/* binding */ createPageLoad)
+/* harmony export */ });
+/* harmony import */ var _base_Callbacks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../base/Callbacks */ "./node_modules/vevet/lib/esm/base/Callbacks/index.js");
+/* harmony import */ var _internal_cn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../internal/cn */ "./node_modules/vevet/lib/esm/internal/cn.js");
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+/* harmony import */ var _utils_listeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utils/listeners */ "./node_modules/vevet/lib/esm/utils/listeners/addEventListener.js");
+
+
+
+
+function createPageLoad({ prefix, applyClassNames }) {
+    const callbacks = new _base_Callbacks__WEBPACK_IMPORTED_MODULE_0__.Callbacks();
+    let isLoaded = false;
+    if (_internal_env__WEBPACK_IMPORTED_MODULE_2__.doc.readyState === 'complete') {
+        setTimeout(() => handleLoaded(), 0);
+    }
+    else {
+        (0,_utils_listeners__WEBPACK_IMPORTED_MODULE_3__.addEventListener)(window, 'load', () => handleLoaded());
+    }
+    /** Callback on page loaded */
+    function handleLoaded() {
+        const { body } = document;
+        isLoaded = true;
+        if (applyClassNames) {
+            (0,_internal_cn__WEBPACK_IMPORTED_MODULE_1__.cnRemove)(_internal_env__WEBPACK_IMPORTED_MODULE_2__.html, `${prefix}loading`);
+            (0,_internal_cn__WEBPACK_IMPORTED_MODULE_1__.cnRemove)(body, `${prefix}loading`);
+            (0,_internal_cn__WEBPACK_IMPORTED_MODULE_1__.cnAdd)(_internal_env__WEBPACK_IMPORTED_MODULE_2__.html, `${prefix}loaded`);
+        }
+        callbacks.emit('loaded', undefined);
+    }
+    /** Add a callback on page load */
+    function onLoad(callback) {
+        if (isLoaded) {
+            callback();
+            return () => { };
+        }
+        return callbacks.on('loaded', () => callback());
+    }
+    return { onLoad, getIsLoaded: () => isLoaded };
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/core/handlers/createViewport/index.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/core/handlers/createViewport/index.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createViewport: () => (/* binding */ createViewport)
+/* harmony export */ });
+/* harmony import */ var _base_Callbacks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../base/Callbacks */ "./node_modules/vevet/lib/esm/base/Callbacks/index.js");
+/* harmony import */ var _internal_cn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../internal/cn */ "./node_modules/vevet/lib/esm/internal/cn.js");
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+/* harmony import */ var _internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../internal/isFiniteNumber */ "./node_modules/vevet/lib/esm/internal/isFiniteNumber.js");
+/* harmony import */ var _utils_listeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utils/listeners */ "./node_modules/vevet/lib/esm/utils/listeners/addEventListener.js");
+
+
+
+
+
+function createViewport({ prefix, props, isMobile, isInApp, browserName, }) {
+    // create styles
+    let styles = _internal_env__WEBPACK_IMPORTED_MODULE_2__.doc.getElementById('vevet_css_preset');
+    if (!styles) {
+        styles = _internal_env__WEBPACK_IMPORTED_MODULE_2__.doc.createElement('style');
+        styles.id = 'vevet_css_preset';
+        _internal_env__WEBPACK_IMPORTED_MODULE_2__.body.appendChild(styles);
+    }
+    // create svh helper
+    const svhHelper = _internal_env__WEBPACK_IMPORTED_MODULE_2__.doc.createElement('div');
+    const { style } = svhHelper;
+    svhHelper.id = 'vevet_svh_helper';
+    style.position = 'fixed';
+    style.top = '-100svh';
+    style.left = '-100px';
+    style.width = '1px';
+    style.height = '100svh';
+    _internal_env__WEBPACK_IMPORTED_MODULE_2__.body.appendChild(svhHelper);
+    // create callbacks
+    const callbacks = new _base_Callbacks__WEBPACK_IMPORTED_MODULE_0__.Callbacks();
+    // default data
+    const data = {
+        width: 0,
+        height: 0,
+        sHeight: 0,
+        vw: 0,
+        vh: 0,
+        svh: 0,
+        scrollbarWidth: 0,
+        rem: 16,
+        landscape: false,
+        portrait: false,
+        dpr: window.devicePixelRatio,
+        lowerDpr: window.devicePixelRatio,
+    };
+    // update values for the first time
+    updateValues();
+    updateClassNames();
+    updateCSSVars();
+    // add resize events
+    let debounce;
+    function debounceResize() {
+        if (debounce) {
+            clearTimeout(debounce);
+            debounce = undefined;
+        }
+        if (props.resizeDebounce) {
+            debounce = setTimeout(() => onResize(), props.resizeDebounce);
+        }
+        else {
+            onResize();
+        }
+    }
+    (0,_utils_listeners__WEBPACK_IMPORTED_MODULE_4__.addEventListener)(window, 'resize', () => debounceResize());
+    const observer = new ResizeObserver(() => debounceResize());
+    observer.observe(_internal_env__WEBPACK_IMPORTED_MODULE_2__.html);
+    observer.observe(_internal_env__WEBPACK_IMPORTED_MODULE_2__.body);
+    /** Event on window resize */
+    function onResize() {
+        const { width: prevWidth, height: prevHeight } = data;
+        updateValues();
+        updateClassNames();
+        updateCSSVars();
+        const { width, height } = data;
+        callbacks.emit('trigger', undefined);
+        if (width !== prevWidth || height !== prevHeight) {
+            callbacks.emit('any', undefined);
+        }
+        if (width !== prevWidth && height === prevHeight) {
+            callbacks.emit('onlyWidth', undefined);
+        }
+        if (height !== prevHeight && width === prevWidth) {
+            callbacks.emit('onlyHeight', undefined);
+        }
+        if (width !== prevWidth && height !== prevHeight) {
+            callbacks.emit('both', undefined);
+        }
+        if (width !== prevWidth) {
+            callbacks.emit('width', undefined);
+        }
+        if (height !== prevHeight) {
+            callbacks.emit('height', undefined);
+        }
+    }
+    /** Update viewport values */
+    function updateValues() {
+        const { width: prevWidth } = data;
+        const vWidth = window.innerWidth;
+        const vHeight = window.innerHeight;
+        data.width = vWidth;
+        data.height = vHeight;
+        data.scrollbarWidth = vWidth - _internal_env__WEBPACK_IMPORTED_MODULE_2__.html.clientWidth;
+        data.vw = data.width / 100;
+        data.vh = data.height / 100;
+        const rootStyles = getComputedStyle(_internal_env__WEBPACK_IMPORTED_MODULE_2__.html);
+        const fontSize = parseFloat(rootStyles.fontSize);
+        data.rem = (0,_internal_isFiniteNumber__WEBPACK_IMPORTED_MODULE_3__.isFiniteNumber)(fontSize) ? fontSize : 16;
+        data.landscape = data.width > data.height;
+        data.portrait = data.width < data.height;
+        data.dpr = window.devicePixelRatio;
+        data.lowerDpr = !isMobile ? 1 : Math.min(data.dpr, 2);
+        // for in-app browser, update svh only if width changed
+        if (isMobile && (isInApp || browserName.includes('fxios'))) {
+            const rootHeight = _internal_env__WEBPACK_IMPORTED_MODULE_2__.html.clientHeight;
+            if (prevWidth !== data.width || !data.sHeight) {
+                data.sHeight = rootHeight;
+                data.svh = data.sHeight / 100;
+            }
+            else if (prevWidth === data.width && rootHeight < data.sHeight) {
+                data.sHeight = rootHeight;
+                data.svh = data.sHeight / 100;
+            }
+        }
+        else {
+            // when other browser, update svh directly
+            data.svh = svhHelper.clientHeight / 100 || _internal_env__WEBPACK_IMPORTED_MODULE_2__.html.clientHeight / 100;
+            data.sHeight = data.svh * 100;
+        }
+    }
+    /** Update page classnames according to the viewport data */
+    function updateClassNames() {
+        if (!props.applyClassNames) {
+            return;
+        }
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_1__.cnToggle)(_internal_env__WEBPACK_IMPORTED_MODULE_2__.html, `${prefix}landscape`, data.landscape);
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_1__.cnToggle)(_internal_env__WEBPACK_IMPORTED_MODULE_2__.html, `${prefix}portrait`, data.portrait);
+    }
+    /** Update CSS variables */
+    function updateCSSVars() {
+        styles.innerHTML = `
+      html {
+        --vw: ${data.vw}px;
+        --vh: ${data.vh}px;
+        --svh: ${data.svh}px;
+        --scrollbar-width: ${data.scrollbarWidth}px;
+      }
+    `;
+    }
+    return { data, callbacks };
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/core/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/core/index.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Core: () => (/* binding */ Core)
+/* harmony export */ });
+/* harmony import */ var detect_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! detect-browser */ "./node_modules/detect-browser/es/index.js");
+/* harmony import */ var inapp_spy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! inapp-spy */ "./node_modules/inapp-spy/dist/index.mjs");
+/* harmony import */ var ismobilejs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ismobilejs */ "./node_modules/ismobilejs/esm/index.js");
+/* harmony import */ var _internal_cn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../internal/cn */ "./node_modules/vevet/lib/esm/internal/cn.js");
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+/* harmony import */ var _manifest_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../manifest.json */ "./node_modules/vevet/lib/esm/manifest.json");
+/* harmony import */ var _handlers_createPageLoad__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./handlers/createPageLoad */ "./node_modules/vevet/lib/esm/core/handlers/createPageLoad/index.js");
+/* harmony import */ var _handlers_createViewport__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./handlers/createViewport */ "./node_modules/vevet/lib/esm/core/handlers/createViewport/index.js");
+
+
+
+
+
+
+
+
+function Core(input) {
+    // set default properties
+    var _a;
+    const defaultProps = {
+        resizeDebounce: 0,
+        easing: [0.25, 0.1, 0.25, 1],
+        applyClassNames: false,
+    };
+    const props = Object.assign(Object.assign({}, defaultProps), input);
+    const prefix = 'v-';
+    // device info
+    const browserData = (0,detect_browser__WEBPACK_IMPORTED_MODULE_0__.detect)();
+    const device = (0,ismobilejs__WEBPACK_IMPORTED_MODULE_2__["default"])();
+    const osName = (_a = ((browserData === null || browserData === void 0 ? void 0 : browserData.os) || '')) === null || _a === void 0 ? void 0 : _a.split(' ')[0].toLowerCase();
+    const browserName = ((browserData === null || browserData === void 0 ? void 0 : browserData.name) || '').toLowerCase();
+    const isMobileByUserAgent = device.phone || device.tablet;
+    let isMobile = isMobileByUserAgent;
+    if (!isMobile) {
+        if (!window.matchMedia('(pointer: fine)').matches) {
+            isMobile = true;
+        }
+    }
+    const { isInApp, appName } = (0,inapp_spy__WEBPACK_IMPORTED_MODULE_1__["default"])();
+    const inAppBrowser = isInApp ? (appName || 'unknown').toLowerCase() : false;
+    // events
+    const pageLoad = (0,_handlers_createPageLoad__WEBPACK_IMPORTED_MODULE_6__.createPageLoad)({
+        prefix,
+        applyClassNames: props.applyClassNames,
+    });
+    const viewport = (0,_handlers_createViewport__WEBPACK_IMPORTED_MODULE_7__.createViewport)({
+        prefix,
+        props,
+        isMobile,
+        isInApp,
+        browserName,
+    });
+    // output
+    const output = Object.assign(Object.assign({}, viewport.data), { viewportCallbacks: viewport.callbacks, version: _manifest_json__WEBPACK_IMPORTED_MODULE_5__.version, props,
+        prefix, phone: device.phone, tablet: device.tablet, mobile: isMobile, osName,
+        browserName,
+        inAppBrowser,
+        doc: _internal_env__WEBPACK_IMPORTED_MODULE_4__.doc,
+        html: _internal_env__WEBPACK_IMPORTED_MODULE_4__.html,
+        body: _internal_env__WEBPACK_IMPORTED_MODULE_4__.body, loaded: false, onLoad: pageLoad.onLoad, onResize: (...params) => viewport.callbacks.on(...params) });
+    // update props on page load
+    pageLoad.onLoad(() => {
+        output.loaded = true;
+    });
+    // update props on viewport change
+    viewport.callbacks.add('trigger', () => {
+        const keys = Object.keys(viewport.data);
+        keys.forEach((key) => {
+            // @ts-ignore
+            output[key] = viewport.data[key];
+        });
+    }, { protected: true, name: 'vevet core' });
+    // set device features
+    (function setDeviceFeatures() {
+        if (!props.applyClassNames) {
+            return;
+        }
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_3__.cnAdd)(_internal_env__WEBPACK_IMPORTED_MODULE_4__.html, `${prefix}os-${osName}`);
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_3__.cnAdd)(_internal_env__WEBPACK_IMPORTED_MODULE_4__.html, `${prefix}browser-${browserName}`);
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_3__.cnToggle)(_internal_env__WEBPACK_IMPORTED_MODULE_4__.html, `${prefix}phone`, output.phone);
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_3__.cnToggle)(_internal_env__WEBPACK_IMPORTED_MODULE_4__.html, `${prefix}tablet`, output.tablet);
+        (0,_internal_cn__WEBPACK_IMPORTED_MODULE_3__.cnToggle)(_internal_env__WEBPACK_IMPORTED_MODULE_4__.html, `${prefix}mobile`, output.mobile);
+    })();
+    return output;
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/global/initVevet.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/global/initVevet.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initVevet: () => (/* binding */ initVevet)
+/* harmony export */ });
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./node_modules/vevet/lib/esm/core/index.js");
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+
+
+/**
+ * @group Utils
+ */
+function initVevet() {
+    var _a;
+    if (!_internal_env__WEBPACK_IMPORTED_MODULE_1__.isBrowser) {
+        return undefined;
+    }
+    if (window.vevet5) {
+        return window.vevet5;
+    }
+    const coreProps = (_a = window.VEVET_PROPS) !== null && _a !== void 0 ? _a : {};
+    const core = (0,_core__WEBPACK_IMPORTED_MODULE_0__.Core)(coreProps);
+    window.vevet5 = core;
+    return window.vevet5;
+}
+// auto initialize
+if (_internal_env__WEBPACK_IMPORTED_MODULE_1__.isBrowser) {
+    window.vevet5 = initVevet();
+}
+//# sourceMappingURL=initVevet.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/cn.js":
+/*!***************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/cn.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cnAdd: () => (/* binding */ cnAdd),
+/* harmony export */   cnHas: () => (/* binding */ cnHas),
+/* harmony export */   cnRemove: () => (/* binding */ cnRemove),
+/* harmony export */   cnToggle: () => (/* binding */ cnToggle)
+/* harmony export */ });
+function cnAdd(element, className) {
+    element.classList.add(className);
+}
+function cnRemove(element, className) {
+    if (className) {
+        element.classList.remove(className);
+    }
+}
+function cnToggle(element, className, is) {
+    if (className) {
+        element.classList.toggle(className, is);
+    }
+}
+function cnHas(element, className) {
+    return element.classList.contains(className);
+}
+//# sourceMappingURL=cn.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/env.js":
+/*!****************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/env.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   body: () => (/* binding */ body),
+/* harmony export */   doc: () => (/* binding */ doc),
+/* harmony export */   html: () => (/* binding */ html),
+/* harmony export */   isBrowser: () => (/* binding */ isBrowser)
+/* harmony export */ });
+const isBrowser = typeof window !== 'undefined';
+const doc = (isBrowser ? document : undefined);
+const html = (isBrowser ? doc.documentElement : undefined);
+const body = (isBrowser ? doc.body : undefined);
+//# sourceMappingURL=env.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/isFiniteNumber.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/isFiniteNumber.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isFiniteNumber: () => (/* binding */ isFiniteNumber)
+/* harmony export */ });
+/* harmony import */ var _isNumber__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isNumber */ "./node_modules/vevet/lib/esm/internal/isNumber.js");
+
+function isFiniteNumber(value) {
+    return (0,_isNumber__WEBPACK_IMPORTED_MODULE_0__.isNumber)(value) && !Number.isNaN(value) && Number.isFinite(value);
+}
+//# sourceMappingURL=isFiniteNumber.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/isNumber.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/isNumber.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isNumber: () => (/* binding */ isNumber)
+/* harmony export */ });
+function isNumber(value) {
+    return typeof value === 'number';
+}
+//# sourceMappingURL=isNumber.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/isUndefined.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/isUndefined.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isUndefined: () => (/* binding */ isUndefined)
+/* harmony export */ });
+function isUndefined(value) {
+    return typeof value === 'undefined';
+}
+//# sourceMappingURL=isUndefined.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/mergeWithNoUndefined.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/mergeWithNoUndefined.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   mergeWithNoUndefined: () => (/* binding */ mergeWithNoUndefined)
+/* harmony export */ });
+function mergeWithNoUndefined(source, add) {
+    const addKeys = Object.keys(add);
+    const addNonUndefinedKeys = addKeys.filter((key) => add[key] !== undefined);
+    const newAdd = addNonUndefinedKeys.reduce((acc, key) => {
+        acc[key] = add[key];
+        return acc;
+    }, {});
+    return Object.assign(Object.assign({}, source), newAdd);
+}
+//# sourceMappingURL=mergeWithNoUndefined.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/noopIfDestroyed.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/noopIfDestroyed.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   noopIfDestroyed: () => (/* binding */ noopIfDestroyed)
+/* harmony export */ });
+/* eslint-disable no-underscore-dangle */
+function noopIfDestroyed(target, propertyKey, descriptor) {
+    const originalMethod = descriptor.value;
+    descriptor.value = function check(...args) {
+        if (this._isDestroyed) {
+            return;
+        }
+        return originalMethod.apply(this, args);
+    };
+}
+//# sourceMappingURL=noopIfDestroyed.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/onlyFinite.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/onlyFinite.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   onlyFinite: () => (/* binding */ onlyFinite)
+/* harmony export */ });
+/* harmony import */ var _isFiniteNumber__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isFiniteNumber */ "./node_modules/vevet/lib/esm/internal/isFiniteNumber.js");
+
+function onlyFinite(value, defaultValue = 0) {
+    if ((0,_isFiniteNumber__WEBPACK_IMPORTED_MODULE_0__.isFiniteNumber)(value)) {
+        return value;
+    }
+    return defaultValue;
+}
+//# sourceMappingURL=onlyFinite.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/prependStyles.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/prependStyles.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   prependStyles: () => (/* binding */ prependStyles)
+/* harmony export */ });
+function prependStyles(style) {
+    var _a;
+    const firstStyles = document.querySelector('link[rel="stylesheet"], style');
+    if (firstStyles) {
+        (_a = firstStyles.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(style, firstStyles);
+    }
+    else {
+        document.head.appendChild(style);
+    }
+}
+//# sourceMappingURL=prependStyles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/safeAction.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/safeAction.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   safeAction: () => (/* binding */ safeAction)
+/* harmony export */ });
+function safeAction(action) {
+    try {
+        action();
+    }
+    catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+    }
+}
+//# sourceMappingURL=safeAction.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/textDirection.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/textDirection.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getTextDirection: () => (/* binding */ getTextDirection)
+/* harmony export */ });
+function getTextDirection(element) {
+    return window.getComputedStyle(element).direction;
+}
+//# sourceMappingURL=textDirection.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/internal/unwrapAngle.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/internal/unwrapAngle.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   unwrapAngleDelta: () => (/* binding */ unwrapAngleDelta)
+/* harmony export */ });
+function unwrapAngleDelta(raw, prevRaw) {
+    const halfTurn = 180;
+    let delta = raw - prevRaw;
+    if (delta > halfTurn) {
+        delta -= halfTurn * 2;
+    }
+    else if (delta < -halfTurn) {
+        delta += halfTurn * 2;
+    }
+    return delta;
+}
+//# sourceMappingURL=unwrapAngle.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/manifest.json":
+/*!**************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/manifest.json ***!
+  \**************************************************/
+/***/ ((module) => {
+
+module.exports = {"version":"5.10.0"};
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/utils/common/closest.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/utils/common/closest.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   closest: () => (/* binding */ closest)
+/* harmony export */ });
+/**
+ * Get closest value in array to target value.
+ *
+ * @example
+ * closest(5, [3, 6, 9, 12, 15]); // => 6
+ */
+function closest(target, values) {
+    if (!Array.isArray(values) || values.length === 0) {
+        return target;
+    }
+    return values.reduce((prev, curr) => Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev);
+}
+//# sourceMappingURL=closest.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/utils/common/toPixels.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/utils/common/toPixels.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   toPixels: () => (/* binding */ toPixels)
+/* harmony export */ });
+/* harmony import */ var _global_initVevet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../global/initVevet */ "./node_modules/vevet/lib/esm/global/initVevet.js");
+/* harmony import */ var _internal_env__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../internal/env */ "./node_modules/vevet/lib/esm/internal/env.js");
+/* harmony import */ var _internal_isNumber__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../internal/isNumber */ "./node_modules/vevet/lib/esm/internal/isNumber.js");
+/* harmony import */ var _internal_onlyFinite__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../internal/onlyFinite */ "./node_modules/vevet/lib/esm/internal/onlyFinite.js");
+
+
+
+
+/**
+ * Transform value to pixels. Supported units: `px` | 'rem' | 'vw' | 'vh' | 'svh'.
+ *
+ * @group Utils
+ *
+ * @example
+ * toPixels('100px'); // => 100
+ * toPixels('1vw'); // => 19.20
+ */
+function toPixels(value) {
+    if (!_internal_env__WEBPACK_IMPORTED_MODULE_1__.isBrowser) {
+        return 0;
+    }
+    const app = (0,_global_initVevet__WEBPACK_IMPORTED_MODULE_0__.initVevet)();
+    if (!window.vevet5_toPixelsCache) {
+        window.vevet5_toPixelsCache = new Map();
+        app.onResize('any', () => {
+            window.vevet5_toPixelsCache.clear();
+        }, { name: 'toPixels' });
+    }
+    if (window.vevet5_toPixelsCache.has(value)) {
+        return window.vevet5_toPixelsCache.get(value);
+    }
+    let finalValue = 0;
+    const num = parseFloat(`${value}`);
+    if ((0,_internal_isNumber__WEBPACK_IMPORTED_MODULE_2__.isNumber)(value)) {
+        finalValue = value;
+    }
+    else if (Number.isNaN(num)) {
+        finalValue = 0;
+    }
+    else if (value.includes('rem')) {
+        finalValue = num * app.rem;
+    }
+    else if (value.includes('vw')) {
+        finalValue = num * app.vw;
+    }
+    else if (value.includes('vh')) {
+        finalValue = num * app.vh;
+    }
+    else if (value.includes('svh')) {
+        finalValue = num * app.svh;
+    }
+    else if (value.includes('px')) {
+        finalValue = num;
+    }
+    finalValue = (0,_internal_onlyFinite__WEBPACK_IMPORTED_MODULE_3__.onlyFinite)(finalValue);
+    window.vevet5_toPixelsCache.set(value, finalValue);
+    return finalValue;
+}
+//# sourceMappingURL=toPixels.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/utils/common/uid.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/utils/common/uid.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   uid: () => (/* binding */ uid)
+/* harmony export */ });
+let index = 0;
+/**
+ * Generates a unique ID with an optional prefix.
+ *
+ * This function returns a string that combines a prefix (default is 'id') with a unique incrementing number.
+ * It ensures each call will return a unique identifier.
+ *
+ * @group Utils
+ *
+ * @example
+ * uid(); // => 'id_1'
+ * uid('test'); // => 'test_2'
+ * uid(0); // => '0_3'
+ */
+function uid(prefix = 'id') {
+    index += 1;
+    return `${prefix}_${index}`;
+}
+//# sourceMappingURL=uid.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/utils/listeners/addEventListener.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/utils/listeners/addEventListener.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addEventListener: () => (/* binding */ addEventListener)
+/* harmony export */ });
+/**
+ * A utility function to add an event listener to a specified element.
+ *
+ * This function adds an event listener for the specified event type and
+ * returns a function that can be called to remove the event listener.
+ *
+ * @param element - The target element to which the event listener will be attached.
+ * @param target - The name of the event to listen for (e.g., 'click', 'scroll').
+ * @param listener - The callback function to execute when the event occurs.
+ * @param options - Optional parameters for the event listener.
+ *
+ * @group Utils
+ *
+ * @example
+ * const button = document.getElementById('myButton');
+ * const removeClickListener = addEventListener(button, 'click', (event) => {
+ *   console.log('Button clicked!');
+ * });
+ *
+ * // To remove the event listener later
+ * removeClickListener();
+ */
+function addEventListener(element, target, listener, options) {
+    element.addEventListener(target, listener, options);
+    const remove = () => {
+        element.removeEventListener(target, listener, options);
+    };
+    return remove;
+}
+//# sourceMappingURL=addEventListener.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/utils/listeners/onResize.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/utils/listeners/onResize.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   onResize: () => (/* binding */ onResize)
+/* harmony export */ });
+/* harmony import */ var _global_initVevet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../global/initVevet */ "./node_modules/vevet/lib/esm/global/initVevet.js");
+
+/**
+ * Adds resize listeners to elements (using `ResizeObserver`) and/or the viewport.
+ *
+ * @group Utils
+ *
+ * @example
+ * const resizeWithElement = onResize({
+ *   callback: () => console.log('Element resized'),
+ *   element: document.getElementById('app'),
+ * });
+ *
+ * const resizeWithViewport = onResize({
+ *   callback: () => console.log('Viewport resized'),
+ *   viewportTarget: 'width',
+ * });
+ *
+ * const resizeWithBoth = onResize({
+ *   callback: () => console.log('Both resized'),
+ *   element: document.getElementById('app'),
+ *   viewportTarget: 'any',
+ * });
+ */
+function onResize({ callback, element, viewportTarget = 'width', resizeDebounce = 0, name, }) {
+    const core = (0,_global_initVevet__WEBPACK_IMPORTED_MODULE_0__.initVevet)();
+    let timeout;
+    let resizeObserver;
+    let viewportCallback;
+    const debounceResize = (delay) => {
+        if (timeout) {
+            clearTimeout(timeout);
+            timeout = undefined;
+        }
+        timeout = setTimeout(() => callback(), delay !== null && delay !== void 0 ? delay : resizeDebounce);
+    };
+    // Initialize ResizeObserver if element is provided
+    if (element) {
+        resizeObserver = new ResizeObserver(() => {
+            debounceResize(core.props.resizeDebounce + resizeDebounce);
+        });
+        (Array.isArray(element) ? element : [element]).forEach((el) => {
+            resizeObserver === null || resizeObserver === void 0 ? void 0 : resizeObserver.observe(el);
+        });
+    }
+    // Attach viewport event listeners if specified
+    if (viewportTarget) {
+        viewportCallback = core.onResize(viewportTarget, () => debounceResize(), {
+            name,
+        });
+    }
+    return {
+        remove: () => {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+            resizeObserver === null || resizeObserver === void 0 ? void 0 : resizeObserver.disconnect();
+            viewportCallback === null || viewportCallback === void 0 ? void 0 : viewportCallback();
+        },
+        resize: () => callback(),
+        debounceResize: () => debounceResize(),
+    };
+}
+//# sourceMappingURL=onResize.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/utils/math/clamp.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/utils/math/clamp.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   clamp: () => (/* binding */ clamp)
+/* harmony export */ });
+/**
+ * Restricts a value to lie within a specified range.
+ *
+ * Ensures that `value` is no less than `min` and no greater than `max`.
+ *
+ * @param {number} value - The input value to be clamped.
+ * @param {number} [min=0] - The lower bound of the range (default is 0).
+ * @param {number} [max=1] - The upper bound of the range (default is 1).
+ * @returns {number} - The clamped value within the range [min, max].
+ *
+ * @group Utils
+ *
+ * @example
+ * clamp(1.5, 0.1, 0.9); // 0.9
+ * clamp(0.001, 0.1, 0.9); // 0.1
+ * clamp(0.5, 0, 1); // 0.5
+ */
+function clamp(value, min = 0, max = 1) {
+    const realMin = Math.min(min, max);
+    const realMax = Math.max(min, max);
+    return Math.max(realMin, Math.min(value, realMax));
+}
+//# sourceMappingURL=clamp.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/utils/math/easing.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/utils/math/easing.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EaseInBack: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_2__.EaseInBack),
+/* harmony export */   EaseInBounce: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_3__.EaseInBounce),
+/* harmony export */   EaseInCirc: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_4__.EaseInCirc),
+/* harmony export */   EaseInCubic: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_5__.EaseInCubic),
+/* harmony export */   EaseInElastic: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_6__.EaseInElastic),
+/* harmony export */   EaseInExpo: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_7__.EaseInExpo),
+/* harmony export */   EaseInOutBack: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_8__.EaseInOutBack),
+/* harmony export */   EaseInOutBounce: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_9__.EaseInOutBounce),
+/* harmony export */   EaseInOutCirc: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_10__.EaseInOutCirc),
+/* harmony export */   EaseInOutCubic: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_11__.EaseInOutCubic),
+/* harmony export */   EaseInOutElastic: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_12__.EaseInOutElastic),
+/* harmony export */   EaseInOutExpo: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_13__.EaseInOutExpo),
+/* harmony export */   EaseInOutQuad: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_14__.EaseInOutQuad),
+/* harmony export */   EaseInOutQuart: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_15__.EaseInOutQuart),
+/* harmony export */   EaseInOutQuint: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_16__.EaseInOutQuint),
+/* harmony export */   EaseInOutSine: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_17__.EaseInOutSine),
+/* harmony export */   EaseInQuad: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_18__.EaseInQuad),
+/* harmony export */   EaseInQuart: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_19__.EaseInQuart),
+/* harmony export */   EaseInQuint: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_20__.EaseInQuint),
+/* harmony export */   EaseInSine: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_21__.EaseInSine),
+/* harmony export */   EaseOutBack: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_22__.EaseOutBack),
+/* harmony export */   EaseOutBounce: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_23__.EaseOutBounce),
+/* harmony export */   EaseOutCirc: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_24__.EaseOutCirc),
+/* harmony export */   EaseOutCubic: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_25__.EaseOutCubic),
+/* harmony export */   EaseOutElastic: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_26__.EaseOutElastic),
+/* harmony export */   EaseOutExpo: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_27__.EaseOutExpo),
+/* harmony export */   EaseOutQuad: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_28__.EaseOutQuad),
+/* harmony export */   EaseOutQuart: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_29__.EaseOutQuart),
+/* harmony export */   EaseOutQuint: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_30__.EaseOutQuint),
+/* harmony export */   EaseOutSine: () => (/* reexport safe */ easing_progress__WEBPACK_IMPORTED_MODULE_31__.EaseOutSine),
+/* harmony export */   easing: () => (/* binding */ easing)
+/* harmony export */ });
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.js");
+/* harmony import */ var _global_initVevet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../global/initVevet */ "./node_modules/vevet/lib/esm/global/initVevet.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInBack.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInBounce.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInCirc.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInCubic.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInElastic.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInExpo.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutBack.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutBounce.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutCirc.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutCubic.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutElastic.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutExpo.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutQuad.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutQuart.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutQuint.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInOutSine.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInQuad.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInQuart.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInQuint.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeInSine.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutBack.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutBounce.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutCirc.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutCubic.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutElastic.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutExpo.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutQuad.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutQuart.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutQuint.js");
+/* harmony import */ var easing_progress__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! easing-progress */ "./node_modules/easing-progress/lib/esm/easing.net/easeOutSine.js");
+
+
+
+/**
+ * Applies an easing function to a given progress value.
+ *
+ * This function calculates eased progress using a specified easing function,
+ * bezier curve, or custom easing function.
+ *
+ * @param {number} progress - The current progress value, typically between 0 and 1.
+ * @param {TEasingType} easingType - The easing method to apply. It can be:
+ *   - A predefined easing function (e.g., `EaseInBounce`).
+ *   - A bezier array (e.g., `[0.25, 0.1, 0.25, 1]`).
+ *   - A custom easing function (e.g., `(value) => Math.sin(Math.PI * 0.5 * value)`).
+ * @returns {number} - The eased progress value.
+ *
+ * @group Utils
+ *
+ * @example
+ * easing(0.35, EaseInBounce);
+ * // => 0.167 (eased progress using EaseInBounce)
+ *
+ * easing(0.35, [0.25, 0.1, 0.25, 1]);
+ * // => 0.604 (eased progress using a bezier curve)
+ *
+ * easing(0.35, (value) => Math.sin(Math.PI * 0.5 * value));
+ * // => 0.522 (eased progress using a custom easing function)
+ */
+const easing = (progress, easingType) => { var _a; if (easingType === void 0) { easingType = (_a = (0,_global_initVevet__WEBPACK_IMPORTED_MODULE_1__.initVevet)().props.easing) !== null && _a !== void 0 ? _a : false; } return (0,easing_progress__WEBPACK_IMPORTED_MODULE_0__.easing)(progress, easingType); };
+//# sourceMappingURL=easing.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vevet/lib/esm/utils/math/lerp.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/vevet/lib/esm/utils/math/lerp.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   lerp: () => (/* binding */ lerp)
+/* harmony export */ });
+/**
+ * Performs linear interpolation (LERP) between a current value and a target value using an easing factor.
+ *
+ * Linear interpolation calculates an intermediate value between `current` and `target`
+ * based on a given `factor`, providing smooth transitions.
+ *
+ * @param {number} current - The starting value.
+ * @param {number} target - The end value.
+ * @param {number} factor - The interpolation factor, typically between 0 and 1. A lower value results in slower interpolation, while a higher value makes it faster.
+ * @param {number} [approximation=0] - A small threshold to determine when the difference between the interpolated value and the target is negligible. If the difference is within this threshold, the function returns `target` directly.
+ * @returns {number} - The interpolated value.
+ *
+ * @group Utils
+ *
+ * @example
+ * lerp(0, 1, 0.4);
+ * // => 0.4 (40% progress from 0 to 1)
+ *
+ * lerp(0.75, 0.8, 0.98);
+ * // => 0.799 (close to the target but not exactly 0.8)
+ *
+ * lerp(0.75, 0.8, 0.98, 0.01);
+ * // => 0.8 (within the approximation threshold)
+ */
+function lerp(current, target, factor, approximation = 0) {
+    const value = current + (target - current) * factor;
+    const difference = Math.abs(target - value);
+    if (difference <= approximation) {
+        return target;
+    }
+    return value;
+}
+//# sourceMappingURL=lerp.js.map
+
+/***/ }),
+
 /***/ "./src/js/_components.js":
 /*!*******************************!*\
   !*** ./src/js/_components.js ***!
@@ -10588,18 +16165,25 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_custom_select_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/_custom-select.js */ "./src/js/components/_custom-select.js");
-/* harmony import */ var _components_open_mobile_menu_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/_open-mobile-menu.js */ "./src/js/components/_open-mobile-menu.js");
-/* harmony import */ var _components_move_header_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/_move-header.js */ "./src/js/components/_move-header.js");
-/* harmony import */ var _components_popup_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/_popup.js */ "./src/js/components/_popup.js");
-/* harmony import */ var _components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/_navigation-swiper.js */ "./src/js/components/_navigation-swiper.js");
-/* harmony import */ var _components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/_cards-swiper.js */ "./src/js/components/_cards-swiper.js");
-/* harmony import */ var _components_move_hero_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/_move-hero.js */ "./src/js/components/_move-hero.js");
-/* harmony import */ var _components_tabs_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/_tabs.js */ "./src/js/components/_tabs.js");
-/* harmony import */ var _components_modal_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/_modal.js */ "./src/js/components/_modal.js");
-/* harmony import */ var _components_rating_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/_rating.js */ "./src/js/components/_rating.js");
-/* harmony import */ var _components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/_button-scroll-top.js */ "./src/js/components/_button-scroll-top.js");
-// import { openVisibleFontCardContent, setAccordeonToggles } from './components/_accordion.js';
+/* harmony import */ var _components_accordion_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/_accordion.js */ "./src/js/components/_accordion.js");
+/* harmony import */ var _components_custom_select_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/_custom-select.js */ "./src/js/components/_custom-select.js");
+/* harmony import */ var _components_open_mobile_menu_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/_open-mobile-menu.js */ "./src/js/components/_open-mobile-menu.js");
+/* harmony import */ var _components_move_header_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/_move-header.js */ "./src/js/components/_move-header.js");
+/* harmony import */ var _components_popup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/_popup.js */ "./src/js/components/_popup.js");
+/* harmony import */ var _components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/_navigation-swiper.js */ "./src/js/components/_navigation-swiper.js");
+/* harmony import */ var _components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/_cards-swiper.js */ "./src/js/components/_cards-swiper.js");
+/* harmony import */ var _components_move_hero_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/_move-hero.js */ "./src/js/components/_move-hero.js");
+/* harmony import */ var _components_tabs_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/_tabs.js */ "./src/js/components/_tabs.js");
+/* harmony import */ var _components_modal_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/_modal.js */ "./src/js/components/_modal.js");
+/* harmony import */ var _components_rating_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/_rating.js */ "./src/js/components/_rating.js");
+/* harmony import */ var _components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/_button-scroll-top.js */ "./src/js/components/_button-scroll-top.js");
+/* harmony import */ var _components_advanced_search_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/_advanced-search.js */ "./src/js/components/_advanced-search.js");
+/* harmony import */ var _components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/_custom-scrollbar.js */ "./src/js/components/_custom-scrollbar.js");
+/* harmony import */ var _components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/_checkbox-select-all.js */ "./src/js/components/_checkbox-select-all.js");
+
+
+
+
 
 
 
@@ -10612,17 +16196,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  (0,_components_custom_select_js__WEBPACK_IMPORTED_MODULE_0__.renderCustomSelect)();
-  (0,_components_open_mobile_menu_js__WEBPACK_IMPORTED_MODULE_1__.setMobileMenu)();
-  (0,_components_move_header_js__WEBPACK_IMPORTED_MODULE_2__.moveHeader)();
-  (0,_components_popup_js__WEBPACK_IMPORTED_MODULE_3__.setPopup)();
-  (0,_components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_4__.setNavigationSwiper)();
-  (0,_components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_5__.initCardsSwiper)();
-  (0,_components_move_hero_js__WEBPACK_IMPORTED_MODULE_6__.moveHero)();
-  (0,_components_tabs_js__WEBPACK_IMPORTED_MODULE_7__.setTabs)();
-  (0,_components_modal_js__WEBPACK_IMPORTED_MODULE_8__.setModals)();
-  (0,_components_rating_js__WEBPACK_IMPORTED_MODULE_9__.setRating)();
-  (0,_components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_10__.addScrollButton)();
+  (0,_components_custom_select_js__WEBPACK_IMPORTED_MODULE_1__.renderCustomSelect)();
+  (0,_components_open_mobile_menu_js__WEBPACK_IMPORTED_MODULE_2__.setMobileMenu)();
+  (0,_components_move_header_js__WEBPACK_IMPORTED_MODULE_3__.moveHeader)();
+  (0,_components_popup_js__WEBPACK_IMPORTED_MODULE_4__.setPopup)();
+  (0,_components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_5__.setNavigationSwiper)();
+  (0,_components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_6__.initCardsSwiper)();
+  (0,_components_move_hero_js__WEBPACK_IMPORTED_MODULE_7__.moveHero)();
+  (0,_components_tabs_js__WEBPACK_IMPORTED_MODULE_8__.setTabs)();
+  (0,_components_modal_js__WEBPACK_IMPORTED_MODULE_9__.setModals)();
+  (0,_components_rating_js__WEBPACK_IMPORTED_MODULE_10__.setRating)();
+  (0,_components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_11__.addScrollButton)();
+  (0,_components_accordion_js__WEBPACK_IMPORTED_MODULE_0__.openVisibleContent)();
+  (0,_components_accordion_js__WEBPACK_IMPORTED_MODULE_0__.setAccordeonToggles)();
+  (0,_components_advanced_search_js__WEBPACK_IMPORTED_MODULE_12__.setAdvancedSearch)();
+  (0,_components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_13__.initCustomScrollbar)();
+  (0,_components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__.initSelectAllCheckbox)();
 });
 
 /***/ }),
@@ -10780,6 +16369,7 @@ const debounce = (callback, timeoutDelay = 500) => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   COUNT_GRID_COLUMNS: () => (/* binding */ COUNT_GRID_COLUMNS),
+/* harmony export */   COUNT_VISIBLE_FIELDS: () => (/* binding */ COUNT_VISIBLE_FIELDS),
 /* harmony export */   COUNT_VISIBLE_TAGS: () => (/* binding */ COUNT_VISIBLE_TAGS),
 /* harmony export */   DESKTOP_WIDTH: () => (/* binding */ DESKTOP_WIDTH),
 /* harmony export */   HEADER_FIXED_OFFSET: () => (/* binding */ HEADER_FIXED_OFFSET),
@@ -10804,6 +16394,7 @@ const SMALL_DESKTOP_WIDTH = window.matchMedia('(min-width: 1024px)');
 const DESKTOP_WIDTH = window.matchMedia('(min-width: 1366px)');
 const HEADER_FIXED_OFFSET = 500;
 const COUNT_VISIBLE_TAGS = 12;
+const COUNT_VISIBLE_FIELDS = 9;
 const MODAL_TIMER = 3000000;
 const TABS_DELAY = 5000;
 const TEXTAREA_LINEHEIGHT = 22;
@@ -10918,6 +16509,158 @@ const COUNT_GRID_COLUMNS = {
 
 /***/ }),
 
+/***/ "./src/js/components/_accordion.js":
+/*!*****************************************!*\
+  !*** ./src/js/components/_accordion.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   openDetails: () => (/* binding */ openDetails),
+/* harmony export */   openVisibleContent: () => (/* binding */ openVisibleContent),
+/* harmony export */   setAccordeonToggles: () => (/* binding */ setAccordeonToggles)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../_utils.js */ "./src/js/_utils.js");
+
+const accordionButtons = document.querySelectorAll('.accordion-button');
+const openVisibleContent = () => {
+  const visibleContent = document.querySelectorAll('.accordion-content--opened');
+  if (!accordionButtons.length || !visibleContent.length) return;
+  visibleContent.forEach(element => {
+    element.style.maxHeight = `${element.scrollHeight}px`;
+  });
+};
+const openDetails = evt => {
+  const currentButton = evt.target.closest('button');
+  const currentContent = currentButton.parentElement.querySelector('.accordion-content');
+  const accordionContainer = currentButton.closest('.accordion');
+  const isSingleMode = accordionContainer && accordionContainer.dataset.accordion === 'single';
+  if (isSingleMode) {
+    const allButtons = accordionContainer.querySelectorAll('.accordion-button');
+    const allContents = accordionContainer.querySelectorAll('.accordion-content');
+    allButtons.forEach(button => {
+      if (button !== currentButton) {
+        button.classList.remove('accordion-button--active');
+      }
+    });
+    allContents.forEach(content => {
+      if (content !== currentContent) {
+        content.classList.remove('accordion-content--opened');
+        content.style.maxHeight = null;
+      }
+    });
+  }
+  currentContent.classList.toggle('accordion-content--opened');
+  currentButton.classList.toggle('accordion-button--active');
+  if (currentContent.classList.contains('accordion-content--opened')) {
+    currentContent.style.maxHeight = `${currentContent.scrollHeight}px`;
+  } else {
+    currentContent.style.maxHeight = null;
+  }
+};
+const setAccordeonToggles = () => {
+  if (!accordionButtons.length) return;
+  accordionButtons.forEach(button => {
+    button.addEventListener('click', openDetails);
+  });
+};
+
+// пересчет высоты при ресайзе
+const recalcOpenedAccordionHeight = () => {
+  const openedContents = document.querySelectorAll('.accordion-content--opened');
+  if (!openedContents.length) return;
+  openedContents.forEach(content => {
+    content.style.maxHeight = null;
+    setTimeout(() => {
+      content.style.maxHeight = `${content.scrollHeight}px`;
+    }, 0);
+  });
+};
+const debounsedRecalc = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.debounce)(recalcOpenedAccordionHeight, 50);
+window.addEventListener('resize', debounsedRecalc);
+
+
+/***/ }),
+
+/***/ "./src/js/components/_advanced-search.js":
+/*!***********************************************!*\
+  !*** ./src/js/components/_advanced-search.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   setAdvancedSearch: () => (/* binding */ setAdvancedSearch)
+/* harmony export */ });
+/* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_vars.js */ "./src/js/_vars.js");
+
+const filter = document.querySelector('.filters');
+const form = filter ? filter.querySelector('.filters__form') : null;
+const filterContainer = form ? form.querySelector('.filters__fields-list') : null;
+const fieldsList = filterContainer ? filterContainer.querySelectorAll('.filters__group') : null;
+const advansedButton = form ? form.querySelector('.filters__advanced-search') : null;
+const setAdvancedSearch = () => {
+  if (!advansedButton || !fieldsList || !fieldsList.length) return;
+
+  // если фильтров мало, прячет кнопку расширенного поиска
+  if (fieldsList.length <= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
+    advansedButton.classList.add('hidden');
+    return;
+  }
+
+  // расчет высоты формы в открытом виде
+  const initialHeightForm = form.scrollHeight;
+
+  // расчет высоты списка со скрытыми элементами
+  fieldsList.forEach((field, index) => {
+    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
+      field.classList.add('hidden');
+    }
+  });
+  const initialHeightList = filterContainer.scrollHeight;
+  filterContainer.style.maxHeight = `${initialHeightList}px`;
+  fieldsList.forEach((field, index) => {
+    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
+      field.classList.remove('hidden');
+    }
+  });
+
+  // функции открытия и закрытия дополнительных полей
+  const showTags = () => {
+    fieldsList.forEach((field, index) => {
+      if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
+        field.classList.remove('field-hidden');
+      }
+    });
+    filterContainer.style.maxHeight = `${filterContainer.scrollHeight}px`;
+    form.style.maxHeight = `${initialHeightForm}px`;
+    advansedButton.classList.add('js-hide-all');
+    advansedButton.textContent = 'Простой поиск';
+  };
+  const hideTags = () => {
+    form.style.maxHeight = `${initialHeightForm}px`;
+    filterContainer.style.maxHeight = `${initialHeightList}px`;
+    fieldsList.forEach((field, index) => {
+      if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
+        field.classList.add('field-hidden');
+      }
+    });
+    advansedButton.classList.remove('js-hide-all');
+    advansedButton.textContent = 'Расширенный поиск';
+  };
+  advansedButton.addEventListener('click', () => {
+    if (!advansedButton.classList.contains('js-hide-all')) {
+      showTags();
+    } else {
+      hideTags();
+    }
+  });
+};
+
+
+/***/ }),
+
 /***/ "./src/js/components/_button-scroll-top.js":
 /*!*************************************************!*\
   !*** ./src/js/components/_button-scroll-top.js ***!
@@ -10996,6 +16739,69 @@ const initCardsSwiper = () => {
       }
     };
     initImgSwiper();
+  });
+};
+
+
+/***/ }),
+
+/***/ "./src/js/components/_checkbox-select-all.js":
+/*!***************************************************!*\
+  !*** ./src/js/components/_checkbox-select-all.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initSelectAllCheckbox: () => (/* binding */ initSelectAllCheckbox)
+/* harmony export */ });
+const selectAllContainers = document.querySelectorAll('.select-all');
+const initSelectAllCheckbox = () => {
+  if (!selectAllContainers || !selectAllContainers.length) return;
+  selectAllContainers.forEach(container => {
+    container.addEventListener('change', evt => {
+      const target = evt.target;
+      if (!target.matches('input[type="checkbox"]')) return;
+      const selectAll = container.querySelector('.select-all-checkbox');
+      const otherCheckboxes = container.querySelectorAll('input[type="checkbox"]:not(.select-all-checkbox)');
+
+      // Клик на "Выбрать все"
+      if (target === selectAll) {
+        otherCheckboxes.forEach(checkbox => checkbox.checked = target.checked);
+      }
+      // Клик на обычный чекбокс
+      else if (selectAll) {
+        selectAll.checked = Array.from(otherCheckboxes).every(checkbox => checkbox.checked);
+      }
+    });
+  });
+};
+
+
+/***/ }),
+
+/***/ "./src/js/components/_custom-scrollbar.js":
+/*!************************************************!*\
+  !*** ./src/js/components/_custom-scrollbar.js ***!
+  \************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initCustomScrollbar: () => (/* binding */ initCustomScrollbar)
+/* harmony export */ });
+/* harmony import */ var vevet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vevet */ "./node_modules/vevet/lib/esm/components/Scrollbar/index.js");
+
+const scrollbarWrappers = document.querySelectorAll('.custom-scrollbar-wrapper');
+const initCustomScrollbar = () => {
+  if (!scrollbarWrappers || !scrollbarWrappers.length) return;
+  scrollbarWrappers.forEach(wrapper => {
+    const customScrollbar = wrapper.querySelector('.custom-scrollbar');
+    const scrollbar = new vevet__WEBPACK_IMPORTED_MODULE_0__.Scrollbar({
+      container: customScrollbar,
+      parent: wrapper,
+      autoHide: false
+    });
   });
 };
 
@@ -11929,11 +17735,15 @@ const setRating = () => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   onTabChange: () => (/* binding */ onTabChange),
 /* harmony export */   showAllTags: () => (/* binding */ showAllTags)
 /* harmony export */ });
 /* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_vars.js */ "./src/js/_vars.js");
 
 const activeLists = document.querySelectorAll('.js-show-more-list-active');
+
+// кнопка работает только на мобильной версии (на десктопе ее нет)
+
 const onButtonClick = evt => {
   const showButton = evt.target;
   const span = showButton.querySelector('span');
@@ -11996,6 +17806,19 @@ const showAllTags = list => {
   });
   buttonMore.removeEventListener('click', onButtonClick);
   buttonMore.addEventListener('click', onButtonClick);
+};
+const onTabChange = list => {
+  const currentContainer = list.closest('.js-show-more');
+  const buttonMore = currentContainer ? currentContainer.querySelector('.js-show-more-button') : null;
+  if (buttonMore) {
+    const span = buttonMore.querySelector('span');
+    buttonMore.classList.remove('js-hide-all');
+    if (span) {
+      span.textContent = 'Показать еще';
+    } else {
+      buttonMore.textContent = 'Показать еще';
+    }
+  }
 };
 const onWindowChange = () => {
   const activeLists = document.querySelectorAll('.js-show-more-list-active');
@@ -12082,6 +17905,7 @@ const setTabs = () => {
         if (listElement) {
           listElement.classList.add('js-show-more-list-active');
           (0,_show_more_js__WEBPACK_IMPORTED_MODULE_0__.showAllTags)(listElement);
+          (0,_show_more_js__WEBPACK_IMPORTED_MODULE_0__.onTabChange)(listElement);
         }
         newContent.classList.add('tabs__tabcontent--active');
       }
