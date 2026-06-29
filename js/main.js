@@ -16180,6 +16180,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_advanced_search_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/_advanced-search.js */ "./src/js/components/_advanced-search.js");
 /* harmony import */ var _components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/_custom-scrollbar.js */ "./src/js/components/_custom-scrollbar.js");
 /* harmony import */ var _components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/_checkbox-select-all.js */ "./src/js/components/_checkbox-select-all.js");
+/* harmony import */ var _components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/_dropdown.js */ "./src/js/components/_dropdown.js");
+
 
 
 
@@ -16212,6 +16214,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_components_advanced_search_js__WEBPACK_IMPORTED_MODULE_12__.setAdvancedSearch)();
   (0,_components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_13__.initCustomScrollbar)();
   (0,_components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__.initSelectAllCheckbox)();
+  (0,_components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__.setDropdown)();
 });
 
 /***/ }),
@@ -16533,7 +16536,14 @@ const openVisibleContent = () => {
 };
 const openDetails = evt => {
   const currentButton = evt.target.closest('button');
-  const currentContent = currentButton.parentElement.querySelector('.accordion-content');
+  let currentContent = currentButton.parentElement.querySelector('.accordion-content');
+  if (!currentContent) {
+    const accordion = currentButton.closest('.accordion');
+    if (accordion) {
+      currentContent = accordion.querySelector('.accordion-content');
+    }
+  }
+  if (!currentContent) return;
   const accordionContainer = currentButton.closest('.accordion');
   const isSingleMode = accordionContainer && accordionContainer.dataset.accordion === 'single';
   if (isSingleMode) {
@@ -16597,9 +16607,101 @@ __webpack_require__.r(__webpack_exports__);
 
 const filter = document.querySelector('.filters');
 const form = filter ? filter.querySelector('.filters__form') : null;
+const buttonOpen = filter ? filter.querySelector('.filters__button-open') : null;
 const filterContainer = form ? form.querySelector('.filters__fields-list') : null;
 const fieldsList = filterContainer ? filterContainer.querySelectorAll('.filters__group') : null;
 const advansedButton = form ? form.querySelector('.filters__advanced-search') : null;
+const controls = filter ? filter.querySelector('.filters__controls') : null;
+let initialHeightForm = 0;
+let initialHeightList = 0;
+let isClasses = true;
+let isControlsMoved = false;
+
+// функция расчета высоты формы
+const heightCalculate = () => {
+  if (!fieldsList || !fieldsList.length) return;
+
+  // сброс рассчитаной высоты
+
+  filterContainer.style.removeProperty('max-height');
+  form.style.removeProperty('max-height');
+
+  // расчет высоты формы в открытом виде
+  initialHeightForm = form.scrollHeight;
+
+  // расчет высоты списка со скрытыми элементами
+  fieldsList.forEach((field, index) => {
+    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
+      field.classList.add('hidden');
+    }
+  });
+  initialHeightList = filterContainer.scrollHeight;
+  filterContainer.style.maxHeight = `${initialHeightList}px`;
+  fieldsList.forEach((field, index) => {
+    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
+      field.classList.remove('hidden');
+      field.classList.add('field-hidden');
+    }
+  });
+};
+
+// функция открытия дополнительных полей
+const showTags = () => {
+  fieldsList.forEach((field, index) => {
+    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
+      field.classList.remove('field-hidden');
+    }
+  });
+  filterContainer.style.maxHeight = `${filterContainer.scrollHeight}px`;
+  form.style.maxHeight = `${initialHeightForm}px`;
+  advansedButton.classList.add('js-hide-all');
+  advansedButton.textContent = 'Простой поиск';
+};
+
+// функция закрытия дополнительных полей
+const hideTags = () => {
+  form.style.maxHeight = `${initialHeightForm}px`;
+  filterContainer.style.maxHeight = `${initialHeightList}px`;
+  fieldsList.forEach((field, index) => {
+    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
+      field.classList.add('field-hidden');
+    }
+  });
+  advansedButton.classList.remove('js-hide-all');
+  advansedButton.textContent = 'Расширенный поиск';
+};
+
+// проверка необходимости аккордеона
+const checkAccordion = () => {
+  // снимает классы аккордеона на десктопе
+  if (buttonOpen && form && _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isClasses) {
+    buttonOpen.classList.remove('accordion-button', 'accordion-button--active');
+    form.classList.remove('accordion-content', 'accordion-content--opened');
+    isClasses = false;
+  }
+
+  // вешает классы аккордеона на десктопе
+  if (buttonOpen && form && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isClasses) {
+    buttonOpen.classList.add('accordion-button', 'accordion-button--active');
+    form.classList.add('accordion-content', 'accordion-content--opened');
+    isClasses = true;
+  }
+};
+
+// двигает блок контролов
+const moveControls = () => {
+  // ставит контролы после фильтров
+  if (form && controls && _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isControlsMoved) {
+    form.insertAdjacentElement('afterend', controls);
+    isControlsMoved = true;
+  }
+
+  // ставит контролы перед фильтрами
+  if (form && controls && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isControlsMoved) {
+    form.insertAdjacentElement('beforebegin', controls);
+    isControlsMoved = false;
+  }
+};
 const setAdvancedSearch = () => {
   if (!advansedButton || !fieldsList || !fieldsList.length) return;
 
@@ -16608,47 +16710,9 @@ const setAdvancedSearch = () => {
     advansedButton.classList.add('hidden');
     return;
   }
-
-  // расчет высоты формы в открытом виде
-  const initialHeightForm = form.scrollHeight;
-
-  // расчет высоты списка со скрытыми элементами
-  fieldsList.forEach((field, index) => {
-    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
-      field.classList.add('hidden');
-    }
-  });
-  const initialHeightList = filterContainer.scrollHeight;
-  filterContainer.style.maxHeight = `${initialHeightList}px`;
-  fieldsList.forEach((field, index) => {
-    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
-      field.classList.remove('hidden');
-    }
-  });
-
-  // функции открытия и закрытия дополнительных полей
-  const showTags = () => {
-    fieldsList.forEach((field, index) => {
-      if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
-        field.classList.remove('field-hidden');
-      }
-    });
-    filterContainer.style.maxHeight = `${filterContainer.scrollHeight}px`;
-    form.style.maxHeight = `${initialHeightForm}px`;
-    advansedButton.classList.add('js-hide-all');
-    advansedButton.textContent = 'Простой поиск';
-  };
-  const hideTags = () => {
-    form.style.maxHeight = `${initialHeightForm}px`;
-    filterContainer.style.maxHeight = `${initialHeightList}px`;
-    fieldsList.forEach((field, index) => {
-      if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_FIELDS) {
-        field.classList.add('field-hidden');
-      }
-    });
-    advansedButton.classList.remove('js-hide-all');
-    advansedButton.textContent = 'Расширенный поиск';
-  };
+  heightCalculate();
+  checkAccordion();
+  moveControls();
   advansedButton.addEventListener('click', () => {
     if (!advansedButton.classList.contains('js-hide-all')) {
       showTags();
@@ -16657,6 +16721,30 @@ const setAdvancedSearch = () => {
     }
   });
 };
+
+// обработчики на ресайзы
+let moveTimeoutDecktop = null;
+let moveTimeoutTablet = null;
+_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.addEventListener('change', () => {
+  clearTimeout(moveTimeoutDecktop);
+  moveTimeoutDecktop = setTimeout(() => {
+    if (advansedButton.classList.contains('js-hide-all')) {
+      hideTags();
+    }
+    heightCalculate();
+    checkAccordion();
+    moveControls();
+  }, 10);
+});
+_vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.addEventListener('change', () => {
+  clearTimeout(moveTimeoutTablet);
+  moveTimeoutTablet = setTimeout(() => {
+    if (advansedButton.classList.contains('js-hide-all')) {
+      hideTags();
+    }
+    heightCalculate();
+  }, 10);
+});
 
 
 /***/ }),
@@ -16951,6 +17039,117 @@ const renderCustomSelect = () => {
       }
     }
     createCustomSelect();
+    toggleSelect();
+  });
+};
+
+
+/***/ }),
+
+/***/ "./src/js/components/_dropdown.js":
+/*!****************************************!*\
+  !*** ./src/js/components/_dropdown.js ***!
+  \****************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   setDropdown: () => (/* binding */ setDropdown)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_utils.js */ "./src/js/_utils.js");
+
+const dropdowns = document.querySelectorAll('.dropdown');
+const setDropdown = () => {
+  if (!dropdowns) return;
+  dropdowns.forEach(dropdown => {
+    const dropdownButton = dropdown.querySelector('.select__button');
+    const dropdownList = dropdown.querySelector('.select__list');
+    if (!dropdownList) return;
+    const checkTabIndex = () => {
+      const options = dropdownList.querySelectorAll('.select__item-link');
+      if (dropdown.classList.contains('dropdown--open')) {
+        (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.setTabIndex)(options);
+        dropdownList.addEventListener('focusout', onSelectFocusOut);
+      } else {
+        (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(options);
+        dropdownList.removeEventListener('focusout', onSelectFocusOut);
+      }
+    };
+    const openSelect = () => {
+      dropdown.classList.add('dropdown--open');
+      checkTabIndex();
+      dropdownList.addEventListener('click', onSelectOptionClick);
+      document.addEventListener('keydown', onSelectKeydown);
+      document.addEventListener('click', onDocumentClick);
+    };
+    const closeSelect = () => {
+      dropdown.classList.remove('dropdown--open');
+      checkTabIndex();
+      dropdownButton.focus();
+      dropdownList.removeEventListener('click', onSelectOptionClick);
+      document.removeEventListener('keydown', onSelectKeydown);
+      document.removeEventListener('click', onDocumentClick);
+    };
+    const toggleSelect = () => {
+      dropdownButton.addEventListener('click', () => {
+        if (dropdown.classList.contains('dropdown--open')) {
+          closeSelect();
+        } else {
+          openSelect();
+        }
+      });
+    };
+    function onSelectKeydown(evt) {
+      const open = dropdown.classList.contains('dropdown--open');
+      const options = Array.from(dropdownList.querySelectorAll('a'));
+      const currentIndex = options.indexOf(document.activeElement);
+      if (!open) {
+        return;
+      }
+      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isArrowDownKey)(evt)) {
+        evt.preventDefault();
+        if (currentIndex < options.length - 1) {
+          options[currentIndex + 1].focus();
+        } else {
+          options[0].focus();
+        }
+        return;
+      }
+      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isArrowUpKey)(evt)) {
+        evt.preventDefault();
+        if (currentIndex > 0) {
+          options[currentIndex - 1].focus();
+        } else {
+          options[options.length - 1].focus();
+        }
+        return;
+      }
+      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isEnterKey)(evt)) {
+        evt.preventDefault();
+        if (currentIndex > 0) {
+          closeSelect();
+        }
+        return;
+      }
+      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isEscapeKey)(evt)) {
+        closeSelect();
+      }
+    }
+    function onSelectOptionClick(evt) {
+      if (evt.target.tagName === 'A') {
+        closeSelect();
+      }
+    }
+    function onDocumentClick(evt) {
+      if (!dropdown.contains(evt.target)) {
+        closeSelect();
+      }
+    }
+    function onSelectFocusOut(evt) {
+      if (evt.relatedTarget === null || !dropdown.contains(evt.relatedTarget)) {
+        closeSelect();
+      }
+    }
     toggleSelect();
   });
 };
@@ -17253,19 +17452,23 @@ const fixButton = header ? header.querySelector('.header__fix-button--catalog') 
 const headerTop = header ? header.querySelector('.header__top') : null;
 const headerBottom = header ? header.querySelector('.header__bottom') : null;
 let isHeaderMoved = false;
+let moveTimeout = null;
 const moveHeader = () => {
-  if (header && _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isHeaderMoved) {
-    headerBottom.insertAdjacentElement('afterbegin', logo);
-    headerBottom.insertAdjacentElement('beforeend', user);
-    headerBottom.insertAdjacentElement('beforeend', socials);
-    isHeaderMoved = true;
-  }
-  if (header && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isHeaderMoved) {
-    select.insertAdjacentElement('afterend', logo);
-    fixButton.insertAdjacentElement('afterend', user);
-    menuContainer.insertAdjacentElement('beforeend', socials);
-    isHeaderMoved = false;
-  }
+  clearTimeout(moveTimeout);
+  moveTimeout = setTimeout(() => {
+    if (header && _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isHeaderMoved) {
+      headerBottom.insertAdjacentElement('afterbegin', logo);
+      headerBottom.insertAdjacentElement('beforeend', user);
+      headerBottom.insertAdjacentElement('beforeend', socials);
+      isHeaderMoved = true;
+    }
+    if (header && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isHeaderMoved) {
+      select.insertAdjacentElement('afterend', logo);
+      fixButton.insertAdjacentElement('afterend', user);
+      menuContainer.insertAdjacentElement('beforeend', socials);
+      isHeaderMoved = false;
+    }
+  }, 10);
 };
 _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.addEventListener('change', moveHeader);
 
@@ -17287,15 +17490,19 @@ __webpack_require__.r(__webpack_exports__);
 const heroTop = document.querySelector('.hero__top');
 const content = heroTop ? heroTop.querySelector('.hero__content') : null;
 let isHeroMoved = false;
+let moveTimeout = null;
 const moveHero = () => {
-  if (heroTop && _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches && !isHeroMoved) {
-    heroTop.insertAdjacentElement('afterbegin', content);
-    isHeroMoved = true;
-  }
-  if (heroTop && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches && isHeroMoved) {
-    heroTop.insertAdjacentElement('beforeend', content);
-    isHeroMoved = false;
-  }
+  clearTimeout(moveTimeout);
+  moveTimeout = setTimeout(() => {
+    if (heroTop && _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches && !isHeroMoved) {
+      heroTop.insertAdjacentElement('afterbegin', content);
+      isHeroMoved = true;
+    }
+    if (heroTop && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches && isHeroMoved) {
+      heroTop.insertAdjacentElement('beforeend', content);
+      isHeroMoved = false;
+    }
+  }, 10);
 };
 _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.addEventListener('change', moveHero);
 
@@ -17430,44 +17637,48 @@ const setNavigationSwiper = () => {
         }
       });
     };
+    let moveTimeout = null;
     const checkNavigationSwiper = () => {
-      // делает скрытый табами слайдер нерабочим
-      if (tabs) {
-        const tabContent = section.closest('.tabs__tabcontent');
-        const isTabActive = tabContent?.classList.contains('tabs__tabcontent--active');
-        if (!isTabActive) {
-          if (swiperContainer) {
-            destroyNavigationSwiper(section, sectionClass);
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        // делает скрытый табами слайдер нерабочим
+        if (tabs) {
+          const tabContent = section.closest('.tabs__tabcontent');
+          const isTabActive = tabContent?.classList.contains('tabs__tabcontent--active');
+          if (!isTabActive) {
+            if (swiperContainer) {
+              destroyNavigationSwiper(section, sectionClass);
+            }
+            return;
           }
-          return;
         }
-      }
 
-      // проверка использования параметра 'auto' у количества слайдов на странице
-      let autoSliderConfig = null;
-      if (!_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && sliderConfig.mobile_count === 'auto') {
-        autoSliderConfig = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getAutoSlidesCount)(section);
-      }
-      if (_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !desktopBreakpoint.matches && sliderConfig.tablet_count === 'auto') {
-        autoSliderConfig = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getAutoSlidesCount)(section);
-      }
-      if (desktopBreakpoint.matches && sliderConfig.desktop_count === 'auto') {
-        autoSliderConfig = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getAutoSlidesCount)(section);
-      }
+        // проверка использования параметра 'auto' у количества слайдов на странице
+        let autoSliderConfig = null;
+        if (!_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && sliderConfig.mobile_count === 'auto') {
+          autoSliderConfig = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getAutoSlidesCount)(section);
+        }
+        if (_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !desktopBreakpoint.matches && sliderConfig.tablet_count === 'auto') {
+          autoSliderConfig = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getAutoSlidesCount)(section);
+        }
+        if (desktopBreakpoint.matches && sliderConfig.desktop_count === 'auto') {
+          autoSliderConfig = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getAutoSlidesCount)(section);
+        }
 
-      // проверка необходимости слайдера
-      const isNeedMobile = !_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.mobile_count);
-      const isNeedTablet = _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !desktopBreakpoint.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.tablet_count);
-      const isNeedDesktop = desktopBreakpoint.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.desktop_count);
-      const isLoopNeeded = (sliderConfig.loop ?? false) && (isNeedMobile || isNeedTablet || isNeedDesktop);
-      if (!swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
-        initNavigationSwiper(isLoopNeeded);
-      } else if (swiperContainer && !isNeedMobile && !isNeedTablet && !isNeedDesktop) {
-        destroyNavigationSwiper(section, sectionClass);
-      } else if (swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
-        destroyNavigationSwiper(section, sectionClass);
-        initNavigationSwiper(isLoopNeeded);
-      }
+        // проверка необходимости слайдера
+        const isNeedMobile = !_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.mobile_count);
+        const isNeedTablet = _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !desktopBreakpoint.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.tablet_count);
+        const isNeedDesktop = desktopBreakpoint.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.desktop_count);
+        const isLoopNeeded = (sliderConfig.loop ?? false) && (isNeedMobile || isNeedTablet || isNeedDesktop);
+        if (!swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
+          initNavigationSwiper(isLoopNeeded);
+        } else if (swiperContainer && !isNeedMobile && !isNeedTablet && !isNeedDesktop) {
+          destroyNavigationSwiper(section, sectionClass);
+        } else if (swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
+          destroyNavigationSwiper(section, sectionClass);
+          initNavigationSwiper(isLoopNeeded);
+        }
+      }, 10);
     };
     checkNavigationSwiper();
     _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.addEventListener('change', checkNavigationSwiper);
@@ -17578,13 +17789,17 @@ const setMobileMenu = () => {
     if (!_vars_js__WEBPACK_IMPORTED_MODULE_1__.DESKTOP_WIDTH.matches && headerLinks && headerLinks.length) {
       (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(headerLinks);
     }
+    let moveTimeout = null;
     _vars_js__WEBPACK_IMPORTED_MODULE_1__.DESKTOP_WIDTH.addEventListener('change', () => {
-      if (!headerLinks || !headerLinks.length) return;
-      if (_vars_js__WEBPACK_IMPORTED_MODULE_1__.DESKTOP_WIDTH.matches) {
-        (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.setTabIndex)(headerLinks);
-      } else {
-        (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(headerLinks);
-      }
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        if (!headerLinks || !headerLinks.length) return;
+        if (_vars_js__WEBPACK_IMPORTED_MODULE_1__.DESKTOP_WIDTH.matches) {
+          (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.setTabIndex)(headerLinks);
+        } else {
+          (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(headerLinks);
+        }
+      }, 10);
     });
     toggleMenuButton();
   });
@@ -17641,15 +17856,19 @@ const setPopup = () => {
         openPopup();
       }
     };
+    let moveTimeout = null;
     const checkPopup = () => {
-      if (_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isPopup) {
-        button.addEventListener('click', togglePopup);
-        isPopup = true;
-      }
-      if (!_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isPopup) {
-        button.removeEventListener('click', togglePopup);
-        isPopup = false;
-      }
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        if (_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isPopup) {
+          button.addEventListener('click', togglePopup);
+          isPopup = true;
+        }
+        if (!_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isPopup) {
+          button.removeEventListener('click', togglePopup);
+          isPopup = false;
+        }
+      }, 10);
     };
     function onFocusOut(evt) {
       if (evt.relatedTarget === null || !popup.contains(evt.relatedTarget)) {
@@ -17820,34 +18039,38 @@ const onTabChange = list => {
     }
   }
 };
+let moveTimeout = null;
 const onWindowChange = () => {
-  const activeLists = document.querySelectorAll('.js-show-more-list-active');
-  activeLists.forEach(list => {
-    if (list.classList.contains('js-show-more-mobile-only') && _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches) {
-      const currentContainer = list.closest('.js-show-more');
-      const buttonMore = currentContainer ? currentContainer.querySelector('.js-show-more-button') : null;
-      const tags = list.querySelectorAll('.js-show-more-tag');
-      if (buttonMore) {
-        const span = buttonMore.querySelector('span');
-        buttonMore.classList.add('hidden');
-        buttonMore.classList.remove('js-hide-all');
-        if (span) {
-          span.textContent = 'Показать еще';
-        } else {
-          buttonMore.textContent = 'Показать еще';
+  clearTimeout(moveTimeout);
+  moveTimeout = setTimeout(() => {
+    const activeLists = document.querySelectorAll('.js-show-more-list-active');
+    activeLists.forEach(list => {
+      if (list.classList.contains('js-show-more-mobile-only') && _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches) {
+        const currentContainer = list.closest('.js-show-more');
+        const buttonMore = currentContainer ? currentContainer.querySelector('.js-show-more-button') : null;
+        const tags = list.querySelectorAll('.js-show-more-tag');
+        if (buttonMore) {
+          const span = buttonMore.querySelector('span');
+          buttonMore.classList.add('hidden');
+          buttonMore.classList.remove('js-hide-all');
+          if (span) {
+            span.textContent = 'Показать еще';
+          } else {
+            buttonMore.textContent = 'Показать еще';
+          }
+        }
+        if (tags && tags.length) {
+          tags.forEach(tag => {
+            tag.classList.remove('hidden');
+          });
         }
       }
-      if (tags && tags.length) {
-        tags.forEach(tag => {
-          tag.classList.remove('hidden');
-        });
+      ;
+      if (list.classList.contains('js-show-more-mobile-only') && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches) {
+        showAllTags(list);
       }
-    }
-    ;
-    if (list.classList.contains('js-show-more-mobile-only') && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches) {
-      showAllTags(list);
-    }
-  });
+    });
+  }, 10);
 };
 
 // скрытие табов на мобильной версии (добавление кнопки "показать все")
