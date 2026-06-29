@@ -98,11 +98,13 @@
     }
   }
 
-  &.select--open .select__button::after {
+  &.select--open .select__button::after,
+  &.dropdown--open .select__button::after {
     transform: scaleY(-1);
   }
 
-  &.select--open .select__list {
+  &.select--open .select__list,
+  &.dropdown--open .select__list {
     transform: scaleY(1);
     opacity: 1;
   }
@@ -123,7 +125,10 @@
     }
 
     &::after {
+      width: 14px;
+      height: 13px;
       mask-image: url("../img/sprite.svg#filter-arrow");
+      mask-size: 14px 13px;
     }
 
   }

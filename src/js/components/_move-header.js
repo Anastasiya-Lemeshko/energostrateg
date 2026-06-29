@@ -12,23 +12,27 @@ const fixButton = header ? header.querySelector('.header__fix-button--catalog') 
 const headerTop = header ? header.querySelector('.header__top') : null;
 const headerBottom = header ? header.querySelector('.header__bottom') : null;
 let isHeaderMoved = false;
+let moveTimeout = null;
 
 const moveHeader = () => {
-  if (header && SMALL_DESKTOP_WIDTH.matches && !isHeaderMoved) {
-    headerBottom.insertAdjacentElement('afterbegin', logo);
-    headerBottom.insertAdjacentElement('beforeend', user);
-    headerBottom.insertAdjacentElement('beforeend', socials);
+  clearTimeout(moveTimeout);
+  moveTimeout = setTimeout(() => {
+    if (header && SMALL_DESKTOP_WIDTH.matches && !isHeaderMoved) {
+      headerBottom.insertAdjacentElement('afterbegin', logo);
+      headerBottom.insertAdjacentElement('beforeend', user);
+      headerBottom.insertAdjacentElement('beforeend', socials);
 
-    isHeaderMoved = true;
-  }
+      isHeaderMoved = true;
+    }
 
-  if (header && !SMALL_DESKTOP_WIDTH.matches && isHeaderMoved) {
-    select.insertAdjacentElement('afterend', logo);
-    fixButton.insertAdjacentElement('afterend', user);
-    menuContainer.insertAdjacentElement('beforeend', socials);
+    if (header && !SMALL_DESKTOP_WIDTH.matches && isHeaderMoved) {
+      select.insertAdjacentElement('afterend', logo);
+      fixButton.insertAdjacentElement('afterend', user);
+      menuContainer.insertAdjacentElement('beforeend', socials);
 
-    isHeaderMoved = false;
-  }
+      isHeaderMoved = false;
+    }
+  }, 10);
 };
 
 SMALL_DESKTOP_WIDTH.addEventListener('change', moveHeader);

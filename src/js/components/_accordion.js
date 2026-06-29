@@ -14,7 +14,16 @@ const openVisibleContent = () => {
 
 const openDetails = (evt) => {
   const currentButton = evt.target.closest('button');
-  const currentContent = currentButton.parentElement.querySelector('.accordion-content');
+  let currentContent = currentButton.parentElement.querySelector('.accordion-content');
+
+  if (!currentContent) {
+    const accordion = currentButton.closest('.accordion');
+    if (accordion) {
+      currentContent = accordion.querySelector('.accordion-content');
+    }
+  }
+
+  if (!currentContent) return;
 
   const accordionContainer = currentButton.closest('.accordion');
   const isSingleMode = accordionContainer && accordionContainer.dataset.accordion === 'single';

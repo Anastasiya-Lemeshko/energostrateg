@@ -13,6 +13,7 @@ import { addScrollButton } from './components/_button-scroll-top.js';
 import { setAdvancedSearch } from './components/_advanced-search.js';
 import { initCustomScrollbar } from './components/_custom-scrollbar.js';
 import { initSelectAllCheckbox } from './components/_checkbox-select-all.js';
+import { setDropdown } from './components/_dropdown.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCustomSelect();
@@ -31,5 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setAdvancedSearch();
   initCustomScrollbar();
   initSelectAllCheckbox();
+  setDropdown();
 });
 

@@ -97,38 +97,43 @@ const onTabChange = (list) => {
   }
 };
 
+let moveTimeout = null;
+
 const onWindowChange = () => {
-  const activeLists = document.querySelectorAll('.js-show-more-list-active');
+  clearTimeout(moveTimeout);
+  moveTimeout = setTimeout(() => {
+    const activeLists = document.querySelectorAll('.js-show-more-list-active');
 
-  activeLists.forEach((list) => {
-    if (list.classList.contains('js-show-more-mobile-only') && TABLET_WIDTH.matches) {
-      const currentContainer = list.closest('.js-show-more');
-      const buttonMore = currentContainer ? currentContainer.querySelector('.js-show-more-button') : null;
-      const tags = list.querySelectorAll('.js-show-more-tag');
+    activeLists.forEach((list) => {
+      if (list.classList.contains('js-show-more-mobile-only') && TABLET_WIDTH.matches) {
+        const currentContainer = list.closest('.js-show-more');
+        const buttonMore = currentContainer ? currentContainer.querySelector('.js-show-more-button') : null;
+        const tags = list.querySelectorAll('.js-show-more-tag');
 
-      if (buttonMore) {
-        const span = buttonMore.querySelector('span');
+        if (buttonMore) {
+          const span = buttonMore.querySelector('span');
 
-        buttonMore.classList.add('hidden');
-        buttonMore.classList.remove('js-hide-all');
-        if (span) {
-          span.textContent = 'Показать еще';
-        } else {
-          buttonMore.textContent = 'Показать еще';
+          buttonMore.classList.add('hidden');
+          buttonMore.classList.remove('js-hide-all');
+          if (span) {
+            span.textContent = 'Показать еще';
+          } else {
+            buttonMore.textContent = 'Показать еще';
+          }
         }
-      }
 
-      if (tags && tags.length) {
-        tags.forEach((tag) => {
-          tag.classList.remove('hidden');
-        });
-      }
-    };
+        if (tags && tags.length) {
+          tags.forEach((tag) => {
+            tag.classList.remove('hidden');
+          });
+        }
+      };
 
-    if (list.classList.contains('js-show-more-mobile-only') && !TABLET_WIDTH.matches) {
-      showAllTags(list);
-    }
-  });
+      if (list.classList.contains('js-show-more-mobile-only') && !TABLET_WIDTH.matches) {
+        showAllTags(list);
+      }
+    });
+  }, 10);
 };
 
 

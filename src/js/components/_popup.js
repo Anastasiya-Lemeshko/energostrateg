@@ -42,16 +42,21 @@ const setPopup = () => {
       }
     };
 
-    const checkPopup = () => {
-      if (SMALL_DESKTOP_WIDTH.matches && !isPopup) {
-        button.addEventListener('click', togglePopup);
-        isPopup = true;
-      }
+    let moveTimeout = null;
 
-      if (!SMALL_DESKTOP_WIDTH.matches && isPopup) {
-        button.removeEventListener('click', togglePopup);
-        isPopup = false;
-      }
+    const checkPopup = () => {
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        if (SMALL_DESKTOP_WIDTH.matches && !isPopup) {
+          button.addEventListener('click', togglePopup);
+          isPopup = true;
+        }
+
+        if (!SMALL_DESKTOP_WIDTH.matches && isPopup) {
+          button.removeEventListener('click', togglePopup);
+          isPopup = false;
+        }
+      }, 10);
     };
 
     function onFocusOut(evt) {

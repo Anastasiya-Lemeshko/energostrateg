@@ -136,50 +136,55 @@ const setNavigationSwiper = () => {
       });
     };
 
+    let moveTimeout = null;
+
     const checkNavigationSwiper = () => {
-      // делает скрытый табами слайдер нерабочим
-      if (tabs) {
-        const tabContent = section.closest('.tabs__tabcontent');
-        const isTabActive = tabContent?.classList.contains('tabs__tabcontent--active');
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        // делает скрытый табами слайдер нерабочим
+        if (tabs) {
+          const tabContent = section.closest('.tabs__tabcontent');
+          const isTabActive = tabContent?.classList.contains('tabs__tabcontent--active');
 
-        if (!isTabActive) {
-          if (swiperContainer) {
-            destroyNavigationSwiper(section, sectionClass);
+          if (!isTabActive) {
+            if (swiperContainer) {
+              destroyNavigationSwiper(section, sectionClass);
+            }
+            return;
           }
-          return;
         }
-      }
 
-      // проверка использования параметра 'auto' у количества слайдов на странице
-      let autoSliderConfig = null;
+        // проверка использования параметра 'auto' у количества слайдов на странице
+        let autoSliderConfig = null;
 
-      if (!TABLET_WIDTH.matches && sliderConfig.mobile_count === 'auto') {
-        autoSliderConfig = getAutoSlidesCount(section);
-      }
+        if (!TABLET_WIDTH.matches && sliderConfig.mobile_count === 'auto') {
+          autoSliderConfig = getAutoSlidesCount(section);
+        }
 
-      if (TABLET_WIDTH.matches && !desktopBreakpoint.matches && sliderConfig.tablet_count === 'auto') {
-        autoSliderConfig = getAutoSlidesCount(section);
-      }
+        if (TABLET_WIDTH.matches && !desktopBreakpoint.matches && sliderConfig.tablet_count === 'auto') {
+          autoSliderConfig = getAutoSlidesCount(section);
+        }
 
-      if (desktopBreakpoint.matches && sliderConfig.desktop_count === 'auto') {
-        autoSliderConfig = getAutoSlidesCount(section);
-      }
+        if (desktopBreakpoint.matches && sliderConfig.desktop_count === 'auto') {
+          autoSliderConfig = getAutoSlidesCount(section);
+        }
 
-      // проверка необходимости слайдера
-      const isNeedMobile = !TABLET_WIDTH.matches && (getSlidesCount(section) > (autoSliderConfig ?? sliderConfig.mobile_count));
-      const isNeedTablet = TABLET_WIDTH.matches && !desktopBreakpoint.matches && (getSlidesCount(section) > (autoSliderConfig ?? sliderConfig.tablet_count));
-      const isNeedDesktop = desktopBreakpoint.matches && (getSlidesCount(section) > (autoSliderConfig ?? sliderConfig.desktop_count));
+        // проверка необходимости слайдера
+        const isNeedMobile = !TABLET_WIDTH.matches && (getSlidesCount(section) > (autoSliderConfig ?? sliderConfig.mobile_count));
+        const isNeedTablet = TABLET_WIDTH.matches && !desktopBreakpoint.matches && (getSlidesCount(section) > (autoSliderConfig ?? sliderConfig.tablet_count));
+        const isNeedDesktop = desktopBreakpoint.matches && (getSlidesCount(section) > (autoSliderConfig ?? sliderConfig.desktop_count));
 
-      const isLoopNeeded = (sliderConfig.loop ?? false) && (isNeedMobile || isNeedTablet || isNeedDesktop);
+        const isLoopNeeded = (sliderConfig.loop ?? false) && (isNeedMobile || isNeedTablet || isNeedDesktop);
 
-      if (!swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
-        initNavigationSwiper(isLoopNeeded);
-      } else if (swiperContainer && (!isNeedMobile && !isNeedTablet && !isNeedDesktop)) {
-        destroyNavigationSwiper(section, sectionClass);
-      } else if (swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
-        destroyNavigationSwiper(section, sectionClass);
-        initNavigationSwiper(isLoopNeeded);
-      }
+        if (!swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
+          initNavigationSwiper(isLoopNeeded);
+        } else if (swiperContainer && (!isNeedMobile && !isNeedTablet && !isNeedDesktop)) {
+          destroyNavigationSwiper(section, sectionClass);
+        } else if (swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
+          destroyNavigationSwiper(section, sectionClass);
+          initNavigationSwiper(isLoopNeeded);
+        }
+      }, 10);
     };
 
     checkNavigationSwiper();

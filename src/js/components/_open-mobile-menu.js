@@ -86,14 +86,19 @@ const setMobileMenu = () => {
       removeTabIndex(headerLinks);
     }
 
-    DESKTOP_WIDTH.addEventListener('change', () => {
-      if (!headerLinks || !headerLinks.length) return;
+    let moveTimeout = null;
 
-      if (DESKTOP_WIDTH.matches) {
-        setTabIndex(headerLinks);
-      } else {
-        removeTabIndex(headerLinks);
-      }
+    DESKTOP_WIDTH.addEventListener('change', () => {
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        if (!headerLinks || !headerLinks.length) return;
+
+        if (DESKTOP_WIDTH.matches) {
+          setTabIndex(headerLinks);
+        } else {
+          removeTabIndex(headerLinks);
+        }
+      }, 10);
     });
 
     toggleMenuButton();
