@@ -16910,7 +16910,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_utils.js */ "./src/js/_utils.js");
 
-const selects = document.querySelectorAll('.select');
+const selects = document.querySelectorAll('.select:not(.dropdown)');
 const renderCustomSelect = () => {
   if (!selects.length) return;
   selects.forEach(select => {
