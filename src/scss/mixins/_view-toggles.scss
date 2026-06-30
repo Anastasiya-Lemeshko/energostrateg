@@ -1,0 +1,50 @@
+@use 'interactive-states' as *;
+
+@mixin view-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+
+  &-toggle {
+    --icon-color: var(--bg-light);
+    --icon-size: 11px 11px;
+    --icon: url("../img/sprite.svg#view-grid");
+
+    position: relative;
+    width: 46px;
+    height: 46px;
+    background-color: var(--white);
+    border: none;
+
+    @include hover-focus {
+      --icon-color: var(--bg-dark);
+
+      outline: none;
+    }
+
+    &--active {
+      --icon-color: var(--bg-primary);
+    }
+
+    &--list {
+      --icon: url("../img/sprite.svg#view-list");
+      --icon-size: 20px 14px;
+    }
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      content: "";
+      width: 20px;
+      height: 20px;
+      mask-image: var(--icon);
+      mask-position: center;
+      mask-size: var(--icon-size);
+      mask-repeat: no-repeat;
+      background-color: var(--icon-color);
+      transition: background-color 0.3s;
+    }
+  }
+}

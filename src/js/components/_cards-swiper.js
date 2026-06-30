@@ -8,10 +8,8 @@ const initCardsSwiper = () => {
   if (!sections.length) return;
 
   sections.forEach((section) => {
-    const sectionClass = getBlockClass(section);
-
     const initImgSwiper = () => {
-      const imgSwipers = section.querySelectorAll(`.${sectionClass}__card-swiper`);
+      const imgSwipers = section.querySelectorAll(`.product-card__swiper`);
 
       if (imgSwipers.length) {
         imgSwipers.forEach((imgSwiper) => {
@@ -24,7 +22,7 @@ const initCardsSwiper = () => {
             spaceBetween: 5,
 
             scrollbar: {
-              el: `.${sectionClass}__card-swiper-scrollbar`,
+              el: `.product-card__swiper-scrollbar`,
               draggable: true,
               hide: false,
             },

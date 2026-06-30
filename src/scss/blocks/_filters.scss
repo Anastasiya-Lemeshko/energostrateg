@@ -19,6 +19,10 @@
   background-color: var(-transparent);
   border: none;
 
+  @include vp-1024 {
+    display: none;
+  }
+
   &::after {
     grid-area: 1 / 2 / 2 / 3;
     content: "";
@@ -60,7 +64,6 @@
 }
 
 .filters__fields-list {
-  //overflow: hidden;
   transition: max-height 0.6s;
 
   @include vp-768 {
@@ -82,7 +85,7 @@
   margin: 0 0 10px;
   visibility: visible;
   opacity: 1;
-  transition: visibility 0.6s, opacity 0.6s;
+  transition: visibility 0.6s 0.2s, opacity 0.6s 0.2s;
 
   @include vp-768 {
     margin: 0;
@@ -91,6 +94,7 @@
   &.field-hidden {
     visibility: hidden;
     opacity: 0;
+    transition: visibility 0.2s, opacity 0.2s;
   }
 
   &--side {
@@ -109,10 +113,16 @@
   font-size: 14px;
 }
 
+.filters__checkboxes {
+  padding: 0 0 10px;
+  background-color: var(--white);
+}
+
 .filters__checkbox-list {
+  position: relative;
   height: 216px;
   margin: 0;
-  padding: 20px;
+  padding: 20px 20px 10px;
   list-style-type: none;
   background-color: var(--white);
 }
@@ -151,18 +161,23 @@
     padding: 20px 10px 10px;
     left: unset;
     right: 0;
+
+    @include vp-1024 {
+      left: 0;
+      right: unset;
+    }
   }
 
   .select__item {
     font-size: 16px;
     text-align: right;
 
+    @include vp-1024 {
+      text-align: left;
+    }
+
     &:not(:last-child) {
       margin: 0 0 15px;
-
-      @include vp-768 {
-        margin: 0;
-      }
     }
   }
 }
@@ -192,6 +207,10 @@
     gap: 0 10px;
     margin: 0;
     padding: 30px 0 0 15px;
+  }
+
+  @include vp-1366 {
+    grid-template-columns: auto 312px 312px;
   }
 }
 
@@ -245,22 +264,72 @@
   align-items: center;
   gap: 50px;
   margin: 0 0 10px;
+
+  @include vp-1024 {
+    align-items: flex-end;
+  }
 }
 
 .filters__view {
   display: none;
+
+  @include vp-1024 {
+    @include view-toggles;
+
+    display: block;
+  }
 }
 
 .filters__products {
-  margin: -20px 0 0;
+  margin: -20px 0 30px;
   padding: 0;
   list-style-type: none;
+  opacity: 1;
+
+  @include vp-768 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
 
   @include vp-1024 {
-    margin: 0;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 0 40px;
+  }
+
+  @include vp-1400 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &--list {
+    @include vp-1024 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--animated {
+    transition: opacity 0.3s;
+  }
+
+  &--hidden {
+    opacity: 0;
   }
 }
 
 .accordion-content--opened+.filters__products {
   margin: 20px 0 0;
+}
+
+.filters__product-card {
+  &:not(:last-child) {
+    margin: 0 0 10px;
+
+    @include vp-768 {
+      margin: 0;
+    }
+  }
+}
+
+.filters__pagination {
+  @include pagination;
 }

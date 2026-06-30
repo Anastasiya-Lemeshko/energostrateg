@@ -325,3 +325,74 @@
     }
   }
 }
+
+@mixin model-radio {
+  --label-color: var(--text-basic);
+  --label-bg: var(--white);
+  --label-border: var(--bg-dark);
+
+  input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    clip: rect(0 0 0 0);
+
+    @include focus {
+      outline: none;
+    }
+  }
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 10px;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.2;
+    color: var(--label-color);
+    background-color: var(--label-bg);
+    border: 1px solid var(--label-border);
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
+    cursor: pointer;
+  }
+
+  &:has(input:focus),
+  &:has(input:focus-visible) {
+    --label-color: var(--white);
+    --label-bg: var(--bg-primary);
+    --label-border: var(--bg-primary);
+  }
+
+  @include hover {
+    --label-color: var(--white);
+    --label-bg: var(--bg-primary);
+    --label-border: var(--bg-primary);
+  }
+
+  &:has(input:checked) {
+    --label-color: var(--white);
+    --label-bg: var(--bg-dark);
+
+    @include hover {
+    --label-color: var(--white);
+    --label-bg: var(--bg-dark);
+    }
+  }
+
+  &:has(input:checked:focus),
+  &:has(input:checked:focus-visible) {
+    --label-color: var(--white);
+    --label-bg: var(--bg-dark);
+  }
+
+  &:has(input:disabled) {
+    --label-color: var(--white);
+    --label-bg: var(--bg-light);
+
+    pointer-events: none;
+    cursor: default;
+  }
+}

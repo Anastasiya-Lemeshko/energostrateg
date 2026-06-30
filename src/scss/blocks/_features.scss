@@ -1,5 +1,18 @@
 @use "index" as *;
 
+.features__desc {
+  max-width: 1500px;
+  margin: 0 0 20px;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text-light);
+
+  @include vp-1024 {
+    margin: 0 0 40px;
+    font-size: 22px;
+  }
+}
+
 .features__list {
   margin: 0;
   padding: 0;
@@ -89,5 +102,15 @@
 
   @include vp-2500 {
     font-size: 18px;
+  }
+}
+
+.features__order {
+  @include link-order;
+
+  margin: 20px auto 0;
+
+  @include vp-1024 {
+    margin: 40px auto 0;
   }
 }

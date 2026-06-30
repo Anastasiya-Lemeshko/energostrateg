@@ -6,38 +6,37 @@
 }
 
 .stars__icon {
-  display: none;
   width: 100%;
   aspect-ratio: 1 / 1;
-  background-image: url("../img/sprite.svg#star");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center;
+  mask-image: url("../img/sprite.svg#star");
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  mask-position: center;
+  background-color: var(--bg-light);
 }
 
 .stars--one .stars__icon:nth-child(1) {
-  display: block;
+  background-color: var(--bg-primary);
 }
 
 .stars--two .stars__icon:nth-child(1),
 .stars--two .stars__icon:nth-child(2) {
-  display: block;
+  background-color: var(--bg-primary);
 }
 
 .stars--three .stars__icon:nth-child(1),
 .stars--three .stars__icon:nth-child(2),
 .stars--three .stars__icon:nth-child(3) {
-  display: block;
+  background-color: var(--bg-primary);
 }
 
 .stars--four .stars__icon:nth-child(1),
 .stars--four .stars__icon:nth-child(2),
 .stars--four .stars__icon:nth-child(3),
 .stars--four .stars__icon:nth-child(4) {
-  display: block;
+  background-color: var(--bg-primary);
 }
 
 .stars--five .stars__icon {
-  display: block;
+  background-color: var(--bg-primary);
 }
-

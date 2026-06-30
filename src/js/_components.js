@@ -14,6 +14,7 @@ import { setAdvancedSearch } from './components/_advanced-search.js';
 import { initCustomScrollbar } from './components/_custom-scrollbar.js';
 import { initSelectAllCheckbox } from './components/_checkbox-select-all.js';
 import { setDropdown } from './components/_dropdown.js';
+import { setFilterToggles } from './components/_filter-view.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCustomSelect();
@@ -33,5 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCustomScrollbar();
   initSelectAllCheckbox();
   setDropdown();
+  setFilterToggles();
 });
 

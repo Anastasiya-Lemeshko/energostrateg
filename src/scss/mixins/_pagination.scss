@@ -2,7 +2,7 @@
 
 @mixin pagination {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-start;
 
   &-list {
@@ -33,21 +33,16 @@
     text-align: center;
     color: var(--color);
     text-decoration: none;
-    background-color: var(--white);
-    border-radius: 5px;
+    background-color: var(--transparent);
     transition: background-color 0.3s;
 
     @include hover-focus {
-      --color: var(--white);
-
       outline: none;
-      background-color: var(--bg-primary);
+      background-color: var(--white);
     }
 
     @include active {
-      --color: var(--white);
-
-      background-color: var(--bg-accent-opacity);
+      background-color: var(--text-extra-light);
     }
 
     &--first,
@@ -85,8 +80,7 @@
     &--current {
       --color: var(--white);
 
-      font-weight: 400;
-      background-color: var(--bg-accent);
+      background-color: var(--bg-dark);
 
       @include hover-focus {
         background-color: var(--bg-primary);

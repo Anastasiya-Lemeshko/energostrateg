@@ -50,7 +50,7 @@ const showTags = () => {
       field.classList.remove('field-hidden');
     }
   });
-  filterContainer.style.maxHeight = `${filterContainer.scrollHeight}px`;
+  filterContainer.style.maxHeight = `${filterContainer.scrollHeight + 15}px`;
   form.style.maxHeight = `${initialHeightForm}px`;
   advansedButton.classList.add('js-hide-all');
   advansedButton.textContent = 'Простой поиск';
