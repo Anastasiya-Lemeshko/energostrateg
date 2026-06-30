@@ -3067,6 +3067,23 @@ span.breadcrumbs__link {
   height: 0;
 }
 
+.v-scrollbar.v-scrollbar_y {
+  right: 24px;
+  top: 20px;
+  height: calc(100% - 40px);
+  width: 1px;
+}
+.v-scrollbar .v-scrollbar__track {
+  background-color: var(--bg-light);
+}
+.v-scrollbar .v-scrollbar__track .v-scrollbar__thumb {
+  left: -3.5px;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 2px;
+  background: var(--text-basic);
+}
+
 .header {
   --window-height: 100dvh - 40px;
 }
