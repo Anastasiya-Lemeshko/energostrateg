@@ -16181,6 +16181,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/_custom-scrollbar.js */ "./src/js/components/_custom-scrollbar.js");
 /* harmony import */ var _components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/_checkbox-select-all.js */ "./src/js/components/_checkbox-select-all.js");
 /* harmony import */ var _components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/_dropdown.js */ "./src/js/components/_dropdown.js");
+/* harmony import */ var _components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/_filter-view.js */ "./src/js/components/_filter-view.js");
+
 
 
 
@@ -16215,6 +16217,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_13__.initCustomScrollbar)();
   (0,_components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__.initSelectAllCheckbox)();
   (0,_components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__.setDropdown)();
+  (0,_components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__.setFilterToggles)();
 });
 
 /***/ }),
@@ -16652,7 +16655,7 @@ const showTags = () => {
       field.classList.remove('field-hidden');
     }
   });
-  filterContainer.style.maxHeight = `${filterContainer.scrollHeight}px`;
+  filterContainer.style.maxHeight = `${filterContainer.scrollHeight + 15}px`;
   form.style.maxHeight = `${initialHeightForm}px`;
   advansedButton.classList.add('js-hide-all');
   advansedButton.textContent = 'Простой поиск';
@@ -16805,9 +16808,8 @@ const sections = document.querySelectorAll('[data-swiper="cards"]');
 const initCardsSwiper = () => {
   if (!sections.length) return;
   sections.forEach(section => {
-    const sectionClass = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getBlockClass)(section);
     const initImgSwiper = () => {
-      const imgSwipers = section.querySelectorAll(`.${sectionClass}__card-swiper`);
+      const imgSwipers = section.querySelectorAll(`.product-card__swiper`);
       if (imgSwipers.length) {
         imgSwipers.forEach(imgSwiper => {
           new swiper__WEBPACK_IMPORTED_MODULE_0__["default"](imgSwiper, {
@@ -16818,7 +16820,7 @@ const initCardsSwiper = () => {
             slidesPerView: 1,
             spaceBetween: 5,
             scrollbar: {
-              el: `.${sectionClass}__card-swiper-scrollbar`,
+              el: `.product-card__swiper-scrollbar`,
               draggable: true,
               hide: false
             }
@@ -17151,6 +17153,42 @@ const setDropdown = () => {
       }
     }
     toggleSelect();
+  });
+};
+
+
+/***/ }),
+
+/***/ "./src/js/components/_filter-view.js":
+/*!*******************************************!*\
+  !*** ./src/js/components/_filter-view.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   setFilterToggles: () => (/* binding */ setFilterToggles)
+/* harmony export */ });
+const filters = document.querySelector('.filters');
+const filterView = filters ? filters.querySelector('.filters__view') : null;
+const filterList = filters ? filters.querySelector('.filters__products') : null;
+const setFilterToggles = () => {
+  if (!filterView || !filterList) return;
+  filterView.addEventListener('click', evt => {
+    const button = evt.target.closest('button');
+    filterView.querySelector('.filters__view-toggle--active').classList.remove('filters__view-toggle--active');
+    button.classList.add('filters__view-toggle--active');
+    filterList.classList.remove('filters__products--animated');
+    filterList.classList.add('filters__products--hidden');
+    setTimeout(() => {
+      if (button.classList.contains('filters__view-toggle--list')) {
+        filterList.classList.add('filters__products--list', 'products-list');
+      } else {
+        filterList.classList.remove('filters__products--list', 'products-list');
+      }
+      filterList.classList.add('filters__products--animated');
+      filterList.classList.remove('filters__products--hidden');
+    }, 50);
   });
 };
 
