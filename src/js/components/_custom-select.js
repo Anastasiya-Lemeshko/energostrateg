@@ -1,6 +1,6 @@
 import { isArrowDownKey, isArrowUpKey, isEnterKey, isEscapeKey, removeTabIndex, setTabIndex } from '../_utils.js';
 
-const selects = document.querySelectorAll('.select:not(.dropdown)');
+const selects = document.querySelectorAll('.select');
 
 const renderCustomSelect = () => {
   if (!selects.length) return;

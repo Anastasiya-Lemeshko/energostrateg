@@ -13,13 +13,13 @@ const setDropdown = () => {
   if (!dropdowns) return;
 
   dropdowns.forEach((dropdown) => {
-    const dropdownButton = dropdown.querySelector('.select__button');
-    const dropdownList = dropdown.querySelector('.select__list');
+    const dropdownButton = dropdown.querySelector('.dropdown__button');
+    const dropdownList = dropdown.querySelector('.dropdown__list');
 
     if (!dropdownList) return;
 
     const checkTabIndex = () => {
-      const options = dropdownList.querySelectorAll('.select__item-link');
+      const options = dropdownList.querySelectorAll('.dropdown__item-link');
 
       if (dropdown.classList.contains('dropdown--open')) {
         setTabIndex(options);
