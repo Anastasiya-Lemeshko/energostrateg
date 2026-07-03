@@ -16182,6 +16182,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/_checkbox-select-all.js */ "./src/js/components/_checkbox-select-all.js");
 /* harmony import */ var _components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/_dropdown.js */ "./src/js/components/_dropdown.js");
 /* harmony import */ var _components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/_filter-view.js */ "./src/js/components/_filter-view.js");
+/* harmony import */ var _components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/_thumb-swiper.js */ "./src/js/components/_thumb-swiper.js");
+
 
 
 
@@ -16218,6 +16220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__.initSelectAllCheckbox)();
   (0,_components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__.setDropdown)();
   (0,_components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__.setFilterToggles)();
+  (0,_components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__.setThumbSwiper)();
 });
 
 /***/ }),
@@ -16433,7 +16436,7 @@ const SLIDER_CONFIG = {
     'loop': true,
     'auto_height': false
   },
-  'product': {
+  'products-list': {
     'mobile_count': 2,
     'tablet_count': 3,
     'desktop_count': 10000,
@@ -16459,6 +16462,17 @@ const SLIDER_CONFIG = {
     'has_navigation': false,
     'has_scrollbar': true,
     'mobile_margin': 20,
+    'desktop_width': SMALL_DESKTOP_WIDTH
+  },
+  'product-tab': {
+    'mobile_count': 'auto',
+    'tablet_count': 2,
+    'desktop_count': 4,
+    'loop': false,
+    'has_navigation': false,
+    'has_scrollbar': true,
+    'mobile_margin': 20,
+    'desktop_margin': 20,
     'desktop_width': SMALL_DESKTOP_WIDTH
   }
 };
@@ -16731,7 +16745,7 @@ let moveTimeoutTablet = null;
 _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.addEventListener('change', () => {
   clearTimeout(moveTimeoutDecktop);
   moveTimeoutDecktop = setTimeout(() => {
-    if (advansedButton.classList.contains('js-hide-all')) {
+    if (advansedButton && advansedButton.classList.contains('js-hide-all')) {
       hideTags();
     }
     heightCalculate();
@@ -16742,7 +16756,7 @@ _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.addEventListener('chan
 _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.addEventListener('change', () => {
   clearTimeout(moveTimeoutTablet);
   moveTimeoutTablet = setTimeout(() => {
-    if (advansedButton.classList.contains('js-hide-all')) {
+    if (advansedButton && advansedButton.classList.contains('js-hide-all')) {
       hideTags();
     }
     heightCalculate();
@@ -17182,9 +17196,9 @@ const setFilterToggles = () => {
     filterList.classList.add('filters__products--hidden');
     setTimeout(() => {
       if (button.classList.contains('filters__view-toggle--list')) {
-        filterList.classList.add('filters__products--list', 'products-list');
+        filterList.classList.add('filters__products--list', 'products-view-list');
       } else {
-        filterList.classList.remove('filters__products--list', 'products-list');
+        filterList.classList.remove('filters__products--list', 'products-view-list');
       }
       filterList.classList.add('filters__products--animated');
       filterList.classList.remove('filters__products--hidden');
@@ -18175,6 +18189,74 @@ const setTabs = () => {
     tabLinks.forEach(tablink => {
       tablink.addEventListener('click', openTabs);
     });
+  });
+};
+
+
+/***/ }),
+
+/***/ "./src/js/components/_thumb-swiper.js":
+/*!********************************************!*\
+  !*** ./src/js/components/_thumb-swiper.js ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   setThumbSwiper: () => (/* binding */ setThumbSwiper)
+/* harmony export */ });
+/* harmony import */ var swiper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! swiper */ "./node_modules/swiper/swiper.mjs");
+/* harmony import */ var swiper_modules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! swiper/modules */ "./node_modules/swiper/modules/index.mjs");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../_utils.js */ "./src/js/_utils.js");
+
+
+
+const sections = document.querySelectorAll('[data-swiper="thumb"]');
+const setThumbSwiper = () => {
+  if (!sections || !sections.length) return;
+  sections.forEach(section => {
+    const mainSwiper = section.querySelector('.main-swiper');
+    const thumbSwiper = section.querySelector('.thumb-swiper');
+    let mainSwiperContainer = null;
+    const sectionClass = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSwiperClass)(mainSwiper);
+    const thumbSwiperContainer = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"](thumbSwiper, {
+      slidesPerView: 4,
+      spaceBetween: 5,
+      watchSlidesProgress: true,
+      centeredSlidesBounds: true,
+      breakpoints: {
+        768: {
+          spaceBetween: 10,
+          direction: 'vertical',
+          watchSlidesProgress: false,
+          centeredSlidesBounds: false
+        }
+      }
+    });
+    const initMainSwiper = () => {
+      if (!mainSwiper) return;
+      mainSwiperContainer = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"](mainSwiper, {
+        modules: [swiper_modules__WEBPACK_IMPORTED_MODULE_1__.Navigation, swiper_modules__WEBPACK_IMPORTED_MODULE_1__.Thumbs, swiper_modules__WEBPACK_IMPORTED_MODULE_1__.EffectFade],
+        direction: 'horizontal',
+        speed: 500,
+        allowTouchMove: true,
+        slidesPerView: 1,
+        spaceBetween: 10,
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true
+        },
+        navigation: {
+          nextEl: `.${sectionClass}swiper-button-container .button-swiper--next`,
+          prevEl: `.${sectionClass}swiper-button-container .button-swiper--prev`
+        },
+        thumbs: {
+          swiper: thumbSwiperContainer,
+          slideThumbActiveClass: `${sectionClass}thumb-slide--active`
+        }
+      });
+    };
+    initMainSwiper();
   });
 };
 
