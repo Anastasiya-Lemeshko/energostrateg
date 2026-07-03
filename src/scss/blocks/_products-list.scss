@@ -1,14 +1,7 @@
 @use "index" as *;
 
-.products-list__swiper-container {
-  margin: 0 0 30px;
-
-  @include vp-1024 {
-    margin: 0 0 40px;
-  }
-}
-
-.products-list__swiper-wrapper {
+.products-list__swiper-wrapper,
+.products-list-short__swiper-wrapper {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
@@ -39,20 +32,34 @@
   }
 }
 
-.products-list__slide {
+.products-list__slide,
+.products-list-short__slide {
   @include slide-layout;
 }
 
-.products-list__slide-container {
+.products-list__slide-container,
+.products-list-short__slide-container {
   @include slide-container;
 }
 
-.products-list__swiper-scrollbar {
+.products-list__swiper-scrollbar,
+.products-list-short__swiper-scrollbar {
   @include swiper-scrollbar-light;
 }
 
-.products-list__order {
+.products-list__order,
+.products-list-short__order {
   @include link-order;
+
+  margin: 30px 0 0;
+
+  @include vp-768 {
+    margin: 30px auto 0;
+  }
+
+  @include vp-1024 {
+    margin: 40px auto 0;
+  }
 
   @include vp-2500 {
     min-width: 450px;

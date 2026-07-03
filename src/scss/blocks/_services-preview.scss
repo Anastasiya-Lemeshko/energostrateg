@@ -31,6 +31,12 @@
     grid-template-columns: repeat(3, 1fr);
     margin: 0 0 40px;
   }
+
+  &--four {
+    @include vp-1024 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
 }
 
 .services-preview__item {

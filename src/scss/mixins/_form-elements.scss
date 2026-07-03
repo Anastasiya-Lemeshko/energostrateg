@@ -231,7 +231,23 @@
   }
 
   span {
+    display: inline;
     font-size: 14px;
+  }
+
+  a {
+    display: inline;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.3s;
+
+    @include hover-focus {
+      color: var(--bg-primary);
+    }
+  }
+
+  @include hover-focus {
+    --color: var(--text-light);
   }
 }
 
@@ -376,8 +392,8 @@
     --label-bg: var(--bg-dark);
 
     @include hover {
-    --label-color: var(--white);
-    --label-bg: var(--bg-dark);
+      --label-color: var(--white);
+      --label-bg: var(--bg-dark);
     }
   }
 

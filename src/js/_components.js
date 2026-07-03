@@ -16,6 +16,7 @@ import { initSelectAllCheckbox } from './components/_checkbox-select-all.js';
 import { setDropdown } from './components/_dropdown.js';
 import { setFilterToggles } from './components/_filter-view.js';
 import { setThumbSwiper } from'./components/_thumb-swiper.js';
+import { alignGridComponents } from './components/_grid-align.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCustomSelect();
@@ -37,5 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setDropdown();
   setFilterToggles();
   setThumbSwiper();
+  alignGridComponents();
 });
 

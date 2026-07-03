@@ -106,6 +106,10 @@
   font-size: 12px;
   color: var(--bg-light);
 
+  @include vp-1280 {
+    font-size: 14px;
+  }
+
   &--secondary {
     @include vp-1024 {
       margin: 0 0 20px;

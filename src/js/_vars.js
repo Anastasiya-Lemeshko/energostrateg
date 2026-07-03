@@ -58,6 +58,14 @@ export const SLIDER_CONFIG = {
     'has_navigation': false,
     'has_scrollbar': true,
   },
+  'products-list-short': {
+    'mobile_count': 2,
+    'tablet_count': 3,
+    'desktop_count': 4,
+    'loop': false,
+    'has_navigation': false,
+    'has_scrollbar': true,
+  },
   'clients': {
     'mobile_count': 'auto',
     'tablet_count': 'auto',

@@ -243,27 +243,10 @@
   position: relative;
   width: fit-content;
   margin: 0;
-  padding-right: 25px;
   font-weight: 400;
   font-size: 18px;
   line-height: 1;
   letter-spacing: -0.02em;
-
-  &::before,
-  &::after {
-    position: absolute;
-    top: 1px;
-    right: 2px;
-    content: "";
-    width: 13px;
-    height: 13px;
-    background-color: var(--bg-dark);
-  }
-
-  &::after {
-    top: 3px;
-    right: 0;
-  }
 }
 
 .product-card__stock {
@@ -286,6 +269,10 @@
 
   &--out {
     --stock-color: var(--error);
+  }
+
+  &--order {
+    --stock-color: var(--yellow);
   }
 }
 

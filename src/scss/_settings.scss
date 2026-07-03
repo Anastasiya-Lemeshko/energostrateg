@@ -94,8 +94,12 @@ form {
 
 .container {
   margin: 0 auto;
-  padding: 0 var(--container-offset);
+  padding: 0 var(--container-offset-mobile);
   max-width: var(--content-width);
+
+  @include vp-768 {
+    padding: 0 var(--container-offset-tablet);
+  }
 
   @include vp-2500 {
     max-width: var(--big-content-width);

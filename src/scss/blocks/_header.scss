@@ -247,31 +247,6 @@
       margin: 0;
     }
   }
-
-  &--services {
-    @include vp-1024 {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 5px;
-    }
-
-    &::after {
-      @include vp-1024 {
-        grid-area: 1 / 2 / 2 / 3;
-        content: "";
-        width: 12px;
-        height: 11px;
-        background-color: var(--bg-primary);
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-image: url("../img/sprite.svg#select-arrow");
-        mask-size: 12px 11px;
-        transform: scaleY(1);
-        transition: background-color 0.3s, transform 0.3s;
-      }
-    }
-  }
 }
 
 .header__nav-link {
@@ -281,6 +256,37 @@
   font-weight: 400;
   font-size: 16px;
   color: inherit;
+}
+
+.header__nav-item--services .header__nav-link {
+  @include vp-1024 {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &::after {
+    @include vp-1024 {
+      grid-area: 1 / 2 / 2 / 3;
+      content: "";
+      width: 12px;
+      height: 11px;
+      background-color: var(--bg-primary);
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-image: url("../img/sprite.svg#select-arrow");
+      mask-size: 12px 11px;
+      transform: scaleY(1);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+  }
+}
+
+.header__nav-subitem {
+  &:not(:last-child) {
+    margin: 0 0 10px;
+  }
 }
 
 .header__nav-sublink {
@@ -340,10 +346,12 @@
   }
 }
 
-.header__tel {
+.header__tel,
+.header__mail {
   @include interactive-link;
 
   display: block;
+  margin: 0 0 5px;
   font-weight: 400;
   font-size: 16px;
   color: inherit;
@@ -487,9 +495,16 @@
   list-style-type: none;
 }
 
+.header__catalog-item {
+  &:not(:last-child) {
+    margin: 0 0 10px;
+  }
+}
+
 .header__catalog-link {
   @include interactive-link;
 
+  display: block;
   font-weight: 400;
   font-size: 14px;
 }

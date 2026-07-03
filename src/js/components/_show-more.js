@@ -2,7 +2,15 @@ import { TABLET_WIDTH, COUNT_VISIBLE_TAGS } from "../_vars.js";
 
 const activeLists = document.querySelectorAll('.js-show-more-list-active');
 
-// кнопка работает только на мобильной версии (на десктопе ее нет)
+const getVisibleCount = (container) => {
+  const dataCount = container.dataset.count;
+  if (dataCount) {
+    const count = parseInt(dataCount, 10);
+    if (!isNaN(count) && count > 0) return count;
+  }
+
+  return COUNT_VISIBLE_TAGS; // значение по умолчанию
+};
 
 const onButtonClick = (evt) => {
   const showButton = evt.target;
@@ -15,9 +23,11 @@ const onButtonClick = (evt) => {
 
   if (!tags || !tags.length) return;
 
+  const visibleCount = getVisibleCount(container);
+
   if (!showButton.classList.contains('js-hide-all')) {
     tags.forEach((tag, index) => {
-      if (index >= COUNT_VISIBLE_TAGS) {
+      if (index >= visibleCount) {
         tag.classList.remove('hidden');
       }
     });
@@ -30,7 +40,7 @@ const onButtonClick = (evt) => {
     }
   } else {
     tags.forEach((tag, index) => {
-      if (index >= COUNT_VISIBLE_TAGS) {
+      if (index >= visibleCount) {
         tag.classList.add('hidden');
       }
     });
@@ -52,6 +62,8 @@ const showAllTags = (list) => {
   const tags = list.querySelectorAll('.js-show-more-tag');
   if (!tags || !tags.length) return;
 
+  const visibleCount = getVisibleCount(container);
+
   // если скрытие нужно только на моб.версии, а открыт десктоп - показывает все теги и выходит из функции
   if (list.classList.contains('js-show-more-mobile-only') && TABLET_WIDTH.matches) {
     buttonMore.classList.add('hidden');
@@ -63,7 +75,7 @@ const showAllTags = (list) => {
     return;
   };
 
-  if (tags.length <= COUNT_VISIBLE_TAGS) {
+  if (tags.length <= visibleCount) {
     buttonMore.classList.add('hidden');
     return;
   }
@@ -72,7 +84,7 @@ const showAllTags = (list) => {
   buttonMore.classList.remove('hidden');
 
   tags.forEach((tag, index) => {
-    if (index >= COUNT_VISIBLE_TAGS) {
+    if (index >= visibleCount) {
       tag.classList.add('hidden');
     }
   });
@@ -135,7 +147,6 @@ const onWindowChange = () => {
     });
   }, 10);
 };
-
 
 // скрытие табов на мобильной версии (добавление кнопки "показать все")
 if (activeLists && activeLists.length) {

@@ -7,13 +7,17 @@
     padding: 0;
 
     @include vp-1024 {
-      padding: 0 var(--container-offset);
+      padding: 0 var(--container-offset-tablet);
     }
   }
 }
 
 .clients__title {
-  padding: 0 var(--container-offset);
+  padding: 0 var(--container-offset-mobile);
+
+  @include vp-768 {
+    padding: 0 var(--container-offset-tablet);
+  }
 
   @include vp-1024 {
     padding: 0;
@@ -67,13 +71,23 @@
   }
 
   &:first-child {
-    --padding: 0 0 0 var(--container-offset);
-    --slide-width: calc(var(--card-width) + var(--container-offset));
+    --padding: 0 0 0 var(--container-offset-mobile);
+    --slide-width: calc(var(--card-width) + var(--container-offset-mobile));
+
+    @include vp-768 {
+      --padding: 0 0 0 var(--container-offset-tablet);
+      --slide-width: calc(var(--card-width) + var(--container-offset-tablet));
+    }
   }
 
   &:last-child {
-    --padding: 0 var(--container-offset) 0 0;
-    --slide-width: calc(var(--card-width) + var(--container-offset));
+    --padding: 0 var(--container-offset-mobile) 0 0;
+    --slide-width: calc(var(--card-width) + var(--container-offset-mobile));
+
+    @include vp-768 {
+      --padding: 0 var(--container-offset-tablet) 0 0;
+      --slide-width: calc(var(--card-width) + var(--container-offset-tablet));
+    }
   }
 }
 
@@ -131,14 +145,22 @@
 .clients__swiper-scrollbar {
   @include swiper-scrollbar;
 
-  margin: 0 var(--container-offset);
+  margin: 0 var(--container-offset-mobile);
+
+  @include vp-768 {
+    margin: 0 var(--container-offset-tablet);
+  }
+
+  @include vp-1024 {
+    margin: 0;
+  }
 }
 
 .clients__order {
   @include link-order;
 
-  width: calc(100% - 2 * var(--container-offset));
-  margin: 0 var(--container-offset);
+  width: calc(100% - 2 * var(--container-offset-mobile));
+  margin: 0 var(--container-offset-mobile);
 
   @include vp-768 {
     width: fit-content;

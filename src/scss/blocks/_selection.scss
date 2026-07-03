@@ -1,0 +1,74 @@
+@use "index" as *;
+
+.selection__wrapper {
+  padding: 15px;
+  background-color: var(--bg-primary);
+}
+
+.selection__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.selection__link {
+  display: block;
+  padding: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--text-basic);
+  background-color: var(--bg-light);
+  transition: color 0.3s, background-color 0.3s;
+
+  @include hover-focus {
+    color: var(--white);
+    background-color: var(--bg-dark);
+  }
+}
+
+.selection__show-more {
+  --arrow-transform: scale(1);
+
+  width: 100%;
+  margin: 5px 0 0;
+  padding: 5px 0 0;
+  background-color: var(--transparent);
+  border: none;
+  text-align: left;
+
+  &.js-hide-all {
+    --arrow-transform: scale(-1);
+  }
+
+  span {
+    display: grid;
+    grid-template-columns: max-content min-content;
+    align-items: center;
+    gap: 3px;
+    font-weight: 400;
+    font-size: 16px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-skip-ink: none;
+    color: var(--bg-light);
+    pointer-events: none;
+
+    &::after {
+      grid-area: 1 / 2 / 2 / 3;
+      content: "";
+      width: 12px;
+      height: 11px;
+      background-color: var(--bg-light);
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-image: url("../img/sprite.svg#select-arrow");
+      mask-size: 12px 11px;
+      transform: var(--arrow-transform);
+      transition: transform 0.3s;
+    }
+  }
+}
+

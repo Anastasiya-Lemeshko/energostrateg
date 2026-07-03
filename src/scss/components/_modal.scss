@@ -191,10 +191,9 @@
   --color: var(--bg-light);
 
   margin: 0 0 20px;
-  transition: opacity 0.3s;
 
   @include vp-1024 {
-    max-width: 426px;
+    max-width: 375px;
     margin: 0 auto 20px;
   }
 
@@ -203,10 +202,23 @@
     --color: var(--bg-light);
   }
 
+  a {
+    transition: opacity 0.3s;
+
+    @include hover-focus {
+      opacity: 0.8;
+      color: var(--bg-light);
+    }
+  }
+
   @include hover {
     --color: var(--bg-light);
+  }
+}
 
-    opacity: 0.8;
+.modal-standard__list--two-column .modal-standard__accept {
+  @include vp-1024 {
+    max-width: 426px;
   }
 }
 
@@ -242,10 +254,23 @@
 .modal-standard__contacts-link {
   @include interactive-opacity;
 
+  display: block;
   margin: 0;
   font-weight: 400;
   font-size: 22px;
   color: var(--text-extra-light);
+
+  @include vp-1024 {
+    font-size: 18px;
+  }
+
+  @include vp-1280 {
+    font-size: 22px;
+  }
+
+  &:not(:last-child) {
+    margin: 0 0 5px;
+  }
 }
 
 .modal-standard__socials {

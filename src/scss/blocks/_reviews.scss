@@ -14,19 +14,22 @@
     padding: 0;
 
     @include vp-1024 {
-      padding: 0 var(--container-offset);
+      padding: 0 var(--container-offset-tablet);
       overflow: unset;
     }
   }
 }
 
 .reviews__title {
-  padding: 0 var(--container-offset);
+  padding: 0 var(--container-offset-mobile);
+
+  @include vp-768 {
+    padding: 0 var(--container-offset-tablet);
+  }
 
   @include vp-1024 {
     padding: 0;
   }
-
 }
 
 .reviews__swiper-wrapper {
@@ -67,13 +70,23 @@
   }
 
   &:first-child {
-    --padding: 0 0 0 var(--container-offset);
-    --slide-width: calc(var(--card-width) + var(--container-offset));
+    --padding: 0 0 0 var(--container-offset-mobile);
+    --slide-width: calc(var(--card-width) + var(--container-offset-mobile));
+
+    @include vp-768 {
+      --padding: 0 0 0 var(--container-offset-tablet);
+      --slide-width: calc(var(--card-width) + var(--container-offset-tablet));
+    }
   }
 
   &:last-child {
-    --padding: 0 var(--container-offset) 0 0;
-    --slide-width: calc(var(--card-width) + var(--container-offset));
+    --padding: 0 var(--container-offset-mobile) 0 0;
+    --slide-width: calc(var(--card-width) + var(--container-offset-mobile));
+
+    @include vp-768 {
+      --padding: 0 var(--container-offset-tablet) 0 0;
+      --slide-width: calc(var(--card-width) + var(--container-offset-tablet));
+    }
   }
 }
 
@@ -96,7 +109,7 @@
   background-color: var(--bg-light);
   text-align: center;
   transition: background-color 0.3s,
-  box-shadow 0.3s;
+    box-shadow 0.3s;
 
   @include vp-2500 {
     padding: 40px;
@@ -142,14 +155,22 @@
 .reviews__swiper-scrollbar {
   @include swiper-scrollbar;
 
-  margin: 0 var(--container-offset);
+  margin: 0 var(--container-offset-mobile);
+
+  @include vp-768 {
+    margin: 0 var(--container-offset-tablet);
+  }
+
+  @include vp-1024 {
+    margin: 0;
+  }
 }
 
 .reviews__order {
   @include link-order;
 
-  width: calc(100% - 2 * var(--container-offset));
-  margin: 0 var(--container-offset);
+  width: calc(100% - 2 * var(--container-offset-mobile));
+  margin: 0 var(--container-offset-mobile);
 
   @include vp-768 {
     width: fit-content;

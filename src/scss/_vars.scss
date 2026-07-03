@@ -5,7 +5,8 @@
   --content-width: 1440px;
   --big-content-width: 1840px;
   --full-content-width: 1960px;
-  --container-offset: 20px;
+  --container-offset-mobile: 10px;
+  --container-offset-tablet: 20px;
 
   // colors
   --transparent: rgba(255, 255, 255, 0);
@@ -18,6 +19,7 @@
   --bg-dark: #055670;
   --bg-light: #f0f0f0;
   --green: #3caa3c;
+  --yellow: #e6f51e;
   --error: #c10000;
 
   // z-index
