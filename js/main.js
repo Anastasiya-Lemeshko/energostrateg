@@ -16183,6 +16183,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/_dropdown.js */ "./src/js/components/_dropdown.js");
 /* harmony import */ var _components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/_filter-view.js */ "./src/js/components/_filter-view.js");
 /* harmony import */ var _components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/_thumb-swiper.js */ "./src/js/components/_thumb-swiper.js");
+/* harmony import */ var _components_grid_align_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/_grid-align.js */ "./src/js/components/_grid-align.js");
+
 
 
 
@@ -16221,6 +16223,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__.setDropdown)();
   (0,_components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__.setFilterToggles)();
   (0,_components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__.setThumbSwiper)();
+  (0,_components_grid_align_js__WEBPACK_IMPORTED_MODULE_18__.alignGridComponents)();
 });
 
 /***/ }),
@@ -16440,6 +16443,14 @@ const SLIDER_CONFIG = {
     'mobile_count': 2,
     'tablet_count': 3,
     'desktop_count': 10000,
+    'loop': false,
+    'has_navigation': false,
+    'has_scrollbar': true
+  },
+  'products-list-short': {
+    'mobile_count': 2,
+    'tablet_count': 3,
+    'desktop_count': 4,
     'loop': false,
     'has_navigation': false,
     'has_scrollbar': true
@@ -17205,6 +17216,54 @@ const setFilterToggles = () => {
     }, 50);
   });
 };
+
+
+/***/ }),
+
+/***/ "./src/js/components/_grid-align.js":
+/*!******************************************!*\
+  !*** ./src/js/components/_grid-align.js ***!
+  \******************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   alignGridComponents: () => (/* binding */ alignGridComponents)
+/* harmony export */ });
+/* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_vars.js */ "./src/js/_vars.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../_utils.js */ "./src/js/_utils.js");
+
+
+const grid = document.querySelectorAll('[data-align="grid"]');
+const alignGridComponents = () => {
+  if (!grid || !grid.length || !_vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches) return;
+  grid.forEach(item => {
+    const gridTitles = item.querySelectorAll('[data-align="title"]');
+    const gridText = item.querySelectorAll('[data-align="text"]');
+    let minTitleHeight = 0;
+    let minTextHeight = 0;
+    if (gridTitles && gridTitles.length) {
+      gridTitles.forEach(title => {
+        title.style.minHeight = 'unset';
+        minTitleHeight = Math.max(minTitleHeight, title.offsetHeight);
+      });
+      gridTitles.forEach(title => {
+        title.style.minHeight = `${minTitleHeight}px`;
+      });
+    }
+    if (gridText && gridText.length) {
+      gridText.forEach(text => {
+        text.style.minHeight = 'unset';
+        minTextHeight = Math.max(minTextHeight, text.offsetHeight);
+      });
+      gridText.forEach(text => {
+        text.style.minHeight = `${minTextHeight}px`;
+      });
+    }
+  });
+};
+const debouncedAlign = (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__.debounce)(alignGridComponents, 100);
+window.addEventListener('resize', debouncedAlign);
 
 
 /***/ }),
@@ -18012,9 +18071,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_vars.js */ "./src/js/_vars.js");
 
 const activeLists = document.querySelectorAll('.js-show-more-list-active');
-
-// кнопка работает только на мобильной версии (на десктопе ее нет)
-
+const getVisibleCount = container => {
+  const dataCount = container.dataset.count;
+  if (dataCount) {
+    const count = parseInt(dataCount, 10);
+    if (!isNaN(count) && count > 0) return count;
+  }
+  return _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_TAGS; // значение по умолчанию
+};
 const onButtonClick = evt => {
   const showButton = evt.target;
   const span = showButton.querySelector('span');
@@ -18022,9 +18086,10 @@ const onButtonClick = evt => {
   const activeList = container ? container.querySelector('.js-show-more-list-active') : null;
   const tags = activeList ? activeList.querySelectorAll('.js-show-more-tag') : null;
   if (!tags || !tags.length) return;
+  const visibleCount = getVisibleCount(container);
   if (!showButton.classList.contains('js-hide-all')) {
     tags.forEach((tag, index) => {
-      if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_TAGS) {
+      if (index >= visibleCount) {
         tag.classList.remove('hidden');
       }
     });
@@ -18036,7 +18101,7 @@ const onButtonClick = evt => {
     }
   } else {
     tags.forEach((tag, index) => {
-      if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_TAGS) {
+      if (index >= visibleCount) {
         tag.classList.add('hidden');
       }
     });
@@ -18054,6 +18119,7 @@ const showAllTags = list => {
   if (!list || !buttonMore) return;
   const tags = list.querySelectorAll('.js-show-more-tag');
   if (!tags || !tags.length) return;
+  const visibleCount = getVisibleCount(container);
 
   // если скрытие нужно только на моб.версии, а открыт десктоп - показывает все теги и выходит из функции
   if (list.classList.contains('js-show-more-mobile-only') && _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.matches) {
@@ -18064,14 +18130,14 @@ const showAllTags = list => {
     return;
   }
   ;
-  if (tags.length <= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_TAGS) {
+  if (tags.length <= visibleCount) {
     buttonMore.classList.add('hidden');
     return;
   }
   list.appendChild(buttonMore);
   buttonMore.classList.remove('hidden');
   tags.forEach((tag, index) => {
-    if (index >= _vars_js__WEBPACK_IMPORTED_MODULE_0__.COUNT_VISIBLE_TAGS) {
+    if (index >= visibleCount) {
       tag.classList.add('hidden');
     }
   });
