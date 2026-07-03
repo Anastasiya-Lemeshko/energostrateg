@@ -50,7 +50,7 @@ export const SLIDER_CONFIG = {
     'loop': true,
     'auto_height': false,
   },
-  'product': {
+  'products-list': {
     'mobile_count': 2,
     'tablet_count': 3,
     'desktop_count': 10000,
@@ -76,6 +76,17 @@ export const SLIDER_CONFIG = {
     'has_navigation': false,
     'has_scrollbar': true,
     'mobile_margin': 20,
+    'desktop_width': SMALL_DESKTOP_WIDTH,
+  },
+  'product-tab': {
+    'mobile_count': 'auto',
+    'tablet_count': 2,
+    'desktop_count': 4,
+    'loop': false,
+    'has_navigation': false,
+    'has_scrollbar': true,
+    'mobile_margin': 20,
+    'desktop_margin': 20,
     'desktop_width': SMALL_DESKTOP_WIDTH,
   },
 };

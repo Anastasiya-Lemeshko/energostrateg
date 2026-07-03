@@ -1,0 +1,45 @@
+@use "../index" as *;
+
+.change-quantity {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.change-quantity__button {
+  @include icon-small-plus;
+
+  width: 35px;
+  height: 50px;
+  border: none;
+  transition: background-color 0.3s, opacity 0.3s;
+
+  @include hover-focus {
+    outline: none;
+    background-color: var(--bg-light);
+  }
+
+  @include active {
+    opacity: 0.8;
+  }
+
+  &--minus {
+    &::after {
+      display: none;
+    }
+  }
+
+  &::before,
+  &::after {
+    height: 2px;
+  }
+}
+
+.change-quantity__count {
+  margin: 0;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 100%;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}

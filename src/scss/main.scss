@@ -19,6 +19,7 @@
 @use "./components/rating";
 @use "./components/page-header";
 @use "./components/custom-scrollbar";
+@use "./components/change-quantity";
 
 // подключения секций страницы
 @use "./blocks/header";
@@ -28,7 +29,7 @@
 @use "./blocks/catalog";
 @use "./blocks/decision";
 @use "./blocks/clients";
-@use "./blocks/product";
+@use "./blocks/products-list";
 @use "./blocks/form";
 @use "./blocks/services-preview";
 @use "./blocks/projects";
@@ -36,3 +37,5 @@
 @use "./blocks/reviews";
 @use "./blocks/footer";
 @use './blocks/filters';
+@use "./blocks/product";
+@use "./blocks/product-tab";

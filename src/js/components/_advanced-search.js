@@ -130,7 +130,7 @@ let moveTimeoutTablet = null;
 SMALL_DESKTOP_WIDTH.addEventListener('change', () => {
   clearTimeout(moveTimeoutDecktop);
   moveTimeoutDecktop = setTimeout(() => {
-    if (advansedButton.classList.contains('js-hide-all')) {
+    if (advansedButton && advansedButton.classList.contains('js-hide-all')) {
       hideTags();
     }
     heightCalculate();
@@ -142,7 +142,7 @@ SMALL_DESKTOP_WIDTH.addEventListener('change', () => {
 TABLET_WIDTH.addEventListener('change', () => {
   clearTimeout(moveTimeoutTablet);
   moveTimeoutTablet = setTimeout(() => {
-    if (advansedButton.classList.contains('js-hide-all')) {
+    if (advansedButton && advansedButton.classList.contains('js-hide-all')) {
       hideTags();
     }
     heightCalculate();

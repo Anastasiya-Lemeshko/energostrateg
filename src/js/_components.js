@@ -15,6 +15,7 @@ import { initCustomScrollbar } from './components/_custom-scrollbar.js';
 import { initSelectAllCheckbox } from './components/_checkbox-select-all.js';
 import { setDropdown } from './components/_dropdown.js';
 import { setFilterToggles } from './components/_filter-view.js';
+import { setThumbSwiper } from'./components/_thumb-swiper.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCustomSelect();
@@ -35,5 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSelectAllCheckbox();
   setDropdown();
   setFilterToggles();
+  setThumbSwiper();
 });
 

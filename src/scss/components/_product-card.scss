@@ -231,7 +231,7 @@
 }
 
 .product-card__rating-content {
-  margin: 0;
+  margin: 1px 0 0;
 }
 
 .product-card__rating-count {
@@ -550,7 +550,7 @@
 }
 
 // сетка списком
-.products-list .product-card {
+.products-view-list .product-card {
   @include vp-1024 {
     grid-template-rows: minmax(0, 1fr);
     align-items: start;

@@ -16,9 +16,9 @@ const setFilterToggles = () => {
 
     setTimeout(() => {
       if (button.classList.contains('filters__view-toggle--list')) {
-        filterList.classList.add('filters__products--list', 'products-list');
+        filterList.classList.add('filters__products--list', 'products-view-list');
       } else {
-        filterList.classList.remove('filters__products--list', 'products-list');
+        filterList.classList.remove('filters__products--list', 'products-view-list');
       }
 
       filterList.classList.add('filters__products--animated');

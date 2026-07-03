@@ -47,20 +47,32 @@
     }
   }
 
-  &:nth-child(1) {
-    --icon: url("../img/sprite.svg#features-1");
+  &--indicator {
+    --icon: url("../img/sprite.svg#features-indicator");
   }
 
-  &:nth-child(2) {
-    --icon: url("../img/sprite.svg#features-2");
+  &--gear {
+    --icon: url("../img/sprite.svg#features-gear");
   }
 
-  &:nth-child(3) {
-    --icon: url("../img/sprite.svg#features-3");
+  &--dialog {
+    --icon: url("../img/sprite.svg#features-dialog");
   }
 
-  &:nth-child(4) {
-    --icon: url("../img/sprite.svg#features-4");
+  &--lock {
+    --icon: url("../img/sprite.svg#features-lock");
+  }
+
+  &--atom {
+    --icon: url("../img/sprite.svg#features-atom");
+  }
+
+  &--lighting {
+    --icon: url("../img/sprite.svg#features-lighting");
+  }
+
+  &--simple {
+    --icon: url("../img/sprite.svg#features-simple");
   }
 }
 

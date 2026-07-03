@@ -1,0 +1,24 @@
+@mixin icon-small-plus {
+  position: relative;
+  display: block;
+  width: 19px;
+  height: 19px;
+  background-color: var(--transparent);
+  margin: 0 auto;
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    content: "";
+    width: 15px;
+    height: 1px;
+    background-color: var(--text-basic);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+}
