@@ -1,0 +1,114 @@
+@use "index" as *;
+
+.steps {}
+
+.steps__swiper-wrapper {
+  display: flex;
+  padding: 0;
+  list-style-type: none;
+
+  @include vp-768 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @include vp-1024 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &--counter {
+    counter-reset: steps;
+  }
+
+  &.swiper-wrapper {
+    display: flex;
+    gap: unset;
+    margin: 0 0 20px;
+
+    @include vp-768 {
+      margin: 0 0 40px;
+    }
+  }
+}
+
+.steps__slide {
+  @include slide-layout;
+}
+
+.steps__swiper-wrapper--counter .steps__slide {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    counter-increment: steps;
+    content: counter(steps, decimal-leading-zero);
+    font-weight: 400;
+    font-size: 40px;
+    letter-spacing: -0.02em;
+    color: var(--white)
+  }
+}
+
+.steps__swiper-wrapper--counter .steps__slide {
+  &::after {
+    content: "Этап " counter(steps);
+  }
+}
+
+
+.steps__card {
+  @include slide-container;
+
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 316px;
+  padding: 15px;
+  color: var(--white);
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s;
+
+  @include vp-2500 {
+    min-height: 350px;
+    padding: 25px;
+  }
+
+  &::after {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    content: "";
+    border: 8px solid var(--transparent);
+    border-right: 8px solid var(--white);
+    border-top: 8px solid var(--white);
+  }
+
+  @include hover {
+    background-color: var(--bg-dark);
+  }
+}
+
+.steps__text {
+  grid-area: 2 / 1 / 3 / 2;
+  display: grid;
+  align-items: end;
+  min-height: 102px;
+  margin: 0;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--bg-light);
+  border-top: 1px solid var(--bg-light);
+}
+
+.steps__swiper-button-container {
+  @include swiper-button-position;
+
+  justify-content: center;
+
+  &.hidden {
+    display: none;
+  }
+}

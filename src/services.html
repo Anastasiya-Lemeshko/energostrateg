@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+
+@include('partials/head.html')
+
+<body class="page__body">
+  @include('partials/header.html')
+  <main class="page__main index">
+    @include('partials/breadcrumbs.html', {"h1": "Наши услуги", "lastLink": "Услуги"})
+    @include('partials/pages/services-hero.html')
+    @include('partials/pages/services-list.html')
+    @include('partials/pages/services-features.html')
+    @include('partials/recent.html')
+    @include('partials/reviews.html')
+    @include('partials/request.html', {"title": "Нужна консультация по оборудованию или задаче объекта?"})
+  </main>
+  @include('partials/footer.html')
+</body>
+
+</html>

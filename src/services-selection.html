@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+
+@include('partials/head.html')
+
+<body class="page__body">
+  @include('partials/header.html')
+  <main class="page__main index">
+    @include('partials/breadcrumbs.html', {"h1": "Подбор оборудования", "services": "true", "lastLink": "Подбор оборудования под&nbsp;ваш&nbsp;объект, задачу и бюджет"})
+    @include('partials/pages/services-selection-hero.html')
+    @include('partials/callback.html', {"title": "Оставить заявку на&nbsp;подбор оборудования"})
+    @include('partials/catalog.html')
+    @include('partials/pages/services-selection-features.html')
+    @include('partials/quick.html')
+    @include('partials/pages/services-selection-clients.html')
+    @include('partials/pages/services-selection-objects.html')
+    @include('partials/pages/services-selection-reasons.html')
+    @include('partials/pages/services-selection-steps.html')
+    @include('partials/pages/services-selection-result.html')
+    @include('partials/recent.html')
+    @include('partials/request.html')
+  </main>
+  @include('partials/footer.html')
+</body>
+
+</html>
