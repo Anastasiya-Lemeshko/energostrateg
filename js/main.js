@@ -16485,6 +16485,13 @@ const SLIDER_CONFIG = {
     'mobile_margin': 20,
     'desktop_margin': 20,
     'desktop_width': SMALL_DESKTOP_WIDTH
+  },
+  'steps': {
+    'mobile_count': 1,
+    'tablet_count': 2,
+    'desktop_count': 4,
+    'loop': false,
+    'desktop_width': SMALL_DESKTOP_WIDTH
   }
 };
 const RANGE_VALUES = {
