@@ -16492,6 +16492,15 @@ const SLIDER_CONFIG = {
     'desktop_count': 4,
     'loop': false,
     'desktop_width': SMALL_DESKTOP_WIDTH
+  },
+  'thanks': {
+    'mobile_count': 'auto',
+    'tablet_count': 2,
+    'desktop_count': 4,
+    'loop': false,
+    'mobile_margin': 20,
+    'desktop_margin': 20,
+    'desktop_width': SMALL_DESKTOP_WIDTH
   }
 };
 const RANGE_VALUES = {
@@ -17291,6 +17300,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const renderPhotoToModal = (modal, button) => {
+  console.log(1);
   const modalImgContainer = modal.querySelector('.modal-photo__img');
   const fullImgContainer = button.parentElement.querySelector('[data-full-photo]');
   if (!modalImgContainer || !fullImgContainer) return;
