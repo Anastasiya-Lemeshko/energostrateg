@@ -1,6 +1,11 @@
 <section class="blog block-color">
   <div class="container">
+    @if (typeof title !== 'undefined') {
+    <h2 class="blog__title title">@title</h2>
+    }
+    @if (typeof title === 'undefined') {
     <h2 class="blog__title title">Статьи</h2>
+    }
     <ul class="blog__list">
       <li class="blog__item">
         <a class="blog__card" href="#">

@@ -10,6 +10,11 @@
         <a class="breadcrumbs__link" href="services.html">Услуги</a>
       </li>
       }
+      @if (typeof blog !== 'undefined') {
+      <li class="breadcrumbs__item">
+        <a class="breadcrumbs__link" href="blog.html">Блог</a>
+      </li>
+      }
       <li class="breadcrumbs__item">
         <span class="breadcrumbs__link">@lastLink</span>
       </li>
