@@ -104,6 +104,15 @@ export const SLIDER_CONFIG = {
     'loop': false,
     'desktop_width': SMALL_DESKTOP_WIDTH,
   },
+  'thanks': {
+    'mobile_count': 'auto',
+    'tablet_count': 2,
+    'desktop_count': 4,
+    'loop': false,
+    'mobile_margin': 20,
+    'desktop_margin': 20,
+    'desktop_width': SMALL_DESKTOP_WIDTH,
+  },
 };
 
 export const RANGE_VALUES = {

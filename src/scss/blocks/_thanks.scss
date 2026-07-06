@@ -1,0 +1,132 @@
+@use "index" as *;
+
+.thanks {
+  overflow: hidden;
+}
+
+.thanks__swiper-wrapper {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  @include vp-768 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  @include vp-1024 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  @include vp-1366 {
+    gap: 20px;
+  }
+
+  &.swiper-wrapper {
+    display: flex;
+    gap: unset;
+    margin: 0 0 30px;
+
+    @include vp-768 {
+      margin: 0 0 40px;
+    }
+  }
+}
+
+.thanks__slide {
+  --padding: 0;
+  --card-width: 300px;
+  --slide-width: var(--card-width);
+
+  @include slide-layout;
+
+  width: auto;
+
+  @include vp-400 {
+    --card-width: 335px;
+  }
+
+  &:first-child {
+    --padding: 0 0 0 var(--container-offset-mobile);
+    --slide-width: calc(var(--card-width) + var(--container-offset-mobile));
+
+    @include vp-768 {
+      --padding: 0 0 0 var(--container-offset-tablet);
+      --slide-width: calc(var(--card-width) + var(--container-offset-tablet));
+    }
+  }
+
+  &:last-child {
+    --padding: 0 var(--container-offset-mobile) 0 0;
+    --slide-width: calc(var(--card-width) + var(--container-offset-mobile));
+
+    @include vp-768 {
+      --padding: 0 var(--container-offset-tablet) 0 0;
+      --slide-width: calc(var(--card-width) + var(--container-offset-tablet));
+    }
+  }
+}
+
+.thanks__card {
+  @include slide-container;
+
+  width: var(--slide-width);
+  padding: var(--padding);
+
+  @include vp-1024 {
+    width: unset;
+    padding: 0;
+  }
+}
+
+.thanks__photo-preview {
+  --img-transform: scale(1);
+
+  width: 100%;
+  aspect-ratio: 305 / 441;
+  padding: 15px;
+  background-color: var(--white);
+  border: none;
+  transition: background-color 0.3s;
+
+  @include hover-focus {
+    --img-transform: scale(1.05);
+
+    background-color: var(--bg-primary);
+    outline: none;
+  }
+}
+
+.thanks__photo-preview-wrapper {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  img {
+    @include img-bg;
+
+    transform: var(--img-transform);
+    transition: transform 0.7s;
+    z-index: 1;
+  }
+}
+
+.thanks__photo-full {
+  display: none;
+}
+
+.thanks__swiper-button-container {
+  @include swiper-button-position;
+
+  justify-content: center;
+
+  &.hidden {
+    display: none;
+  }
+}

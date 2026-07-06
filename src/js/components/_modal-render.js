@@ -2,6 +2,7 @@ import { MODAL_CONTENT } from "./../_vars.js";
 import { initVideo } from './_video.js';
 
 const renderPhotoToModal = (modal, button) => {
+  console.log(1)
   const modalImgContainer = modal.querySelector('.modal-photo__img');
   const fullImgContainer = button.parentElement.querySelector('[data-full-photo]');
 

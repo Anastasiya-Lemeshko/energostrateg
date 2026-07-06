@@ -1,7 +1,5 @@
 @use "index" as *;
 
-.steps {}
-
 .steps__swiper-wrapper {
   display: flex;
   padding: 0;
@@ -52,7 +50,7 @@
   }
 }
 
-.steps__swiper-wrapper--counter .steps__slide {
+.steps__swiper-wrapper--steps .steps__slide {
   &::after {
     content: "Этап " counter(steps);
   }

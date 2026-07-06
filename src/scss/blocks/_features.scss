@@ -74,6 +74,10 @@
   &--simple {
     --icon: url("../img/sprite.svg#features-simple");
   }
+
+  &--tick {
+    --icon: url("../img/sprite.svg#features-tick");
+  }
 }
 
 .features__title {

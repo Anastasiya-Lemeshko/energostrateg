@@ -386,6 +386,14 @@
   }
 }
 
+.header__menu .header__socials-item--mail {
+  display: none;
+
+  @include vp-1024 {
+    display: block
+  }
+}
+
 .header__socials-link {
   @include social-link;
 }
