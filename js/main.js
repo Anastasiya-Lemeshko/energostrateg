@@ -16185,6 +16185,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/_thumb-swiper.js */ "./src/js/components/_thumb-swiper.js");
 /* harmony import */ var _components_grid_align_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/_grid-align.js */ "./src/js/components/_grid-align.js");
 /* harmony import */ var _components_hide_big_text_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/_hide-big-text.js */ "./src/js/components/_hide-big-text.js");
+/* harmony import */ var _components_compare_swiper_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/_compare-swiper.js */ "./src/js/components/_compare-swiper.js");
+/* harmony import */ var _components_compare_sticky_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/_compare-sticky.js */ "./src/js/components/_compare-sticky.js");
+
+
 
 
 
@@ -16227,6 +16231,8 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__.setThumbSwiper)();
   (0,_components_grid_align_js__WEBPACK_IMPORTED_MODULE_18__.alignGridComponents)();
   (0,_components_hide_big_text_js__WEBPACK_IMPORTED_MODULE_19__.setBigTextToggles)();
+  (0,_components_compare_swiper_js__WEBPACK_IMPORTED_MODULE_20__.setCompareSwiper)();
+  (0,_components_compare_sticky_js__WEBPACK_IMPORTED_MODULE_21__.setStickyCards)();
 });
 
 /***/ }),
@@ -16393,6 +16399,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   MODAL_TIMER: () => (/* binding */ MODAL_TIMER),
 /* harmony export */   RANGE_VALUES: () => (/* binding */ RANGE_VALUES),
 /* harmony export */   SLIDER_CONFIG: () => (/* binding */ SLIDER_CONFIG),
+/* harmony export */   SLIDER_GAP: () => (/* binding */ SLIDER_GAP),
+/* harmony export */   SLIDES_COUNT: () => (/* binding */ SLIDES_COUNT),
 /* harmony export */   SMALL_DESKTOP_WIDTH: () => (/* binding */ SMALL_DESKTOP_WIDTH),
 /* harmony export */   TABLET_WIDTH: () => (/* binding */ TABLET_WIDTH),
 /* harmony export */   TABS_DELAY: () => (/* binding */ TABS_DELAY),
@@ -16413,6 +16421,54 @@ const COUNT_VISIBLE_TAGS = 12;
 const COUNT_VISIBLE_FIELDS = 9;
 const HIDE_TEXT_HEIGHT = 175;
 const MODAL_TIMER = 3000000;
+const SLIDES_COUNT = {
+  'default': 1,
+  'promo': {
+    'mobile': 1,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'brands': {
+    'mobile': 2,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'delivery': {
+    'mobile': 2,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'latest': {
+    'mobile': 2,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'cards': {
+    'mobile': 1,
+    'tablet': 1,
+    'desktop': 1
+  },
+  'service': {
+    'mobile': 1,
+    'tablet': 1,
+    'desktop': 1
+  },
+  'navigation': {
+    'mobile': 1,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'compare': {
+    'mobile': 2,
+    'tablet': 3,
+    'desktop': 3
+  }
+};
+const SLIDER_GAP = {
+  'mobile': 20,
+  'tablet': 10,
+  'desktop': 10
+};
 const TABS_DELAY = 5000;
 const TEXTAREA_LINEHEIGHT = 22;
 const MODAL_CONTENT = {
@@ -16911,6 +16967,236 @@ const initSelectAllCheckbox = () => {
       }
     });
   });
+};
+
+
+/***/ }),
+
+/***/ "./src/js/components/_compare-sticky.js":
+/*!**********************************************!*\
+  !*** ./src/js/components/_compare-sticky.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   setStickyCards: () => (/* binding */ setStickyCards)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_utils.js */ "./src/js/_utils.js");
+
+const compare = document.querySelector('.compare__wrapper');
+const compareSwiperContainer = compare ? compare.querySelector('.compare__swiper-container') : null;
+const compareSwiper = compareSwiperContainer ? compareSwiperContainer.querySelector('.compare__swiper') : null;
+let isScrollListenerAdded = false;
+const setStickyCards = () => {
+  if (!compareSwiper) return;
+  const swiperHeight = compareSwiper.offsetHeight;
+  const fixedHeight = compareSwiper.offsetHeight * 0.6;
+  compareSwiperContainer.style.height = `${swiperHeight}px`;
+  const onWindowScroll = () => {
+    const swiperRect = compareSwiper.getBoundingClientRect();
+    const isSwiperVisible = compareSwiperContainer.getBoundingClientRect().bottom >= fixedHeight;
+    const isCompareVisible = compare.getBoundingClientRect().bottom >= fixedHeight;
+    if (swiperRect.bottom < fixedHeight && !compareSwiper.classList.contains('compare__swiper--fixed')) {
+      compareSwiper.classList.add('compare__swiper--fixed');
+    }
+    if ((isSwiperVisible || !isCompareVisible) && compareSwiper.classList.contains('compare__swiper--fixed')) {
+      compareSwiper.classList.remove('compare__swiper--fixed');
+    }
+  };
+  if (!isScrollListenerAdded) {
+    isScrollListenerAdded = true;
+    const debouncedOnScrollWindow = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.debounce)(onWindowScroll, 10);
+    window.addEventListener('scroll', debouncedOnScrollWindow);
+  }
+};
+const debouncedsetStickyCards = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.debounce)(setStickyCards, 50);
+window.addEventListener('resize', debouncedsetStickyCards);
+
+
+/***/ }),
+
+/***/ "./src/js/components/_compare-swiper.js":
+/*!**********************************************!*\
+  !*** ./src/js/components/_compare-swiper.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   setCompareSwiper: () => (/* binding */ setCompareSwiper)
+/* harmony export */ });
+/* harmony import */ var swiper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! swiper */ "./node_modules/swiper/swiper.mjs");
+/* harmony import */ var swiper_modules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! swiper/modules */ "./node_modules/swiper/modules/index.mjs");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../_utils.js */ "./src/js/_utils.js");
+/* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../_vars.js */ "./src/js/_vars.js");
+
+
+
+
+const compare = document.querySelector('.compare__wrapper');
+const imageSwiper = compare ? compare.querySelector('.compare__swiper') : null;
+const charSwiper = compare ? compare.querySelector('.compare__char-swiper') : null;
+const compareButtons = compare ? compare.querySelector('.compare__swiper-buttons') : null;
+const onWindowScroll = () => {
+  const compareRect = compare.getBoundingClientRect();
+  const visibleTop = Math.max(compareRect.top, 0);
+  const visibleBottom = Math.min(compareRect.bottom, window.innerHeight);
+  const visibleHeight = Math.max(visibleBottom - visibleTop, 0);
+  const isCompareVisible = visibleHeight >= window.innerHeight * 0.5;
+  if (isCompareVisible) {
+    compareButtons.classList.add('compare__swiper-buttons--visible');
+  } else {
+    compareButtons.classList.remove('compare__swiper-buttons--visible');
+  }
+};
+const debouncedOnScrollWindow = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.debounce)(onWindowScroll, 30);
+const addWindowListener = () => {
+  window.addEventListener('scroll', debouncedOnScrollWindow);
+};
+const removeWindowListener = () => {
+  window.removeEventListener('scroll', debouncedOnScrollWindow);
+};
+const setCompareSwiper = () => {
+  if (!imageSwiper || !charSwiper) return;
+  const sectionClass = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSwiperClass)(imageSwiper);
+  const charLists = charSwiper.querySelectorAll('dl dd');
+  const charItem = charSwiper.querySelector('dd span');
+  const shiftChar = index => {
+    if (!_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches) {
+      const totalWidth = charItem.clientWidth + _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDER_GAP.mobile;
+      charLists.forEach(charList => {
+        charList.style.transform = `translateX(${-1 * totalWidth * index}px)`;
+      });
+    }
+  };
+  const setImageSwiper = () => {
+    let imageSwiperContainer = null;
+    const destroyImageSwiper = (swiper, el) => {
+      if (imageSwiperContainer) {
+        imageSwiperContainer.destroy();
+        imageSwiperContainer = null;
+        (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.removeSwiperClass)(swiper, el);
+      }
+    };
+    const initImageSwiper = () => {
+      (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.addSwiperClass)(imageSwiper, sectionClass);
+      imageSwiperContainer = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"](imageSwiper, {
+        modules: [swiper_modules__WEBPACK_IMPORTED_MODULE_1__.Navigation],
+        direction: 'horizontal',
+        speed: 500,
+        allowTouchMove: true,
+        slidesPerView: 2,
+        spaceBetween: 10,
+        loop: false,
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 20
+          },
+          1366: {
+            slidesPerView: 4
+          }
+        },
+        navigation: {
+          nextEl: `.${sectionClass}swiper-button--next`,
+          prevEl: `.${sectionClass}swiper-button--prev`
+        },
+        on: {
+          init: function () {
+            const numberOfVisibleSlides = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.checkVisibleSlides)('compare');
+            (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.setSlidesTabIndex)(this, numberOfVisibleSlides);
+          },
+          slideChange: function () {
+            const numberOfVisibleSlides = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.checkVisibleSlides)('compare');
+            (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.setSlidesTabIndex)(this, numberOfVisibleSlides);
+            shiftChar(this.activeIndex);
+          },
+          breakpoint: function () {
+            requestAnimationFrame(() => {
+              this.navigation.update();
+              this.update();
+            });
+          }
+        }
+      });
+    };
+    const checkImageSwiper = () => {
+      const isNeedSwiperMobile = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDES_COUNT.compare.mobile;
+      const isNeedSwiperTablet = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDES_COUNT.compare.tablet;
+      if (!imageSwiperContainer && (!_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && isNeedSwiperMobile || _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && isNeedSwiperTablet)) {
+        initImageSwiper();
+        addWindowListener();
+      } else if (_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !isNeedSwiperTablet && imageSwiperContainer) {
+        destroyImageSwiper(imageSwiper, sectionClass);
+        removeWindowListener();
+      }
+    };
+    checkImageSwiper();
+    _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.addEventListener('change', checkImageSwiper);
+  };
+  const setCharSwiper = () => {
+    const charClass = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSwiperClass)(charSwiper);
+    let charSwiperContainer = null;
+    const destroyCharSwiper = (swiper, el) => {
+      if (charSwiperContainer) {
+        charSwiperContainer.destroy();
+        charSwiperContainer = null;
+        (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.removeSwiperClass)(swiper, el);
+      }
+    };
+    const initCharSwiper = () => {
+      (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.addSwiperClass)(charSwiper, charClass);
+      charSwiperContainer = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"](charSwiper, {
+        modules: [swiper_modules__WEBPACK_IMPORTED_MODULE_1__.Navigation],
+        direction: 'horizontal',
+        speed: 500,
+        allowTouchMove: true,
+        slidesPerView: 2,
+        spaceBetween: 10,
+        loop: false,
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 20
+          },
+          1366: {
+            slidesPerView: 4
+          }
+        },
+        navigation: {
+          nextEl: `.${sectionClass}swiper-button--next`,
+          prevEl: `.${sectionClass}swiper-button--prev`
+        },
+        on: {
+          init: function () {
+            const numberOfVisibleSlides = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.checkVisibleSlides)('compare');
+            (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.setSlidesTabIndex)(this, numberOfVisibleSlides);
+          },
+          slideChange: function () {
+            const numberOfVisibleSlides = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.checkVisibleSlides)('compare');
+            (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.setSlidesTabIndex)(this, numberOfVisibleSlides);
+          }
+        }
+      });
+    };
+    let moveTimeout = null;
+    const checkCharSwiper = () => {
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        const isNeedSwiperTablet = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDES_COUNT.compare.tablet;
+        if (!charSwiperContainer && _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && isNeedSwiperTablet) {
+          initCharSwiper();
+        } else if (charSwiperContainer && _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !isNeedSwiperTablet || !_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches) {
+          destroyCharSwiper(charSwiper, charClass);
+        }
+      }, 10);
+    };
+    checkCharSwiper();
+    _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.addEventListener('change', checkCharSwiper);
+  };
+  setImageSwiper();
+  setCharSwiper();
 };
 
 
