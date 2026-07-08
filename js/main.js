@@ -16184,6 +16184,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/_filter-view.js */ "./src/js/components/_filter-view.js");
 /* harmony import */ var _components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/_thumb-swiper.js */ "./src/js/components/_thumb-swiper.js");
 /* harmony import */ var _components_grid_align_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/_grid-align.js */ "./src/js/components/_grid-align.js");
+/* harmony import */ var _components_hide_big_text_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/_hide-big-text.js */ "./src/js/components/_hide-big-text.js");
+
 
 
 
@@ -16224,6 +16226,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__.setFilterToggles)();
   (0,_components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__.setThumbSwiper)();
   (0,_components_grid_align_js__WEBPACK_IMPORTED_MODULE_18__.alignGridComponents)();
+  (0,_components_hide_big_text_js__WEBPACK_IMPORTED_MODULE_19__.setBigTextToggles)();
 });
 
 /***/ }),
@@ -16385,6 +16388,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   COUNT_VISIBLE_TAGS: () => (/* binding */ COUNT_VISIBLE_TAGS),
 /* harmony export */   DESKTOP_WIDTH: () => (/* binding */ DESKTOP_WIDTH),
 /* harmony export */   HEADER_FIXED_OFFSET: () => (/* binding */ HEADER_FIXED_OFFSET),
+/* harmony export */   HIDE_TEXT_HEIGHT: () => (/* binding */ HIDE_TEXT_HEIGHT),
 /* harmony export */   MODAL_CONTENT: () => (/* binding */ MODAL_CONTENT),
 /* harmony export */   MODAL_TIMER: () => (/* binding */ MODAL_TIMER),
 /* harmony export */   RANGE_VALUES: () => (/* binding */ RANGE_VALUES),
@@ -16407,6 +16411,7 @@ const DESKTOP_WIDTH = window.matchMedia('(min-width: 1366px)');
 const HEADER_FIXED_OFFSET = 500;
 const COUNT_VISIBLE_TAGS = 12;
 const COUNT_VISIBLE_FIELDS = 9;
+const HIDE_TEXT_HEIGHT = 175;
 const MODAL_TIMER = 3000000;
 const TABS_DELAY = 5000;
 const TEXTAREA_LINEHEIGHT = 22;
@@ -17284,6 +17289,83 @@ window.addEventListener('resize', debouncedAlign);
 
 /***/ }),
 
+/***/ "./src/js/components/_hide-big-text.js":
+/*!*********************************************!*\
+  !*** ./src/js/components/_hide-big-text.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   checkBigTextHeight: () => (/* binding */ checkBigTextHeight),
+/* harmony export */   setBigTextToggles: () => (/* binding */ setBigTextToggles)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../_utils.js */ "./src/js/_utils.js");
+/* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../_vars.js */ "./src/js/_vars.js");
+
+
+const bigTextButtons = document.querySelectorAll('.big-text-button');
+const showText = evt => {
+  const currentButton = evt.target.closest('button');
+  let currentContent = currentButton.parentElement.querySelector('.big-text-content');
+  if (!currentContent) return;
+  currentContent.classList.toggle('big-text-content--opened');
+  currentButton.classList.toggle('big-text-button--active');
+  if (currentContent.classList.contains('big-text-content--opened')) {
+    currentContent.style.maxHeight = `${currentContent.scrollHeight}px`;
+    currentButton.textContent = 'Свернуть';
+  } else {
+    currentContent.style.maxHeight = `${_vars_js__WEBPACK_IMPORTED_MODULE_1__.HIDE_TEXT_HEIGHT}px`;
+    currentButton.textContent = 'Читать полностью';
+  }
+};
+const checkBigTextHeight = () => {
+  if (!bigTextButtons || !bigTextButtons.length) return;
+  bigTextButtons.forEach(button => {
+    const content = button.parentElement.querySelector('.big-text-content');
+    if (!content) return;
+
+    // Проверяет, нужно ли показывать кнопку
+    const fullHeight = content.scrollHeight;
+    if (fullHeight <= _vars_js__WEBPACK_IMPORTED_MODULE_1__.HIDE_TEXT_HEIGHT) {
+      button.classList.add('hidden');
+    } else {
+      button.classList.remove('hidden');
+      content.style.maxHeight = `${_vars_js__WEBPACK_IMPORTED_MODULE_1__.HIDE_TEXT_HEIGHT}px`;
+    }
+  });
+};
+const setBigTextToggles = () => {
+  if (!bigTextButtons.length) return;
+  bigTextButtons.forEach(button => {
+    button.addEventListener('click', showText);
+  });
+};
+
+// пересчет высоты при ресайзе
+const recalcOpenedTextHeight = () => {
+  const openedContents = document.querySelectorAll('.big-text-content--opened');
+  if (!openedContents.length) return;
+  openedContents.forEach(content => {
+    const button = content.parentElement.querySelector('.big-text-button');
+    content.style.maxHeight = null;
+    setTimeout(() => {
+      const fullHeight = content.scrollHeight;
+      content.style.maxHeight = `${fullHeight}px`;
+      if (fullHeight <= _vars_js__WEBPACK_IMPORTED_MODULE_1__.HIDE_TEXT_HEIGHT) {
+        button.classList.add('hidden');
+      } else {
+        button.classList.remove('hidden');
+      }
+    }, 0);
+  });
+};
+const debounsedRecalc = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.debounce)(recalcOpenedTextHeight, 50);
+window.addEventListener('resize', debounsedRecalc);
+
+
+/***/ }),
+
 /***/ "./src/js/components/_modal-render.js":
 /*!********************************************!*\
   !*** ./src/js/components/_modal-render.js ***!
@@ -17300,7 +17382,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const renderPhotoToModal = (modal, button) => {
-  console.log(1);
   const modalImgContainer = modal.querySelector('.modal-photo__img');
   const fullImgContainer = button.parentElement.querySelector('[data-full-photo]');
   if (!modalImgContainer || !fullImgContainer) return;
@@ -17310,26 +17391,6 @@ const renderPhotoToModal = (modal, button) => {
   (0,_video_js__WEBPACK_IMPORTED_MODULE_1__.initVideo)(copyFullImg);
 };
 const renderModalContent = (modal, button) => {
-  // Отрисовка заголовка для модального окна
-  if (button.hasAttribute('data-modal-title')) {
-    const titleKey = button.getAttribute('data-modal-title');
-    const modalTitle = modal.querySelector('[data-modal-title]');
-    if (_vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.title && _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.title[titleKey] && modalTitle) {
-      modalTitle.textContent = _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.title[titleKey];
-    }
-    ;
-  }
-
-  // Отрисовка описания для модального окна
-  if (button.hasAttribute('data-modal-desc')) {
-    const descKey = button.getAttribute('data-modal-desc');
-    const modalDesc = modal.querySelector('[data-modal-desc]');
-    if (_vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.title && _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.desc[descKey] && modalDesc) {
-      modalDesc.textContent = _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.desc[descKey];
-    }
-    ;
-  }
-
   // Отрисовка динамического заголовка
   if (button.hasAttribute('data-modal-dynamic')) {
     let sourceTitle = button.closest('[data-modal-title]');
@@ -17341,18 +17402,13 @@ const renderModalContent = (modal, button) => {
     ;
   }
 
-  // Отрисовка заголовка с паттерном
-  if (button.hasAttribute('data-modal-pattern')) {
-    let sourceTitle = button.closest('[data-modal-title]');
-    const modalTitle = modal.querySelector('[data-modal-title]');
-    const patternKey = button.getAttribute('data-modal-pattern');
-    if (!sourceTitle) sourceTitle = button.parentElement.querySelector('[data-modal-title]');
-    if (sourceTitle && modalTitle && _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.pattern[patternKey]) {
-      const dynamicText = sourceTitle.textContent.trim();
-      const pattern = _vars_js__WEBPACK_IMPORTED_MODULE_0__.MODAL_CONTENT.pattern[patternKey];
-      modalTitle.textContent = pattern.replace('{title}', dynamicText);
+  // заполнение поля "услуги"
+  if (button.hasAttribute('data-service')) {
+    const service = button.dataset.service;
+    const serviceField = modal.querySelector('input[name="service"]');
+    if (service && serviceField) {
+      serviceField.value = `Услуга: ${service}`;
     }
-    ;
   }
 };
 
@@ -18230,6 +18286,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   setTabs: () => (/* binding */ setTabs)
 /* harmony export */ });
 /* harmony import */ var _show_more_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_show-more.js */ "./src/js/components/_show-more.js");
+/* harmony import */ var _hide_big_text_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_hide-big-text.js */ "./src/js/components/_hide-big-text.js");
+
 
 const tabs = document.querySelectorAll('.tabs');
 const setTabs = () => {
@@ -18268,6 +18326,7 @@ const setTabs = () => {
         newContent.classList.add('tabs__tabcontent--active');
       }
       btnTarget.classList.add('tabs__tablink--active');
+      (0,_hide_big_text_js__WEBPACK_IMPORTED_MODULE_1__.checkBigTextHeight)();
     };
     tabLinks.forEach(tablink => {
       tablink.addEventListener('click', openTabs);
