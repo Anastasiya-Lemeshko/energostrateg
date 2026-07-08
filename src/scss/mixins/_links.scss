@@ -25,6 +25,10 @@
     --icon: url("../img/sprite.svg#max");
   }
 
+  &--dzen {
+    --icon: url("../img/sprite.svg#dzen");
+  }
+
   &::after {
     position: absolute;
     top: 0;

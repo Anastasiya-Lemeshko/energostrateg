@@ -1,18 +1,25 @@
-<div class="modal modal-standard" data-modal="selection">
+<div class="modal modal-standard" data-modal="service">
   <div class="modal__container modal-standard__container">
     <button class="modal__close-button modal-close">
       <span class="visually-hidden">Закрыть.</span>
     </button>
     <div class="modal-standard__wrapper">
       <div class="modal-standard__header">
-        <p class="modal-standard__title title">Поможем подобрать решение под объект, условия эксплуатации, задачу и&nbsp;бюджет</p>
+        <p class="modal-standard__title title">Оставить заявку</p>
+        <p class="modal-standard__text">Оставьте заявку на&nbsp;услугу&nbsp;&mdash; мы&nbsp;свяжемся с&nbsp;вами и&nbsp;подробно обсудим все условия.</p>
       </div>
       <form class="modal-standard__form" action="form.php" method="post">
-        <ul class="modal-standard__list modal-standard__list--two-column">
+        <ul class="modal-standard__list">
           <li class="modal-standard__item">
             <label class="modal-standard__field">
               <span class="visually-hidden">Ваше имя</span>
               <input class="modal-standard__input" type="text" name="name" placeholder="Ваше имя*">
+            </label>
+          </li>
+          <li class="modal-standard__item">
+            <label class="modal-standard__field">
+              <span class="visually-hidden">Услуга</span>
+              <input class="modal-standard__input" type="text" name="service" placeholder="Услуга">
             </label>
           </li>
           <li class="modal-standard__item">
@@ -25,24 +32,6 @@
             <label class="modal-standard__field">
               <span class="visually-hidden">Ваша почта</span>
               <input class="modal-standard__input" type="email" name="email" placeholder="Ваша почта">
-            </label>
-          </li>
-          <li class="modal-standard__item">
-            <label class="modal-standard__field">
-              <span class="visually-hidden">Для какого объекта нужно оборудование (необязательно)</span>
-              <input class="modal-standard__input" type="text" name="object" placeholder="Для какого объекта нужно оборудование">
-            </label>
-          </li>
-          <li class="modal-standard__item">
-            <label class="modal-standard__field">
-              <span class="visually-hidden">Что должно работать (необязательно)</span>
-              <input class="modal-standard__input" type="text" name="purpose" placeholder="Что должно работать">
-            </label>
-          </li>
-          <li class="modal-standard__item">
-            <label class="modal-standard__field">
-              <span class="visually-hidden">Когда должно работать (сезон)? (необязательно)</span>
-              <input class="modal-standard__input" type="text" name="season" placeholder="Когда должно работать (сезон)?">
             </label>
           </li>
         </ul>

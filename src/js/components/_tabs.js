@@ -1,4 +1,5 @@
-import { showAllTags, onTabChange } from "./_show-more.js";
+import { showAllTags, onTabChange } from './_show-more.js';
+import { checkBigTextHeight } from './_hide-big-text.js';
 
 const tabs = document.querySelectorAll('.tabs');
 
@@ -49,6 +50,8 @@ const setTabs = () => {
       }
 
       btnTarget.classList.add('tabs__tablink--active');
+
+      checkBigTextHeight();
     };
 
     tabLinks.forEach((tablink) => {

@@ -13,11 +13,11 @@
 
   &--h1 {
     margin: 0 0 10px;
-    font-size: 27px;
+    font-size: 32px;
 
     @include vp-1024 {
     margin: 0 0 20px;
-    font-size: 42px;
+    font-size: 52px;
   }
   }
 }

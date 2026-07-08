@@ -111,12 +111,15 @@
           <p class="product__stock product__stock--in">В&nbsp;наличии</p>
         </div>
         <div class="product__users">
-          <div class="product__brand">
-            <picture>
-              <source width="48" height="48" type="image/webp" srcset="img/producers/amd@1x.webp 1x, img/producers/amd@2x.webp 2x">
-              <img src="img/producers/amd@1x.jpg" srcset="img/producers/amd@2x.jpg 2x" width="48" height="48" alt="">
-            </picture>
-          </div>
+          <a class="product__brand" href="#">
+            <p class="product__brand-text">AMO</p>
+            <div class="product__brand-img">
+              <picture>
+                <source width="48" height="48" type="image/webp" srcset="img/producers/amo@1x.webp 1x, img/producers/amo@2x.webp 2x">
+                <img src="img/producers/amo@1x.jpg" srcset="img/producers/amo@2x.jpg 2x" width="48" height="48" alt="">
+              </picture>
+            </div>
+          </a>
           <div class="product__rating">
             <div class="product__rating-stars stars stars--four" role="img" aria-label="Оценка товара четыре из пяти">
               <span class="stars__icon" aria-hidden="true"></span>
@@ -197,8 +200,10 @@
             <li class="product__order-info-item">Доставка по&nbsp;России по&nbsp;тарифам&nbsp;ТК, до&nbsp;14&nbsp;дней</li>
             <li class="product__order-info-item">Рассчитаем вариант в&nbsp;лизинг</li>
           </ul>
-          <button class="product__order-button button button--main" type="button" aria-label="Открыть форму и запросить коммерческое предложение" data-modal-button="kp">Запросить КП</button>
-          <button class="product__order-button button button--main button--light" type="button" aria-label="Открыть форму и оставить заявку" data-modal-button="oneclick" data-modal-dynamic>Купить в 1 клик</button>
+          <div class="product__order-modal-buttons">
+            <button class="product__order-button button button--main" type="button" aria-label="Открыть форму и запросить коммерческое предложение" data-modal-button="kp">Запросить КП</button>
+            <button class="product__order-button button button--main button--light" type="button" aria-label="Открыть форму и оставить заявку" data-modal-button="oneclick" data-modal-dynamic>Купить в 1 клик</button>
+          </div>
         </div>
       </div>
     </div>

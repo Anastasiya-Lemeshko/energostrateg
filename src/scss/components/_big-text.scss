@@ -1,0 +1,39 @@
+@use "index" as *;
+
+.big-text-content {
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.4s, max-height 0.4s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--transparent), var(--white));
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  &--opened {
+    &::after {
+      opacity: 0;
+    }
+  }
+}
+
+.big-text-button {
+  @include interactive-link-color;
+
+  margin: 10px 0 0;
+  padding: 0;
+  font-size: 16px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--bg-primary);
+  border: none;
+  background-color: var(--transparent);
+}

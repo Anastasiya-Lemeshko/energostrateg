@@ -296,7 +296,7 @@
 }
 
 .header__address {
-  margin: 0 0 34px;
+  margin: 0 0 5px;
 
   @include vp-1024 {
     justify-self: end;
@@ -316,14 +316,16 @@
   font-size: 16px;
   color: inherit;
 
-  &--mail {
-    @include interactive-link;
-
-    display: none;
+  &--time {
+    margin: 0 0 34px;
 
     @include vp-1024 {
-      display: block;
+      margin: 0;
     }
+  }
+
+  &--mail {
+    @include interactive-link;
   }
 
   &--address {

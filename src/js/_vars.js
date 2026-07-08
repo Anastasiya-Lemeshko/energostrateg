@@ -14,6 +14,8 @@ export const HEADER_FIXED_OFFSET = 500;
 export const COUNT_VISIBLE_TAGS = 12;
 export const COUNT_VISIBLE_FIELDS = 9;
 
+export const HIDE_TEXT_HEIGHT = 175;
+
 export const MODAL_TIMER = 3000000;
 
 export const TABS_DELAY = 5000;
