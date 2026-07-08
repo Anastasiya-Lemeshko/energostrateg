@@ -18,6 +18,8 @@ import { setFilterToggles } from './components/_filter-view.js';
 import { setThumbSwiper } from './components/_thumb-swiper.js';
 import { alignGridComponents } from './components/_grid-align.js';
 import { setBigTextToggles } from './components/_hide-big-text.js';
+import { setCompareSwiper } from './components/_compare-swiper.js';
+import { setStickyCards } from './components/_compare-sticky.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCustomSelect();
@@ -41,5 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setThumbSwiper();
   alignGridComponents();
   setBigTextToggles();
+  setCompareSwiper();
+  setStickyCards();
 });
 

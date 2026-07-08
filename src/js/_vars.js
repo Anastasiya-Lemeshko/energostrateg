@@ -18,6 +18,56 @@ export const HIDE_TEXT_HEIGHT = 175;
 
 export const MODAL_TIMER = 3000000;
 
+export const SLIDES_COUNT = {
+  'default': 1,
+  'promo': {
+    'mobile': 1,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'brands': {
+    'mobile': 2,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'delivery': {
+    'mobile': 2,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'latest': {
+    'mobile': 2,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'cards': {
+    'mobile': 1,
+    'tablet': 1,
+    'desktop': 1
+  },
+  'service': {
+    'mobile': 1,
+    'tablet': 1,
+    'desktop': 1
+  },
+  'navigation': {
+    'mobile': 1,
+    'tablet': 2,
+    'desktop': 2
+  },
+  'compare': {
+    'mobile': 2,
+    'tablet': 3,
+    'desktop': 3
+  },
+};
+
+export const SLIDER_GAP = {
+  'mobile': 20,
+  'tablet': 10,
+  'desktop': 10
+};
+
 export const TABS_DELAY = 5000;
 
 export const TEXTAREA_LINEHEIGHT = 22;

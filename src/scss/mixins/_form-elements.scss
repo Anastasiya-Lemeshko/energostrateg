@@ -103,6 +103,7 @@
 
 
 @mixin input-number-reset {
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     appearance: none;
@@ -252,8 +253,9 @@
 }
 
 @mixin control-toggle {
-  --label-color: var(--black);
-  --bg-color: var(--grey);
+  --label-color: var(--text-basic);
+  --bg-color: var(--white);
+  --toggle-color: var(--bg-dark);
   --toggle-transform: translateX(0);
 
   position: relative;
@@ -270,12 +272,13 @@
   }
 
   &::before {
-    width: 53px;
+    width: 44px;
     height: 22px;
     background-color: var(--bg-color);
     transition: background-color 0.3s, color 0.3s;
 
     @include vp-1024 {
+      width: 53px;
       height: 28px;
     }
   }
@@ -284,10 +287,10 @@
     width: 22px;
     height: 22px;
     padding: 2px;
-    background-color: var(--grey-light);
+    background-color: var(--toggle-color);
     background-clip: content-box;
     transform: var(--toggle-transform);
-    transition: transform 0.3s;
+    transition: transform 0.3s, background-color 0.3s;
     z-index: 1;
 
     @include vp-1024 {
@@ -306,33 +309,30 @@
 
   span {
     display: inline-block;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 14px;
     text-transform: uppercase;
     text-decoration: underline;
+    text-decoration-skip-ink: none;
+    text-underline-offset: 3px;
     color: var(--label-color);
     transition: color 0.3s;
-
-    @include vp-1024 {
-      font-weight: 600;
-      font-size: 18px;
-    }
   }
 
   &:has(input:focus),
   &:has(input:focus-visible) {
     --label-color: var(--bg-primary);
-    --bg-color: var(--grey-shadow);
+    --toggle-color: var(--bg-primary);
   }
 
   @include hover {
     --label-color: var(--bg-primary);
-    --bg-color: var(--grey-shadow);
+    --toggle-color: var(--bg-primary);
   }
 
   &:has(input:checked) {
-    --label-color: var(--accent-dark);
-    --bg-color: var(--accent-dark);
+    --bg-color: var(--bg-dark);
+    --toggle-color: var(--white);
     --toggle-transform: translateX(31px);
 
     @include vp-1024 {
