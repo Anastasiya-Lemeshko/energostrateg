@@ -17,8 +17,14 @@
   }
 }
 
+.page-header + .page-hero:not(:has(button)) .page-hero__title {
+  @include vp-1024 {
+    margin-top: 40px;
+  }
+}
+
 .page-hero__content {
-  margin: 0 0 10px;
+  margin: 0 0 20px;
 
   @include vp-768 {
     margin: 0 0 40px;
@@ -31,8 +37,8 @@
     color: var(--text-light);
   }
 
-  p + p {
-    margin-top: 10px;
+  p+p {
+    margin-top: 20px;
   }
 }
 
@@ -55,6 +61,18 @@
   img {
     @include img-bg;
   }
+}
+
+.page-hero__request-title {
+  margin: 0 0 10px;
+  font-weight: 400;
+  font-size: 22px;
+}
+
+.page-hero__request-text {
+  margin: 0 0 20px;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .page-hero__button {

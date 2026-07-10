@@ -1,5 +1,13 @@
 @use "index" as *;
 
+.steps__desc {
+  max-width: 675px;
+  margin: 0 0 20px;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text-light);
+}
+
 .steps__swiper-wrapper {
   display: flex;
   padding: 0;

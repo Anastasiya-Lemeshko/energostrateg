@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+
+@include('partials/head.html')
+
+<body class="page__body">
+  @include('partials/header.html')
+  <main class="page__main index">
+    @include('partials/breadcrumbs.html', {"h1": "Гарантии", "lastLink": "Гарантия и возврат оборудования"})
+    @include('partials/pages/guarantee-hero.html')
+    @include('partials/pages/guarantee-reasons.html')
+    @include('partials/pages/guarantee-conditions.html')
+    @include('partials/pages/guarantee-rules.html')
+    @include('partials/recent.html')
+    @include('partials/request.html', {"title": "Нужна консультация по&nbsp;оборудованию или задаче объекта?"})
+  </main>
+  @include('partials/footer.html')
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+
+@include('partials/head.html')
+
+<body class="page__body">
+  @include('partials/header.html')
+  <main class="page__main index">
+    @include('partials/breadcrumbs.html', {"h1": "Резервное электроснабжение частного дома с&nbsp;автоматическим запуском генератора", "lastLink": "Резервное электроснабжение частного дома с&nbsp;автоматическим запуском генератора"})
+    @include('partials/pages/project-typical-hero-img.html')
+    @include('partials/pages/project-typical-hero.html')
+    @include('partials/pages/project-typical-needs.html')
+    @include('partials/pages/project-typical-decision.html')
+    @include('partials/pages/project-typical-process.html')
+    @include('partials/pages/project-typical-result.html')
+    @include('partials/pages/project-typical-final.html')
+    @include('partials/pages/project-typical-media.html')
+    @include('partials/pages/project-typical-clients.html')
+    @include('partials/products-project.html')
+    @include('partials/recent.html')
+    @include('partials/request.html', {"title": "Нужна консультация по&nbsp;оборудованию или задаче объекта?"})
+  </main>
+  @include('partials/footer.html')
+</body>
+
+</html>

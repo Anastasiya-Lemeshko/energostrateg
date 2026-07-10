@@ -17,7 +17,7 @@
     right: var(--container-offset-mobile);
     width: auto;
     z-index: var(--z-button-scroll-top);
-    animation: slideDown 0.5s forwards;
+    animation: slide 0.5s forwards;
 
     @include vp-768 {
       left: var(--container-offset-tablet);
@@ -142,8 +142,6 @@
   padding: 0;
   list-style-type: none;
   background-color: var(--bg-light);
-
-  @include vp-1024 {}
 }
 
 .compare__char-group {

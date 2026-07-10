@@ -92,3 +92,14 @@
     }
   }
 }
+
+@mixin pagination-light {
+  @include pagination;
+
+  &-link,
+  &-button {
+    @include hover-focus {
+      background-color: var(--bg-light);
+    }
+  }
+}
