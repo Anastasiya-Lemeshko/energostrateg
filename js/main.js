@@ -16921,28 +16921,30 @@ function lerp(current, target, factor, approximation = 0) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_accordion_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/_accordion.js */ "./src/js/components/_accordion.js");
-/* harmony import */ var _components_custom_select_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/_custom-select.js */ "./src/js/components/_custom-select.js");
-/* harmony import */ var _components_open_mobile_menu_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/_open-mobile-menu.js */ "./src/js/components/_open-mobile-menu.js");
-/* harmony import */ var _components_move_header_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/_move-header.js */ "./src/js/components/_move-header.js");
-/* harmony import */ var _components_popup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/_popup.js */ "./src/js/components/_popup.js");
-/* harmony import */ var _components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/_navigation-swiper.js */ "./src/js/components/_navigation-swiper.js");
-/* harmony import */ var _components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/_cards-swiper.js */ "./src/js/components/_cards-swiper.js");
-/* harmony import */ var _components_move_hero_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/_move-hero.js */ "./src/js/components/_move-hero.js");
-/* harmony import */ var _components_tabs_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/_tabs.js */ "./src/js/components/_tabs.js");
-/* harmony import */ var _components_modal_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/_modal.js */ "./src/js/components/_modal.js");
-/* harmony import */ var _components_rating_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/_rating.js */ "./src/js/components/_rating.js");
-/* harmony import */ var _components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/_button-scroll-top.js */ "./src/js/components/_button-scroll-top.js");
-/* harmony import */ var _components_advanced_search_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/_advanced-search.js */ "./src/js/components/_advanced-search.js");
-/* harmony import */ var _components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/_custom-scrollbar.js */ "./src/js/components/_custom-scrollbar.js");
-/* harmony import */ var _components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/_checkbox-select-all.js */ "./src/js/components/_checkbox-select-all.js");
-/* harmony import */ var _components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/_dropdown.js */ "./src/js/components/_dropdown.js");
-/* harmony import */ var _components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/_filter-view.js */ "./src/js/components/_filter-view.js");
-/* harmony import */ var _components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/_thumb-swiper.js */ "./src/js/components/_thumb-swiper.js");
-/* harmony import */ var _components_grid_align_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/_grid-align.js */ "./src/js/components/_grid-align.js");
-/* harmony import */ var _components_hide_big_text_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/_hide-big-text.js */ "./src/js/components/_hide-big-text.js");
-/* harmony import */ var _components_compare_swiper_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/_compare-swiper.js */ "./src/js/components/_compare-swiper.js");
-/* harmony import */ var _components_compare_sticky_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/_compare-sticky.js */ "./src/js/components/_compare-sticky.js");
-/* harmony import */ var _components_fancybox_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/_fancybox.js */ "./src/js/components/_fancybox.js");
+/* harmony import */ var _components_fixed_header_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/_fixed-header.js */ "./src/js/components/_fixed-header.js");
+/* harmony import */ var _components_custom_select_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/_custom-select.js */ "./src/js/components/_custom-select.js");
+/* harmony import */ var _components_open_mobile_menu_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/_open-mobile-menu.js */ "./src/js/components/_open-mobile-menu.js");
+/* harmony import */ var _components_move_header_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/_move-header.js */ "./src/js/components/_move-header.js");
+/* harmony import */ var _components_popup_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/_popup.js */ "./src/js/components/_popup.js");
+/* harmony import */ var _components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/_navigation-swiper.js */ "./src/js/components/_navigation-swiper.js");
+/* harmony import */ var _components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/_cards-swiper.js */ "./src/js/components/_cards-swiper.js");
+/* harmony import */ var _components_move_hero_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/_move-hero.js */ "./src/js/components/_move-hero.js");
+/* harmony import */ var _components_tabs_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/_tabs.js */ "./src/js/components/_tabs.js");
+/* harmony import */ var _components_modal_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/_modal.js */ "./src/js/components/_modal.js");
+/* harmony import */ var _components_rating_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/_rating.js */ "./src/js/components/_rating.js");
+/* harmony import */ var _components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/_button-scroll-top.js */ "./src/js/components/_button-scroll-top.js");
+/* harmony import */ var _components_advanced_search_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/_advanced-search.js */ "./src/js/components/_advanced-search.js");
+/* harmony import */ var _components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/_custom-scrollbar.js */ "./src/js/components/_custom-scrollbar.js");
+/* harmony import */ var _components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/_checkbox-select-all.js */ "./src/js/components/_checkbox-select-all.js");
+/* harmony import */ var _components_dropdown_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/_dropdown.js */ "./src/js/components/_dropdown.js");
+/* harmony import */ var _components_filter_view_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/_filter-view.js */ "./src/js/components/_filter-view.js");
+/* harmony import */ var _components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/_thumb-swiper.js */ "./src/js/components/_thumb-swiper.js");
+/* harmony import */ var _components_grid_align_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/_grid-align.js */ "./src/js/components/_grid-align.js");
+/* harmony import */ var _components_hide_big_text_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/_hide-big-text.js */ "./src/js/components/_hide-big-text.js");
+/* harmony import */ var _components_compare_swiper_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/_compare-swiper.js */ "./src/js/components/_compare-swiper.js");
+/* harmony import */ var _components_compare_sticky_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/_compare-sticky.js */ "./src/js/components/_compare-sticky.js");
+/* harmony import */ var _components_fancybox_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/_fancybox.js */ "./src/js/components/_fancybox.js");
+
 
 
 
@@ -16967,30 +16969,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  (0,_components_custom_select_js__WEBPACK_IMPORTED_MODULE_1__.renderCustomSelect)();
-  (0,_components_open_mobile_menu_js__WEBPACK_IMPORTED_MODULE_2__.setMobileMenu)();
-  (0,_components_move_header_js__WEBPACK_IMPORTED_MODULE_3__.moveHeader)();
-  (0,_components_popup_js__WEBPACK_IMPORTED_MODULE_4__.setPopup)();
-  (0,_components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_5__.setNavigationSwiper)();
-  (0,_components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_6__.initCardsSwiper)();
-  (0,_components_move_hero_js__WEBPACK_IMPORTED_MODULE_7__.moveHero)();
-  (0,_components_tabs_js__WEBPACK_IMPORTED_MODULE_8__.setTabs)();
-  (0,_components_modal_js__WEBPACK_IMPORTED_MODULE_9__.setModals)();
-  (0,_components_rating_js__WEBPACK_IMPORTED_MODULE_10__.setRating)();
-  (0,_components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_11__.addScrollButton)();
+  (0,_components_fixed_header_js__WEBPACK_IMPORTED_MODULE_1__.addFixedHeader)();
+  (0,_components_custom_select_js__WEBPACK_IMPORTED_MODULE_2__.renderCustomSelect)();
+  (0,_components_open_mobile_menu_js__WEBPACK_IMPORTED_MODULE_3__.setMobileMenu)();
+  (0,_components_move_header_js__WEBPACK_IMPORTED_MODULE_4__.moveHeader)();
+  (0,_components_popup_js__WEBPACK_IMPORTED_MODULE_5__.setPopup)();
+  (0,_components_navigation_swiper_js__WEBPACK_IMPORTED_MODULE_6__.setNavigationSwiper)();
+  (0,_components_cards_swiper_js__WEBPACK_IMPORTED_MODULE_7__.initCardsSwiper)();
+  (0,_components_move_hero_js__WEBPACK_IMPORTED_MODULE_8__.moveHero)();
+  (0,_components_tabs_js__WEBPACK_IMPORTED_MODULE_9__.setTabs)();
+  (0,_components_modal_js__WEBPACK_IMPORTED_MODULE_10__.setModals)();
+  (0,_components_rating_js__WEBPACK_IMPORTED_MODULE_11__.setRating)();
+  (0,_components_button_scroll_top_js__WEBPACK_IMPORTED_MODULE_12__.addScrollButton)();
   (0,_components_accordion_js__WEBPACK_IMPORTED_MODULE_0__.openVisibleContent)();
   (0,_components_accordion_js__WEBPACK_IMPORTED_MODULE_0__.setAccordeonToggles)();
-  (0,_components_advanced_search_js__WEBPACK_IMPORTED_MODULE_12__.setAdvancedSearch)();
-  (0,_components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_13__.initCustomScrollbar)();
-  (0,_components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_14__.initSelectAllCheckbox)();
-  (0,_components_dropdown_js__WEBPACK_IMPORTED_MODULE_15__.setDropdown)();
-  (0,_components_filter_view_js__WEBPACK_IMPORTED_MODULE_16__.setFilterToggles)();
-  (0,_components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_17__.setThumbSwiper)();
-  (0,_components_grid_align_js__WEBPACK_IMPORTED_MODULE_18__.alignGridComponents)();
-  (0,_components_hide_big_text_js__WEBPACK_IMPORTED_MODULE_19__.setBigTextToggles)();
-  (0,_components_compare_swiper_js__WEBPACK_IMPORTED_MODULE_20__.setCompareSwiper)();
-  (0,_components_compare_sticky_js__WEBPACK_IMPORTED_MODULE_21__.setStickyCards)();
-  (0,_components_fancybox_js__WEBPACK_IMPORTED_MODULE_22__.setFancyboxGallery)();
+  (0,_components_advanced_search_js__WEBPACK_IMPORTED_MODULE_13__.setAdvancedSearch)();
+  (0,_components_custom_scrollbar_js__WEBPACK_IMPORTED_MODULE_14__.initCustomScrollbar)();
+  (0,_components_checkbox_select_all_js__WEBPACK_IMPORTED_MODULE_15__.initSelectAllCheckbox)();
+  (0,_components_dropdown_js__WEBPACK_IMPORTED_MODULE_16__.setDropdown)();
+  (0,_components_filter_view_js__WEBPACK_IMPORTED_MODULE_17__.setFilterToggles)();
+  (0,_components_thumb_swiper_js__WEBPACK_IMPORTED_MODULE_18__.setThumbSwiper)();
+  (0,_components_grid_align_js__WEBPACK_IMPORTED_MODULE_19__.alignGridComponents)();
+  (0,_components_hide_big_text_js__WEBPACK_IMPORTED_MODULE_20__.setBigTextToggles)();
+  (0,_components_compare_swiper_js__WEBPACK_IMPORTED_MODULE_21__.setCompareSwiper)();
+  (0,_components_compare_sticky_js__WEBPACK_IMPORTED_MODULE_22__.setStickyCards)();
+  (0,_components_fancybox_js__WEBPACK_IMPORTED_MODULE_23__.setFancyboxGallery)();
 });
 
 /***/ }),
@@ -17157,8 +17160,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   MODAL_TIMER: () => (/* binding */ MODAL_TIMER),
 /* harmony export */   RANGE_VALUES: () => (/* binding */ RANGE_VALUES),
 /* harmony export */   SLIDER_CONFIG: () => (/* binding */ SLIDER_CONFIG),
-/* harmony export */   SLIDER_GAP: () => (/* binding */ SLIDER_GAP),
-/* harmony export */   SLIDES_COUNT: () => (/* binding */ SLIDES_COUNT),
 /* harmony export */   SMALL_DESKTOP_WIDTH: () => (/* binding */ SMALL_DESKTOP_WIDTH),
 /* harmony export */   TABLET_WIDTH: () => (/* binding */ TABLET_WIDTH),
 /* harmony export */   TABS_DELAY: () => (/* binding */ TABS_DELAY),
@@ -17179,54 +17180,6 @@ const COUNT_VISIBLE_TAGS = 12;
 const COUNT_VISIBLE_FIELDS = 9;
 const HIDE_TEXT_HEIGHT = 175;
 const MODAL_TIMER = 3000000;
-const SLIDES_COUNT = {
-  'default': 1,
-  'promo': {
-    'mobile': 1,
-    'tablet': 2,
-    'desktop': 2
-  },
-  'brands': {
-    'mobile': 2,
-    'tablet': 2,
-    'desktop': 2
-  },
-  'delivery': {
-    'mobile': 2,
-    'tablet': 2,
-    'desktop': 2
-  },
-  'latest': {
-    'mobile': 2,
-    'tablet': 2,
-    'desktop': 2
-  },
-  'cards': {
-    'mobile': 1,
-    'tablet': 1,
-    'desktop': 1
-  },
-  'service': {
-    'mobile': 1,
-    'tablet': 1,
-    'desktop': 1
-  },
-  'navigation': {
-    'mobile': 1,
-    'tablet': 2,
-    'desktop': 2
-  },
-  'compare': {
-    'mobile': 2,
-    'tablet': 3,
-    'desktop': 3
-  }
-};
-const SLIDER_GAP = {
-  'mobile': 20,
-  'tablet': 10,
-  'desktop': 10
-};
 const TABS_DELAY = 5000;
 const TEXTAREA_LINEHEIGHT = 22;
 const MODAL_CONTENT = {
@@ -17320,6 +17273,12 @@ const SLIDER_CONFIG = {
     'mobile_margin': 20,
     'desktop_margin': 20,
     'desktop_width': SMALL_DESKTOP_WIDTH
+  },
+  'compare': {
+    'mobile_count': 2,
+    'tablet_count': 3,
+    'desktop_count': 4,
+    'gap': 20
   }
 };
 const RANGE_VALUES = {
@@ -17748,6 +17707,7 @@ const compareSwiper = compareSwiperContainer ? compareSwiperContainer.querySelec
 let isScrollListenerAdded = false;
 const setStickyCards = () => {
   if (!compareSwiper) return;
+  compareSwiper.classList.remove('compare__swiper--fixed');
   const swiperHeight = compareSwiper.offsetHeight;
   const fixedHeight = compareSwiper.offsetHeight * 0.6;
   compareSwiperContainer.style.height = `${swiperHeight}px`;
@@ -17796,6 +17756,8 @@ const compare = document.querySelector('.compare__wrapper');
 const imageSwiper = compare ? compare.querySelector('.compare__swiper') : null;
 const charSwiper = compare ? compare.querySelector('.compare__char-swiper') : null;
 const compareButtons = compare ? compare.querySelector('.compare__swiper-buttons') : null;
+
+// показывает кнопки свайпера (только при его инициализации)
 const onWindowScroll = () => {
   const compareRect = compare.getBoundingClientRect();
   const visibleTop = Math.max(compareRect.top, 0);
@@ -17822,11 +17784,16 @@ const setCompareSwiper = () => {
   const charItem = charSwiper.querySelector('dd span');
   const shiftChar = index => {
     if (!_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches) {
-      const totalWidth = charItem.clientWidth + _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDER_GAP.mobile;
+      const totalWidth = charItem.clientWidth + _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDER_CONFIG.compare.gap;
       charLists.forEach(charList => {
         charList.style.transform = `translateX(${-1 * totalWidth * index}px)`;
       });
     }
+  };
+  const deleteShiftChar = () => {
+    charLists.forEach(charList => {
+      charList.style.transform = null;
+    });
   };
   const setImageSwiper = () => {
     let imageSwiperContainer = null;
@@ -17880,18 +17847,28 @@ const setCompareSwiper = () => {
       });
     };
     const checkImageSwiper = () => {
-      const isNeedSwiperMobile = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDES_COUNT.compare.mobile;
-      const isNeedSwiperTablet = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDES_COUNT.compare.tablet;
-      if (!imageSwiperContainer && (!_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && isNeedSwiperMobile || _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && isNeedSwiperTablet)) {
+      const isNeedMobile = !_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDER_CONFIG.compare.mobile_count;
+      const isNeedTablet = _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !_vars_js__WEBPACK_IMPORTED_MODULE_3__.DESKTOP_WIDTH.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDER_CONFIG.compare.tablet_count;
+      const isNeedDesktop = _vars_js__WEBPACK_IMPORTED_MODULE_3__.DESKTOP_WIDTH.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDER_CONFIG.compare.desktop_count;
+      if (!imageSwiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
         initImageSwiper();
         addWindowListener();
-      } else if (_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !isNeedSwiperTablet && imageSwiperContainer) {
+      } else if (imageSwiperContainer && !isNeedMobile && !isNeedTablet && !isNeedDesktop) {
         destroyImageSwiper(imageSwiper, sectionClass);
         removeWindowListener();
+        setTimeout(() => {
+          compareButtons.classList.remove('compare__swiper-buttons--visible');
+        }, 10);
+      } else if (imageSwiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
+        destroyImageSwiper(imageSwiper, sectionClass);
+        removeWindowListener();
+        initImageSwiper();
+        addWindowListener();
       }
     };
     checkImageSwiper();
     _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.addEventListener('change', checkImageSwiper);
+    _vars_js__WEBPACK_IMPORTED_MODULE_3__.DESKTOP_WIDTH.addEventListener('change', checkImageSwiper);
   };
   const setCharSwiper = () => {
     const charClass = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSwiperClass)(charSwiper);
@@ -17942,16 +17919,24 @@ const setCompareSwiper = () => {
     const checkCharSwiper = () => {
       clearTimeout(moveTimeout);
       moveTimeout = setTimeout(() => {
-        const isNeedSwiperTablet = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDES_COUNT.compare.tablet;
-        if (!charSwiperContainer && _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && isNeedSwiperTablet) {
+        const isNeedTablet = _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !_vars_js__WEBPACK_IMPORTED_MODULE_3__.DESKTOP_WIDTH.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDER_CONFIG.compare.tablet_count;
+        const isNeedDesktop = _vars_js__WEBPACK_IMPORTED_MODULE_3__.DESKTOP_WIDTH.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDER_CONFIG.compare.desktop_count;
+        if (!charSwiperContainer && (isNeedTablet || isNeedDesktop)) {
           initCharSwiper();
-        } else if (charSwiperContainer && _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !isNeedSwiperTablet || !_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches) {
+        } else if (charSwiperContainer && !isNeedTablet && !isNeedDesktop || !_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches) {
           destroyCharSwiper(charSwiper, charClass);
+        } else if (charSwiperContainer && (isNeedTablet || isNeedDesktop)) {
+          destroyCharSwiper(charSwiper, charClass);
+          initCharSwiper();
+        }
+        if (_vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches || _vars_js__WEBPACK_IMPORTED_MODULE_3__.DESKTOP_WIDTH.matches) {
+          deleteShiftChar();
         }
       }, 10);
     };
     checkCharSwiper();
     _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.addEventListener('change', checkCharSwiper);
+    _vars_js__WEBPACK_IMPORTED_MODULE_3__.DESKTOP_WIDTH.addEventListener('change', checkCharSwiper);
   };
   setImageSwiper();
   setCharSwiper();
@@ -18300,6 +18285,58 @@ const setFilterToggles = () => {
     }, 50);
   });
 };
+
+
+/***/ }),
+
+/***/ "./src/js/components/_fixed-header.js":
+/*!********************************************!*\
+  !*** ./src/js/components/_fixed-header.js ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addFixedHeader: () => (/* binding */ addFixedHeader)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../_utils.js */ "./src/js/_utils.js");
+/* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../_vars.js */ "./src/js/_vars.js");
+
+
+const header = document.querySelector('.header');
+let isFixedHeader = false;
+let moveTimeout = null;
+const headerScrollHandler = () => {
+  if (!_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.matches) return;
+  const scrollTop = window.pageYOffset;
+  header.classList.toggle('header--fixed', scrollTop >= _vars_js__WEBPACK_IMPORTED_MODULE_1__.HEADER_FIXED_OFFSET);
+};
+const debouncedHeaderScrollHandler = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.debounce)(headerScrollHandler, 50);
+const addFixedHeader = () => {
+  if (!header || !_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.matches) return;
+  window.addEventListener('scroll', debouncedHeaderScrollHandler);
+  headerScrollHandler();
+  isFixedHeader = true;
+};
+const removeFixedHeader = () => {
+  if (!header) return;
+  window.removeEventListener('scroll', debouncedHeaderScrollHandler);
+  header.classList.remove('header--fixed');
+  isFixedHeader = false;
+};
+const checkFixedHeader = () => {
+  clearTimeout(moveTimeout);
+  moveTimeout = setTimeout(() => {
+    if (!header) return;
+    if (_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.matches && !isFixedHeader) {
+      addFixedHeader();
+    }
+    if (!_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.matches && isFixedHeader) {
+      removeFixedHeader();
+    }
+  }, 10);
+};
+_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.addEventListener('change', checkFixedHeader);
 
 
 /***/ }),
