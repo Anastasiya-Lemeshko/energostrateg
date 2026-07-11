@@ -1,4 +1,5 @@
 import { openVisibleContent, setAccordeonToggles } from './components/_accordion.js';
+import { addFixedHeader } from './components/_fixed-header.js';
 import { renderCustomSelect } from './components/_custom-select.js';
 import { setMobileMenu } from './components/_open-mobile-menu.js';
 import { moveHeader } from './components/_move-header.js';
@@ -20,9 +21,10 @@ import { alignGridComponents } from './components/_grid-align.js';
 import { setBigTextToggles } from './components/_hide-big-text.js';
 import { setCompareSwiper } from './components/_compare-swiper.js';
 import { setStickyCards } from './components/_compare-sticky.js';
-import{ setFancyboxGallery } from './components/_fancybox.js';
+import { setFancyboxGallery } from './components/_fancybox.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  addFixedHeader();
   renderCustomSelect();
   setMobileMenu();
   moveHeader();

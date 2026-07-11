@@ -28,7 +28,14 @@
           </a>
           }
         </div>
-        <button class="header__menu-open button" data-mobile-menu-button="main" type="button">Меню</button>
+        <div class="header__mobile-contacts">
+          <a class="header__mobile-contacts-link header__mobile-contacts-link--tel" href="tel:+7(495)7488890">
+            <span class="visually-hidden">+7&nbsp;(495)&nbsp;748&nbsp;88&nbsp;90</span>
+          </a>
+          <a class="header__mobile-contacts-link header__mobile-contacts-link--mail" href="mailto:info@generatory-russia.ru">
+            <span class="visually-hidden">info@generatory-russia.ru</span>
+          </a>
+        </div>
         <div class="header__menu" data-mobile-menu="main">
           <div class="header__logo-menu">
             @if (typeof isHomepage !== 'undefined') {
@@ -98,7 +105,6 @@
               <a class="header__address-text header__address-text--mail" href="mailto:info@generatory-russia.ru">info@generatory-russia.ru</a>
             </div>
             <div class="header__feedback">
-              <!-- <a class="header__mail" href="mailto:info@generatory-russia.ru">info@generatory-russia.ru</a> -->
               <a class="header__tel" href="tel:+7(495)7488890">+7&nbsp;(495)&nbsp;748&nbsp;88&nbsp;90</a>
               <button class="header__callback" type="button" aria-label="Открыть форму и заказать обратный звонок" data-modal-button="callback">Обратный звонок</button>
             </div>
@@ -122,96 +128,102 @@
           </div>
         </div>
       </div>
-      <div class="header__bottom">
-        <div class="header__catalog">
-          <button class="header__catalog-button button" type="button">Каталог</button>
-          <div class="header__catalog-container">
-            <div class="header__catalog-group">
-              <a class="header__catalog-title" href="#">Генераторы</a>
-              <ul class="header__catalog-list">
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Дизель-генераторы (ДГУ)</a>
-                </li>
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Бензогенераторы</a>
-                </li>
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Газовые генераторы</a>
-                </li>
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Сварочные генераторы</a>
-                </li>
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Контейнеры для генератороd</a>
-                </li>
-              </ul>
+      <div class="header__bottom-container">
+        <div class="header__bottom-wrapper">
+          <div class="header__bottom">
+            <div class="header__catalog">
+              <button class="header__catalog-button button" type="button">Каталог</button>
+              <div class="header__catalog-container">
+                <div class="header__catalog-group">
+                  <a class="header__catalog-title" href="#">Генераторы</a>
+                  <ul class="header__catalog-list">
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Дизель-генераторы (ДГУ)</a>
+                    </li>
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Бензогенераторы</a>
+                    </li>
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Газовые генераторы</a>
+                    </li>
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Сварочные генераторы</a>
+                    </li>
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Контейнеры для генератороd</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="header__catalog-group">
+                  <a class="header__catalog-title" href="#">Электроснабжение и автоматика</a>
+                  <ul class="header__catalog-list">
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">ИБП (источники бесперебойного питания)</a>
+                    </li>
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">АВР (автоматический ввод резерва)</a>
+                    </li>
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Стабилизаторы напряжения</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="header__catalog-group">
+                  <a class="header__catalog-title" href="#">Компрессорное и насосное <br>оборудование</a>
+                  <ul class="header__catalog-list">
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Дизельные компрессоры</a>
+                    </li>
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Мотопомпы</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="header__catalog-group">
+                  <a class="header__catalog-title" href="#">Тепловое оборудование</a>
+                  <ul class="header__catalog-list">
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Тепловые пушки</a>
+                    </li>
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Модульные котельные</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="header__catalog-group">
+                  <a class="header__catalog-title" href="#">Строительное оборудование</a>
+                  <ul class="header__catalog-list">
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Виброплиты</a>
+                    </li>
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Копры (свайные)</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="header__catalog-group">
+                  <a class="header__catalog-title" href="#">Освещение</a>
+                  <ul class="header__catalog-list">
+                    <li class="header__catalog-item">
+                      <a class="header__catalog-link" href="#">Осветительные мачты</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="header__catalog-group">
-              <a class="header__catalog-title" href="#">Электроснабжение и автоматика</a>
-              <ul class="header__catalog-list">
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">ИБП (источники бесперебойного питания)</a>
-                </li>
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">АВР (автоматический ввод резерва)</a>
-                </li>
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Стабилизаторы напряжения</a>
-                </li>
-              </ul>
-            </div>
-            <div class="header__catalog-group">
-              <a class="header__catalog-title" href="#">Компрессорное и насосное <br>оборудование</a>
-              <ul class="header__catalog-list">
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Дизельные компрессоры</a>
-                </li>
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Мотопомпы</a>
-                </li>
-              </ul>
-            </div>
-            <div class="header__catalog-group">
-              <a class="header__catalog-title" href="#">Тепловое оборудование</a>
-              <ul class="header__catalog-list">
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Тепловые пушки</a>
-                </li>
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Модульные котельные</a>
-                </li>
-              </ul>
-            </div>
-            <div class="header__catalog-group">
-              <a class="header__catalog-title" href="#">Строительное оборудование</a>
-              <ul class="header__catalog-list">
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Виброплиты</a>
-                </li>
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Копры (свайные)</a>
-                </li>
-              </ul>
-            </div>
-            <div class="header__catalog-group">
-              <a class="header__catalog-title" href="#">Освещение</a>
-              <ul class="header__catalog-list">
-                <li class="header__catalog-item">
-                  <a class="header__catalog-link" href="#">Осветительные мачты</a>
-                </li>
-              </ul>
-            </div>
+            <button class="header__catalog-mobile-button button button--dark" type="button" data-mobile-menu-button="catalog">Каталог</button>
+            <form class="header__search search-form">
+              <label class="search-form__field">
+                <span class="visually-hidden">Поиск по товарам</span>
+                <input class="search-form__input" type="search" name="search" placeholder="Поиск по товарам">
+              </label>
+              <button class="search-form__button" type="submit">
+                <span class="visually-hidden">Искать.</span>
+              </button>
+            </form>
+            <button class="header__menu-open button button--dark" data-mobile-menu-button="main" type="button">Меню</button>
           </div>
         </div>
-        <form class="header__search search-form">
-          <label class="search-form__field">
-            <span class="visually-hidden">Поиск по товарам</span>
-            <input class="search-form__input" type="search" name="search" placeholder="Поиск по товарам">
-          </label>
-          <button class="search-form__button" type="submit">
-            <span class="visually-hidden">Искать.</span>
-          </button>
-        </form>
       </div>
     </nav>
   </div>

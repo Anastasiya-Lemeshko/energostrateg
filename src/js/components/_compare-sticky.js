@@ -9,6 +9,8 @@ let isScrollListenerAdded = false;
 const setStickyCards = () => {
   if (!compareSwiper) return;
 
+  compareSwiper.classList.remove('compare__swiper--fixed');
+
   const swiperHeight = compareSwiper.offsetHeight;
   const fixedHeight = compareSwiper.offsetHeight * 0.6;
 

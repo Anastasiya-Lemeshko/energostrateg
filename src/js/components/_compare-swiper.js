@@ -9,13 +9,14 @@ import {
   getSwiperClass,
   debounce
 } from '../_utils.js';
-import { TABLET_WIDTH, SLIDES_COUNT, SLIDER_GAP } from "../_vars.js";
+import { TABLET_WIDTH, DESKTOP_WIDTH, SLIDER_CONFIG } from "../_vars.js";
 
 const compare = document.querySelector('.compare__wrapper');
 const imageSwiper = compare ? compare.querySelector('.compare__swiper') : null;
 const charSwiper = compare ? compare.querySelector('.compare__char-swiper') : null;
 const compareButtons = compare ? compare.querySelector('.compare__swiper-buttons') : null;
 
+// показывает кнопки свайпера (только при его инициализации)
 const onWindowScroll = () => {
   const compareRect = compare.getBoundingClientRect();
 
@@ -51,13 +52,19 @@ const setCompareSwiper = () => {
 
   const shiftChar = (index) => {
     if (!TABLET_WIDTH.matches) {
-      const totalWidth = charItem.clientWidth + SLIDER_GAP.mobile;
+      const totalWidth = charItem.clientWidth + SLIDER_CONFIG.compare.gap;
 
       charLists.forEach((charList) => {
         charList.style.transform = `translateX(${-1 * totalWidth * index}px)`;
       });
     }
   };
+
+  const deleteShiftChar = () => {
+    charLists.forEach((charList) => {
+      charList.style.transform = null;
+    });
+  }
 
   const setImageSwiper = () => {
     let imageSwiperContainer = null;
@@ -118,20 +125,30 @@ const setCompareSwiper = () => {
     };
 
     const checkImageSwiper = () => {
-      const isNeedSwiperMobile = getSlidesCount(imageSwiper) > SLIDES_COUNT.compare.mobile;
-      const isNeedSwiperTablet = getSlidesCount(imageSwiper) > SLIDES_COUNT.compare.tablet;
+      const isNeedMobile = !TABLET_WIDTH.matches && (getSlidesCount(imageSwiper) > SLIDER_CONFIG.compare.mobile_count);
+      const isNeedTablet = TABLET_WIDTH.matches && !DESKTOP_WIDTH.matches && (getSlidesCount(imageSwiper) > SLIDER_CONFIG.compare.tablet_count);
+      const isNeedDesktop = DESKTOP_WIDTH.matches && (getSlidesCount(imageSwiper) > SLIDER_CONFIG.compare.desktop_count);
 
-      if (!imageSwiperContainer && (!TABLET_WIDTH.matches && isNeedSwiperMobile || TABLET_WIDTH.matches && isNeedSwiperTablet)) {
+      if (!imageSwiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
         initImageSwiper();
         addWindowListener();
-      } else if (TABLET_WIDTH.matches && !isNeedSwiperTablet && imageSwiperContainer) {
+      } else if (imageSwiperContainer && (!isNeedMobile && !isNeedTablet && !isNeedDesktop)) {
         destroyImageSwiper(imageSwiper, sectionClass);
         removeWindowListener();
+        setTimeout(() => {
+          compareButtons.classList.remove('compare__swiper-buttons--visible');
+        }, 10);
+      } else if (imageSwiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
+        destroyImageSwiper(imageSwiper, sectionClass);
+        removeWindowListener();
+        initImageSwiper();
+        addWindowListener();
       }
     };
 
     checkImageSwiper();
     TABLET_WIDTH.addEventListener('change', checkImageSwiper);
+    DESKTOP_WIDTH.addEventListener('change', checkImageSwiper);
   };
 
   const setCharSwiper = () => {
@@ -191,18 +208,27 @@ const setCompareSwiper = () => {
     const checkCharSwiper = () => {
       clearTimeout(moveTimeout);
       moveTimeout = setTimeout(() => {
-        const isNeedSwiperTablet = getSlidesCount(imageSwiper) > SLIDES_COUNT.compare.tablet;
+        const isNeedTablet = TABLET_WIDTH.matches && !DESKTOP_WIDTH.matches && (getSlidesCount(imageSwiper) > SLIDER_CONFIG.compare.tablet_count);
+        const isNeedDesktop = DESKTOP_WIDTH.matches && (getSlidesCount(imageSwiper) > SLIDER_CONFIG.compare.desktop_count);
 
-        if (!charSwiperContainer && TABLET_WIDTH.matches && isNeedSwiperTablet) {
+        if (!charSwiperContainer && (isNeedTablet || isNeedDesktop)) {
           initCharSwiper();
-        } else if (charSwiperContainer && TABLET_WIDTH.matches && !isNeedSwiperTablet || !TABLET_WIDTH.matches) {
+        } else if (charSwiperContainer && (!isNeedTablet && !isNeedDesktop) || !TABLET_WIDTH.matches) {
           destroyCharSwiper(charSwiper, charClass);
+        } else if (charSwiperContainer && (isNeedTablet || isNeedDesktop)) {
+          destroyCharSwiper(charSwiper, charClass);
+          initCharSwiper();
+        }
+
+        if (TABLET_WIDTH.matches || DESKTOP_WIDTH.matches) {
+          deleteShiftChar();
         }
       }, 10);
     };
 
     checkCharSwiper();
     TABLET_WIDTH.addEventListener('change', checkCharSwiper);
+    DESKTOP_WIDTH.addEventListener('change', checkCharSwiper);
   };
 
   setImageSwiper();
