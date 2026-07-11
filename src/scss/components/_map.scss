@@ -1,39 +1,45 @@
 @use "index" as *;
 
+.map {
+  background-color: var(--white);
+}
+
 .map__wrapper {
   display: grid;
-  height: 300px;
-  border-radius: 5px;
+  height: 305px;
+  margin: 0;
   overflow: hidden;
 
-  @include vp-768 {
-    height: 520px;
+  @include vp-550 {
+    height: 450px;
   }
 
-  @include vp-1366 {
-    height: 741px;
+  @include vp-768 {
+    height: 100%;
   }
 }
 
 .map__image {
+  position: relative;
   grid-area: 1 / 1 / 2 / 2;
   margin: auto;
   width: 100%;
   height: 100%;
-  background-color: var(--grey);
-}
+  background-color: var(--bg-light);
 
-.map__image img {
-  display: block;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+  img {
+    @include img-bg;
+  }
 }
 
 .map__iframe {
   grid-area: 1 / 1 / 2 / 2;
+  position: relative;
+  z-index: 1;
 }
 
 .map__iframe iframe {
+  width: 100%;
   height: 100%;
+  border: none;
 }

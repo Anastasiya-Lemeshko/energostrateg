@@ -1,4 +1,9 @@
+@if (typeof color !== 'undefined') {
+<div class="page-header page-header--color">
+}
+@if (typeof color === 'undefined') {
 <div class="page-header">
+}
   <div class="container">
     <h1 class="title title--h1">@h1</h1>
     <ol class="breadcrumbs">

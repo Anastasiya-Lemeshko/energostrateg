@@ -1,0 +1,72 @@
+@use "index" as *;
+
+.contacts__wrapper {
+  @include vp-768 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 20px;
+  }
+
+  @include vp-1024 {
+    grid-template-columns: 1fr minmax(0, 2fr);
+  }
+}
+
+.contacts__map {
+  margin: 0 0 10px;
+
+  @include vp-768 {
+    grid-area: 1 / 2 / 5 / 2;
+    margin: 0;
+  }
+}
+
+.contacts__group {
+  &:not(:last-child) {
+    margin: 0 0 20px;
+  }
+}
+
+.contacts__subtitle {
+  margin: 0 0 10px;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--bg-dark);
+}
+
+.contacts__tel,
+.contacts__mail,
+.contacts__address {
+  display: block;
+  margin: 0;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--bg-primary);
+}
+
+.contacts__tel,
+.contacts__mail {
+  @include interactive-link-color;
+}
+
+.contacts__mail {
+  margin: 9px 0 0;
+}
+
+.contacts__socials {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  @include vp-1024 {
+    gap: 5px;
+  }
+}
+
+.contacts__socials-link {
+  @include social-link;
+}

@@ -6,4 +6,15 @@
   @include vp-1024 {
     margin: 74px 0 20px;
   }
+
+  &--color {
+    background-color: var(--bg-light);
+    margin: 20px 0 0;
+    padding: 20px 0;
+
+    @include vp-1024 {
+      margin: 24px 0 0;
+      padding: 50px 0 20px;
+    }
+  }
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+
+@include('partials/head.html')
+
+<body class="page__body">
+  @include('partials/header.html')
+  <main class="page__main index">
+    @include('partials/breadcrumbs.html', {"h1": "Регламент технического обслуживания дизельных генераторов на базе двигателя Ricardo 1500&nbsp;об/мин", "blog": "true", "lastLink": "Регламент технического обслуживания дизельных генераторов на базе двигателя Ricardo 1500&nbsp;об/мин"})
+    @include('partials/pages/news-typical-page.html')
+    @include('partials/products-article.html')
+    @include('partials/blog-preview.html', {"title": "Читать еще"})
+    @include('partials/request.html')
+  </main>
+  @include('partials/footer.html')
+</body>
+
+</html>

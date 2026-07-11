@@ -1,0 +1,31 @@
+@use "index" as *;
+
+.favorites__products {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  @include vp-768 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @include vp-1024 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include vp-1400 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.favorites__card {
+  &:not(:last-child) {
+    margin: 0 0 10px;
+
+    @include vp-768 {
+      margin: 0;
+    }
+  }
+}
