@@ -116,7 +116,7 @@
   }
 
   @include hover-focus {
-    outline: none;
+    outline-offset: -1px;
     background-color: var(--text-extra-light);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   }

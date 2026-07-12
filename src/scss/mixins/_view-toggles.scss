@@ -19,8 +19,7 @@
     @include hover-focus {
       --icon-color: var(--bg-dark);
 
-      outline: none;
-    }
+      }
 
     &--active {
       --icon-color: var(--bg-primary);

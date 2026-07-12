@@ -43,11 +43,6 @@
     right: calc(50% - var(--full-content-width) / 2 - 75px);
   }
 
-  &:focus-visible,
-  &:hover {
-    outline: none;
-  }
-
   &:active {
     opacity: 0.7;
   }

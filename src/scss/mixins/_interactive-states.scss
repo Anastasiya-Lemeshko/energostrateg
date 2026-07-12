@@ -44,7 +44,6 @@
 
   @include hover-focus {
     color: var(--text-light);
-    outline: none;
   }
 
   @include active {
@@ -57,7 +56,6 @@
 
   @include hover-focus {
     color: var(--text-basic);
-    outline: none;
   }
 
   @include active {
@@ -70,7 +68,6 @@
 
   @include hover-focus {
     color: var(--bg-dark);
-    outline: none;
   }
 
   @include active {
@@ -127,56 +124,12 @@
   }
 }
 
-
-// @mixin interactive-button-light {
-//   opacity: 1;
-//   transition: background-color 0.3s, opacity 0.3s;
-
-//   @include hover-focus {
-//     background-color: var(--grey);
-//     outline: none;
-//   }
-
-//   @include active {
-//     opacity: 0.7;
-//   }
-
-//   @include disabled {
-//     background-color: var(--grey);
-//     color: var(--text-light);
-//     cursor: default;
-//     pointer-events: none;
-//   }
-// }
-
-// @mixin interactive-button-dark {
-//   opacity: 1;
-//   transition: background-color 0.3s, opacity 0.3s;
-
-//   @include hover-focus {
-//     background-color: var(--text-light);
-//     outline: none;
-//   }
-
-//   @include active {
-//     opacity: 0.7;
-//   }
-
-//   @include disabled {
-//     background-color: var(--grey);
-//     color: var(--text-light);
-//     cursor: default;
-//     pointer-events: none;
-//   }
-// }
-
 @mixin interactive-opacity {
   transition: opacity 0.3s;
   cursor: pointer;
 
   @include hover-focus {
     opacity: 0.7;
-    outline: none;
   }
 
   @include active {

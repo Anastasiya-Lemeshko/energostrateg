@@ -43,6 +43,17 @@ a,
 button {
   color: inherit;
   cursor: pointer;
+
+  @include focus {
+    outline: 1px solid var(--bg-dark);
+    outline-offset: 2px;
+  }
+}
+
+input {
+  @include focus {
+    outline: 1px solid var(--bg-dark);
+  }
 }
 
 form {

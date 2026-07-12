@@ -51,7 +51,6 @@
   @include hover-focus {
     --button-color: var(--bg-primary);
 
-    outline: none;
   }
 
   @include active {

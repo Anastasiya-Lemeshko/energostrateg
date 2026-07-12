@@ -236,6 +236,7 @@
   color: var(--white);
 
   @include vp-1024 {
+    width: fit-content;
     margin: 0;
     color: var(--text-basic);
     text-align: left;

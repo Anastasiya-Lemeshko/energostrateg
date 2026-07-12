@@ -176,8 +176,6 @@ const setNavigationSwiper = () => {
 
         const isLoopNeeded = (sliderConfig.loop ?? false) && (isNeedMobile || isNeedTablet || isNeedDesktop);
 
-        console.log(section, getSlidesCount(section), getAutoSlidesCount(section))
-
         if (!swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
           initNavigationSwiper(isLoopNeeded);
         } else if (swiperContainer && (!isNeedMobile && !isNeedTablet && !isNeedDesktop)) {

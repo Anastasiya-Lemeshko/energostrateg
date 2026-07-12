@@ -1,5 +1,5 @@
 import { isEscapeKey, getScrollWidth, setTabIndex, removeTabIndex } from './../_utils.js';
-import { DESKTOP_WIDTH } from "./../_vars.js";
+import { SMALL_DESKTOP_WIDTH } from "./../_vars.js";
 
 const header = document.querySelector('.header');
 const menuButtons = document.querySelectorAll('[data-mobile-menu-button]');
@@ -82,18 +82,18 @@ const setMobileMenu = () => {
       });
     };
 
-    if (!DESKTOP_WIDTH.matches && headerLinks && headerLinks.length) {
+    if (!SMALL_DESKTOP_WIDTH.matches && headerLinks && headerLinks.length) {
       removeTabIndex(headerLinks);
     }
 
     let moveTimeout = null;
 
-    DESKTOP_WIDTH.addEventListener('change', () => {
+    SMALL_DESKTOP_WIDTH.addEventListener('change', () => {
       clearTimeout(moveTimeout);
       moveTimeout = setTimeout(() => {
         if (!headerLinks || !headerLinks.length) return;
 
-        if (DESKTOP_WIDTH.matches) {
+        if (SMALL_DESKTOP_WIDTH.matches) {
           setTabIndex(headerLinks);
         } else {
           removeTabIndex(headerLinks);
