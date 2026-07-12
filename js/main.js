@@ -17059,6 +17059,7 @@ const getSlidesCount = swiper => {
 const getAutoSlidesCount = swiper => {
   const swiperSlide = swiper.querySelector('[class*="swiper-wrapper"] li');
   const slideWidth = swiperSlide.offsetWidth;
+  console.log('slideWidth', slideWidth, 'window.innerWidth', window.innerWidth);
   return Math.floor(window.innerWidth / slideWidth);
 };
 const addSwiperClass = (swiper, el) => {
@@ -17279,6 +17280,26 @@ const SLIDER_CONFIG = {
     'tablet_count': 3,
     'desktop_count': 4,
     'gap': 20
+  },
+  'features': {
+    'mobile_count': 'auto',
+    'tablet_count': 'auto',
+    'desktop_count': 10000,
+    'loop': false,
+    'has_navigation': false,
+    'has_scrollbar': true,
+    'mobile_margin': 20,
+    'desktop_margin': 20,
+    'desktop_width': SMALL_DESKTOP_WIDTH
+  },
+  'media': {
+    'mobile_count': 10000,
+    'tablet_count': 3,
+    'desktop_count': 4,
+    'loop': false,
+    'mobile_margin': 20,
+    'desktop_margin': 20,
+    'desktop_width': SMALL_DESKTOP_WIDTH
   }
 };
 const RANGE_VALUES = {
@@ -18954,6 +18975,7 @@ const setNavigationSwiper = () => {
         const isNeedTablet = _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !desktopBreakpoint.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.tablet_count);
         const isNeedDesktop = desktopBreakpoint.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.desktop_count);
         const isLoopNeeded = (sliderConfig.loop ?? false) && (isNeedMobile || isNeedTablet || isNeedDesktop);
+        console.log(section, (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section), (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getAutoSlidesCount)(section));
         if (!swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
           initNavigationSwiper(isLoopNeeded);
         } else if (swiperContainer && !isNeedMobile && !isNeedTablet && !isNeedDesktop) {
