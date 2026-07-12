@@ -58,6 +58,10 @@
     font-weight: 400;
     font-size: 16px;
     color: var(--text-light);
+
+    @include vp-1024 {
+      max-width: unset;
+    }
   }
 
   p+p {

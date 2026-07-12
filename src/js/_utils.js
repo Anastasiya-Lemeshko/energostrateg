@@ -43,6 +43,8 @@ const getSlidesCount = (swiper) => {
 const getAutoSlidesCount = (swiper) => {
   const swiperSlide = swiper.querySelector('[class*="swiper-wrapper"] li');
   const slideWidth = swiperSlide.offsetWidth;
+    console.log('slideWidth', slideWidth, 'window.innerWidth', window.innerWidth)
+
   return Math.floor(window.innerWidth / slideWidth);
 }
 

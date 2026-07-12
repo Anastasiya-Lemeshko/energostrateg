@@ -16,8 +16,16 @@
     font-size: 32px;
 
     @include vp-1024 {
-    margin: 0 0 20px;
-    font-size: 52px;
+      margin: 0 0 20px;
+      font-size: 52px;
+    }
   }
+
+  &--small {
+    font-size: 18px;
+
+    @include vp-1024 {
+      font-size: 30px;
+    }
   }
 }

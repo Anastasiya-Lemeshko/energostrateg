@@ -1,10 +1,18 @@
 @use "index" as *;
 
-.media__list {
-  margin: 0;
+.media__swiper {
   padding: 20px;
-  list-style-type: none;
   background-color: var(--bg-primary);
+
+  &.swiper {
+    margin: 0 0 20px;
+  }
+}
+
+.media__swiper-wrapper {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 
   @include vp-768 {
     display: grid;
@@ -15,9 +23,14 @@
   @include vp-1024 {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  &.swiper-wrapper {
+    display: flex;
+    gap: unset;
+  }
 }
 
-.media__item {
+.media__slide {
   &:not(:last-child) {
     margin: 0 0 20px;
 
@@ -25,6 +38,7 @@
       margin: 0;
     }
   }
+
 }
 
 .media__img {
@@ -39,6 +53,24 @@
   }
 
   img {
-    @include img-bg;
+    @include img-cover;
   }
+}
+
+.media__swiper-button-container {
+  @include swiper-button-position;
+
+  justify-content: center;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.swiper-wrapper .media__item {
+  @include slide-layout;
+}
+
+.swiper-wrapper .media__img {
+  @include slide-container;
 }

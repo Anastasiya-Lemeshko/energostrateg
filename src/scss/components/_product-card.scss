@@ -502,7 +502,7 @@
     transform: translateY(-50%);
     right: 19px;
     align-items: flex-end;
-    gap: 1px;
+    gap: 3px;
     margin: 1px 0 10px;
     z-index: 1;
     pointer-events: none;
@@ -519,6 +519,10 @@
     &--new {
       font-size: 18px;
       color: var(--white);
+
+      @include vp-400 {
+        font-size: 22px;
+      }
 
       @include vp-1366 {
         font-size: 22px;

@@ -1,11 +1,27 @@
 @use "index" as *;
 
+.steps {
+  overflow: hidden;
+}
+
+.steps__title {
+  @include vp-1024 {
+    margin: 0 0 20px;
+  }
+}
+
 .steps__desc {
   max-width: 675px;
   margin: 0 0 20px;
   font-weight: 400;
   font-size: 16px;
   color: var(--text-light);
+}
+
+.steps__title + .steps__swiper-container {
+  @include vp-1024 {
+    margin-top: 40px;
+  }
 }
 
 .steps__swiper-wrapper {

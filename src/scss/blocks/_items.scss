@@ -1,5 +1,23 @@
 @use "index" as *;
 
+.items__title {
+  @include vp-1024 {
+    margin: 0 0 20px;
+  }
+}
+
+.items__desc {
+  max-width: 675px;
+  margin: 0 0 20px;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text-light);
+
+  @include vp-1024 {
+    margin: 0 0 35px;
+  }
+}
+
 .items__list {
   margin: 0;
   padding: 0;
@@ -13,6 +31,12 @@
 
   @include vp-1024 {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.items__title + .items__list {
+  @include vp-1024 {
+    margin-top: 40px;
   }
 }
 

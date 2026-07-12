@@ -36,6 +36,12 @@
   @include vp-2500 {
     gap: 130px;
   }
+
+  &.swiper-wrapper {
+    display: flex;
+    gap: unset;
+    margin: 0 0 20px;
+  }
 }
 
 .features__item {
@@ -129,4 +135,31 @@
   @include vp-1024 {
     margin: 40px auto 0;
   }
+}
+
+.features__slide {
+  --card-width: 280px;
+  --slide-width: var(--card-width);
+
+  @include slide-layout;
+
+  width: auto;
+
+  @include vp-450 {
+    --card-width: 350px;
+  }
+}
+
+.features__slide .features__item {
+  @include slide-container;
+
+  width: var(--slide-width);
+
+  @include vp-1024 {
+    width: unset;
+  }
+}
+
+.features__swiper-scrollbar {
+  @include swiper-scrollbar;
 }

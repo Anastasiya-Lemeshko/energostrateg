@@ -136,6 +136,11 @@
     padding: 10px 30px;
   }
 
+  @include vp-768 {
+    padding: 10px 40px;
+    font-size: 14px;
+  }
+
   @include vp-1024 {
     display: none;
   }
@@ -511,6 +516,7 @@
 .header__catalog-mobile-button {
   @include vp-768 {
     height: 50px;
+    padding: 10px 20px;
   }
 
   @include vp-1024 {
@@ -662,6 +668,16 @@
   }
 }
 
+.header__user-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include vp-1024 {
+    display: block;
+  }
+}
+
 .header__user-item--compare {
   display: none;
 
@@ -673,6 +689,7 @@
 .header__user-link {
   --icon-color: var(--bg-primary);
 
+  position: relative;
   display: grid;
   justify-items: center;
   gap: 5px;
@@ -728,6 +745,27 @@
 .header__user-link-text {
   @include vp-1024 {
     @include visually-hidden;
+  }
+}
+
+.header__user-count {
+  position: absolute;
+  top: -4px;
+  left: calc(50% + 4px);
+  min-width: 22px;
+  height: 22px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--white);
+  background-color: var(--error);
+  border-radius: 50%;
+  text-align: center;
+  z-index: 1;
+
+  @include vp-1024 {
+    top: -7px;
+    left: unset;
+    right: -7px;
   }
 }
 

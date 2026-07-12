@@ -24,6 +24,10 @@
       right: var(--container-offset-tablet);
     }
 
+    @include vp-1024 {
+      top: 70px;
+    }
+
     @include vp-1366 {
       max-width: calc(var(--content-width) - var(--container-offset-tablet) * 2);
       margin: 0 auto;

@@ -98,10 +98,7 @@
 
   @include vp-550 {
     aspect-ratio: unset;
-  }
-
-  @include vp-768 {
-    height: 305px;
+    height: 340px;
   }
 
   @include vp-2500 {

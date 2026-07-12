@@ -168,11 +168,15 @@
 }
 
 .decision__text {
-  max-width: 520px;
+  max-width: 90%;
   margin: 0;
   font-weight: 400;
   font-size: 16px;
   color: var(-text-light);
+
+  @include vp-550 {
+    max-width: 520px;
+  }
 
   @include vp-1024 {
     max-width: 340px;

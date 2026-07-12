@@ -121,6 +121,26 @@ export const SLIDER_CONFIG = {
     'desktop_count': 4,
     'gap': 20,
   },
+  'features': {
+    'mobile_count': 'auto',
+    'tablet_count': 'auto',
+    'desktop_count': 10000,
+    'loop': false,
+    'has_navigation': false,
+    'has_scrollbar': true,
+    'mobile_margin': 20,
+    'desktop_margin': 20,
+    'desktop_width': SMALL_DESKTOP_WIDTH,
+  },
+  'media': {
+    'mobile_count': 10000,
+    'tablet_count': 3,
+    'desktop_count': 4,
+    'loop': false,
+    'mobile_margin': 20,
+    'desktop_margin': 20,
+    'desktop_width': SMALL_DESKTOP_WIDTH,
+  },
 };
 
 export const RANGE_VALUES = {

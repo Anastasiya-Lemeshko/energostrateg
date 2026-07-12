@@ -222,6 +222,16 @@
   }
 }
 
+.modal-standard__form-button-container {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.modal-standard__form-error-wrapper {
+  color: var(--error-light);
+}
+
 .modal-standard__form-button {
   width: 100%;
 
