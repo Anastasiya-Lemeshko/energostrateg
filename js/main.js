@@ -17059,7 +17059,6 @@ const getSlidesCount = swiper => {
 const getAutoSlidesCount = swiper => {
   const swiperSlide = swiper.querySelector('[class*="swiper-wrapper"] li');
   const slideWidth = swiperSlide.offsetWidth;
-  console.log('slideWidth', slideWidth, 'window.innerWidth', window.innerWidth);
   return Math.floor(window.innerWidth / slideWidth);
 };
 const addSwiperClass = (swiper, el) => {
@@ -18975,7 +18974,6 @@ const setNavigationSwiper = () => {
         const isNeedTablet = _vars_js__WEBPACK_IMPORTED_MODULE_3__.TABLET_WIDTH.matches && !desktopBreakpoint.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.tablet_count);
         const isNeedDesktop = desktopBreakpoint.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section) > (autoSliderConfig ?? sliderConfig.desktop_count);
         const isLoopNeeded = (sliderConfig.loop ?? false) && (isNeedMobile || isNeedTablet || isNeedDesktop);
-        console.log(section, (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(section), (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getAutoSlidesCount)(section));
         if (!swiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
           initNavigationSwiper(isLoopNeeded);
         } else if (swiperContainer && !isNeedMobile && !isNeedTablet && !isNeedDesktop) {
@@ -19092,15 +19090,15 @@ const setMobileMenu = () => {
         }
       });
     };
-    if (!_vars_js__WEBPACK_IMPORTED_MODULE_1__.DESKTOP_WIDTH.matches && headerLinks && headerLinks.length) {
+    if (!_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.matches && headerLinks && headerLinks.length) {
       (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(headerLinks);
     }
     let moveTimeout = null;
-    _vars_js__WEBPACK_IMPORTED_MODULE_1__.DESKTOP_WIDTH.addEventListener('change', () => {
+    _vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.addEventListener('change', () => {
       clearTimeout(moveTimeout);
       moveTimeout = setTimeout(() => {
         if (!headerLinks || !headerLinks.length) return;
-        if (_vars_js__WEBPACK_IMPORTED_MODULE_1__.DESKTOP_WIDTH.matches) {
+        if (_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.matches) {
           (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.setTabIndex)(headerLinks);
         } else {
           (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(headerLinks);
