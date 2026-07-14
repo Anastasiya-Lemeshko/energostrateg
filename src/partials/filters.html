@@ -1,9 +1,9 @@
 <section class="filters block-color">
-  <h2 class="visually-hidden">Каталог товаров с фильтрами</h2>
   <div class="container">
-    <div class="filters__wrapper accordion">
+    <h2 class="filters__title title">Фильтр</h2>
+    <div class="filters__wrapper" data-mobile-menu-container>
       <div class="filters__controls">
-        <button class="filters__button-open accordion-button" type="button">Фильтр</button>
+        <button class="filters__button-open" type="button" data-mobile-menu-button="filter">Фильтр</button>
         <div class="filters__dropdown dropdown">
           <button class="filters__dropdown-button dropdown__button" type="button" aria-label="Выполнить сортировку.">Сначала дешевле</button>
           <ul class="dropdown__list js-select-list">
@@ -36,7 +36,10 @@
           </button>
         </div>
       </div>
-      <form class="filters__form filter-form accordion-content" action="form.php" method="get">
+      <form class="filters__form filter-form js-overlay" action="form.php" method="get" data-mobile-menu="filter">
+        <button class="filters__close-button js-button-close" type="button">
+          <span class="visually-hidden">Закрыть фильтры.</span>
+        </button>
         <div class="filters__group filters__group--side">
           <p class="filters__group-title">Производитель:</p>
           <div class="filters__checkboxes custom-scrollbar-wrapper">

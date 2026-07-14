@@ -332,10 +332,10 @@
   &:has(input:checked) {
     --bg-color: var(--bg-dark);
     --toggle-color: var(--white);
-    --toggle-transform: translateX(31px);
+    --toggle-transform: translateX(22px);
 
     @include vp-1024 {
-      --toggle-transform: translateX(25px);
+      --toggle-transform: translateX(24px);
     }
   }
 }

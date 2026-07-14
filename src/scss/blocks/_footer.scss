@@ -24,12 +24,13 @@
 
 .footer__top {
   display: grid;
-  grid-template-columns: minmax(0, auto) minmax(0, max-content);
-  gap: 40px 50px;
+  grid-template-columns: 1fr 145px;
+  gap: 40px 20px;
   margin: 0 0 40px;
 
   @include vp-768 {
     grid-template-columns: repeat(2, 1fr);
+    gap: 40px 50px;
   }
 
   @include vp-1024 {

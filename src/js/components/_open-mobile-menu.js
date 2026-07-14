@@ -1,7 +1,6 @@
 import { isEscapeKey, getScrollWidth, setTabIndex, removeTabIndex } from './../_utils.js';
 import { SMALL_DESKTOP_WIDTH } from "./../_vars.js";
 
-const header = document.querySelector('.header');
 const menuButtons = document.querySelectorAll('[data-mobile-menu-button]');
 
 const setMobileMenu = () => {
@@ -9,6 +8,7 @@ const setMobileMenu = () => {
 
   menuButtons.forEach((menuButton) => {
     const menuName = menuButton.getAttribute('data-mobile-menu-button');
+    const parentContainer = menuButton.closest('[data-mobile-menu-container]');
 
     if (!menuName) return;
 
@@ -16,8 +16,9 @@ const setMobileMenu = () => {
 
     if (!menu) return;
 
-    const headerLinks = menu.querySelectorAll('a, button');
+    const menuLinks = menu.querySelectorAll('a, button');
     const closeButton = menu.querySelector('.js-button-close');
+    const isOverlay = menu.classList.contains('js-overlay');
 
     let scrollSize = 0;
 
@@ -28,8 +29,9 @@ const setMobileMenu = () => {
       document.addEventListener('keydown', onDocumentKeydown);
       document.addEventListener('click', onDocumentClick);
       closeButton.addEventListener('click', onCloseButtonClick);
-      header.addEventListener('focusout', onMenuFocusOut);
-      setTabIndex(headerLinks);
+      if (parentContainer) parentContainer.addEventListener('focusout', onMenuFocusOut);
+      if (isOverlay) document.body.classList.add('overlay');
+      setTabIndex(menuLinks);
 
       scrollSize = getScrollWidth();
       document.body.style.paddingRight = `${scrollSize}px`;
@@ -43,8 +45,9 @@ const setMobileMenu = () => {
       document.removeEventListener('keydown', onDocumentKeydown);
       document.removeEventListener('click', onDocumentClick);
       closeButton.removeEventListener('click', onCloseButtonClick);
-      header.removeEventListener('focusout', onMenuFocusOut);
-      removeTabIndex(headerLinks);
+      if (parentContainer) parentContainer.removeEventListener('focusout', onMenuFocusOut);
+      if (isOverlay) document.body.classList.remove('overlay');
+      removeTabIndex(menuLinks);
     };
 
     function onDocumentKeydown(evt) {
@@ -55,13 +58,13 @@ const setMobileMenu = () => {
     }
 
     function onMenuFocusOut(evt) {
-      if (evt.relatedTarget === null || !header.contains(evt.relatedTarget)) {
+      if (evt.relatedTarget === null || (parentContainer && !parentContainer.contains(evt.relatedTarget))) {
         closeMobileMenu();
       }
     }
 
     function onDocumentClick(evt) {
-      if (!header.contains(evt.target)) {
+      if (parentContainer && !parentContainer.contains(evt.target)) {
         closeMobileMenu();
       }
     }
@@ -82,8 +85,8 @@ const setMobileMenu = () => {
       });
     };
 
-    if (!SMALL_DESKTOP_WIDTH.matches && headerLinks && headerLinks.length) {
-      removeTabIndex(headerLinks);
+    if (!SMALL_DESKTOP_WIDTH.matches && menuLinks && menuLinks.length) {
+      removeTabIndex(menuLinks);
     }
 
     let moveTimeout = null;
@@ -91,12 +94,12 @@ const setMobileMenu = () => {
     SMALL_DESKTOP_WIDTH.addEventListener('change', () => {
       clearTimeout(moveTimeout);
       moveTimeout = setTimeout(() => {
-        if (!headerLinks || !headerLinks.length) return;
+        if (!menuLinks || !menuLinks.length) return;
 
         if (SMALL_DESKTOP_WIDTH.matches) {
-          setTabIndex(headerLinks);
+          setTabIndex(menuLinks);
         } else {
-          removeTabIndex(headerLinks);
+          removeTabIndex(menuLinks);
         }
       }, 10);
     });

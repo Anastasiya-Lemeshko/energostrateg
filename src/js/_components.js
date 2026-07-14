@@ -22,6 +22,7 @@ import { setBigTextToggles } from './components/_hide-big-text.js';
 import { setCompareSwiper } from './components/_compare-swiper.js';
 import { setStickyCards } from './components/_compare-sticky.js';
 import { setFancyboxGallery } from './components/_fancybox.js';
+import { moveProductFeatures } from './components/_move_product_features.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   addFixedHeader();
@@ -49,5 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setCompareSwiper();
   setStickyCards();
   setFancyboxGallery();
+  moveProductFeatures();
 });
 

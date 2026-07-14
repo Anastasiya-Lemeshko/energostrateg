@@ -10,7 +10,6 @@ const controls = filter ? filter.querySelector('.filters__controls') : null;
 
 let initialHeightForm = 0;
 let initialHeightList = 0;
-let isClasses = true;
 let isControlsMoved = false;
 
 // функция расчета высоты формы
@@ -69,23 +68,6 @@ const hideTags = () => {
   advansedButton.textContent = 'Расширенный поиск';
 };
 
-// проверка необходимости аккордеона
-const checkAccordion = () => {
-  // снимает классы аккордеона на десктопе
-  if (buttonOpen && form && SMALL_DESKTOP_WIDTH.matches && isClasses) {
-    buttonOpen.classList.remove('accordion-button', 'accordion-button--active');
-    form.classList.remove('accordion-content', 'accordion-content--opened');
-    isClasses = false;
-  }
-
-  // вешает классы аккордеона на десктопе
-  if (buttonOpen && form && !SMALL_DESKTOP_WIDTH.matches && !isClasses) {
-    buttonOpen.classList.add('accordion-button', 'accordion-button--active');
-    form.classList.add('accordion-content', 'accordion-content--opened');
-    isClasses = true;
-  }
-};
-
 // двигает блок контролов
 const moveControls = () => {
   // ставит контролы после фильтров
@@ -101,6 +83,7 @@ const moveControls = () => {
   }
 };
 
+// функция расширенного поиска
 const setAdvancedSearch = () => {
   if (!advansedButton || !fieldsList || !fieldsList.length) return;
 
@@ -111,7 +94,6 @@ const setAdvancedSearch = () => {
   }
 
   heightCalculate();
-  checkAccordion();
   moveControls();
 
   advansedButton.addEventListener('click', () => {
@@ -134,7 +116,6 @@ SMALL_DESKTOP_WIDTH.addEventListener('change', () => {
       hideTags();
     }
     heightCalculate();
-    checkAccordion();
     moveControls();
   }, 10);
 });

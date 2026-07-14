@@ -1,5 +1,5 @@
 import Swiper from 'swiper';
-import { Navigation } from 'swiper/modules';
+import { Scrollbar } from 'swiper/modules';
 import {
   getSlidesCount,
   addSwiperClass,
@@ -14,34 +14,6 @@ import { TABLET_WIDTH, DESKTOP_WIDTH, SLIDER_CONFIG } from "../_vars.js";
 const compare = document.querySelector('.compare__wrapper');
 const imageSwiper = compare ? compare.querySelector('.compare__swiper') : null;
 const charSwiper = compare ? compare.querySelector('.compare__char-swiper') : null;
-const compareButtons = compare ? compare.querySelector('.compare__swiper-buttons') : null;
-
-// показывает кнопки свайпера (только при его инициализации)
-const onWindowScroll = () => {
-  const compareRect = compare.getBoundingClientRect();
-
-  const visibleTop = Math.max(compareRect.top, 0);
-  const visibleBottom = Math.min(compareRect.bottom, window.innerHeight);
-  const visibleHeight = Math.max(visibleBottom - visibleTop, 0);
-
-  const isCompareVisible = visibleHeight >= window.innerHeight * 0.5;
-
-  if (isCompareVisible) {
-    compareButtons.classList.add('compare__swiper-buttons--visible');
-  } else {
-    compareButtons.classList.remove('compare__swiper-buttons--visible');
-  }
-};
-
-const debouncedOnScrollWindow = debounce(onWindowScroll, 30);
-
-const addWindowListener = () => {
-  window.addEventListener('scroll', debouncedOnScrollWindow);
-};
-
-const removeWindowListener = () => {
-  window.removeEventListener('scroll', debouncedOnScrollWindow);
-};
 
 const setCompareSwiper = () => {
   if (!imageSwiper || !charSwiper) return;
@@ -81,7 +53,7 @@ const setCompareSwiper = () => {
       addSwiperClass(imageSwiper, sectionClass);
 
       imageSwiperContainer = new Swiper(imageSwiper, {
-        modules: [Navigation],
+        modules: [Scrollbar],
         direction: 'horizontal',
         speed: 500,
         allowTouchMove: true,
@@ -99,9 +71,10 @@ const setCompareSwiper = () => {
           },
         },
 
-        navigation: {
-          nextEl: `.${sectionClass}swiper-button--next`,
-          prevEl: `.${sectionClass}swiper-button--prev`,
+        scrollbar: {
+          el: '.compare__swiper-scrollbar',
+          draggable: true,
+          hide: false,
         },
 
         on: {
@@ -116,7 +89,7 @@ const setCompareSwiper = () => {
           },
           breakpoint: function () {
             requestAnimationFrame(() => {
-              this.navigation.update();
+              this.Scrollbar.update();
               this.update();
             });
           }
@@ -131,18 +104,11 @@ const setCompareSwiper = () => {
 
       if (!imageSwiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
         initImageSwiper();
-        addWindowListener();
       } else if (imageSwiperContainer && (!isNeedMobile && !isNeedTablet && !isNeedDesktop)) {
         destroyImageSwiper(imageSwiper, sectionClass);
-        removeWindowListener();
-        setTimeout(() => {
-          compareButtons.classList.remove('compare__swiper-buttons--visible');
-        }, 10);
       } else if (imageSwiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
         destroyImageSwiper(imageSwiper, sectionClass);
-        removeWindowListener();
         initImageSwiper();
-        addWindowListener();
       }
     };
 
@@ -167,7 +133,7 @@ const setCompareSwiper = () => {
       addSwiperClass(charSwiper, charClass);
 
       charSwiperContainer = new Swiper(charSwiper, {
-        modules: [Navigation],
+        modules: [Scrollbar],
         direction: 'horizontal',
         speed: 500,
         allowTouchMove: true,
@@ -185,9 +151,10 @@ const setCompareSwiper = () => {
           },
         },
 
-        navigation: {
-          nextEl: `.${sectionClass}swiper-button--next`,
-          prevEl: `.${sectionClass}swiper-button--prev`,
+        scrollbar: {
+          el: '.compare__swiper-scrollbar',
+          draggable: true,
+          hide: false,
         },
 
         on: {

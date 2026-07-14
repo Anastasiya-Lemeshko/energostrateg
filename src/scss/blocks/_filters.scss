@@ -8,6 +8,14 @@
   }
 }
 
+.filters__title {
+  display: none;
+
+  @include vp-1024 {
+    display: block;
+  }
+}
+
 .filters__button-open {
   position: relative;
   display: grid;
@@ -45,21 +53,66 @@
 }
 
 .filters__form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 100dvh;
+  overflow-y: scroll;
+  transform: translateX(-100%);
+  visibility: hidden;
+  opacity: 0;
+  z-index: -1;
   padding: 20px 10px 10px;
   color: var(--white);
   background-color: var(--bg-primary);
-  transition: opacity 0.4s, max-height 0.4s, padding 0.4s;
+  transition: transform 0s, opacity 0s, max-height 0s;
 
   @include vp-1024 {
+    position: relative;
+    top: unset;
+    left: unset;
+    width: unset;
+    height: unset;
     display: grid;
     grid-template-columns: 1fr 3fr;
     margin: 0 0 30px;
     padding: 0;
+    overflow-y: unset;
     background-color: var(--transparent);
+    transition: opacity 0.4s, max-height 0.4s;
+    transform: scaleY(1);
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
   }
 
-  &.accordion-content--opened {
-    overflow: visible;
+  &.is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+    z-index: var(--z-modal);
+    transition: transform 0.4s, opacity 0.4s, max-height 0.4s;
+  }
+}
+
+.filters__close-button {
+  @include close-button;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+
+  @include vp-1024 {
+    display: none;
+  }
+
+  &::before,
+  &::after {
+    width: 25px;
+    background-color: var(--white);
   }
 }
 
@@ -123,6 +176,7 @@
 
 .filters__checkbox-list {
   position: relative;
+  width: calc(100% - 50px);
   height: 216px;
   margin: 0;
   padding: 0;
@@ -290,7 +344,7 @@
 }
 
 .filters__products {
-  margin: -20px 0 30px;
+  margin: 0 0 30px;
   padding: 0;
   list-style-type: none;
   opacity: 1;
