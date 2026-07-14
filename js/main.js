@@ -16944,6 +16944,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_compare_swiper_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/_compare-swiper.js */ "./src/js/components/_compare-swiper.js");
 /* harmony import */ var _components_compare_sticky_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/_compare-sticky.js */ "./src/js/components/_compare-sticky.js");
 /* harmony import */ var _components_fancybox_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/_fancybox.js */ "./src/js/components/_fancybox.js");
+/* harmony import */ var _components_move_product_features_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/_move_product_features.js */ "./src/js/components/_move_product_features.js");
+
 
 
 
@@ -16994,6 +16996,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_components_compare_swiper_js__WEBPACK_IMPORTED_MODULE_21__.setCompareSwiper)();
   (0,_components_compare_sticky_js__WEBPACK_IMPORTED_MODULE_22__.setStickyCards)();
   (0,_components_fancybox_js__WEBPACK_IMPORTED_MODULE_23__.setFancyboxGallery)();
+  (0,_components_move_product_features_js__WEBPACK_IMPORTED_MODULE_24__.moveProductFeatures)();
 });
 
 /***/ }),
@@ -17456,7 +17459,6 @@ const advansedButton = form ? form.querySelector('.filters__advanced-search') : 
 const controls = filter ? filter.querySelector('.filters__controls') : null;
 let initialHeightForm = 0;
 let initialHeightList = 0;
-let isClasses = true;
 let isControlsMoved = false;
 
 // функция расчета высоты формы
@@ -17513,23 +17515,6 @@ const hideTags = () => {
   advansedButton.textContent = 'Расширенный поиск';
 };
 
-// проверка необходимости аккордеона
-const checkAccordion = () => {
-  // снимает классы аккордеона на десктопе
-  if (buttonOpen && form && _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isClasses) {
-    buttonOpen.classList.remove('accordion-button', 'accordion-button--active');
-    form.classList.remove('accordion-content', 'accordion-content--opened');
-    isClasses = false;
-  }
-
-  // вешает классы аккордеона на десктопе
-  if (buttonOpen && form && !_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isClasses) {
-    buttonOpen.classList.add('accordion-button', 'accordion-button--active');
-    form.classList.add('accordion-content', 'accordion-content--opened');
-    isClasses = true;
-  }
-};
-
 // двигает блок контролов
 const moveControls = () => {
   // ставит контролы после фильтров
@@ -17544,6 +17529,8 @@ const moveControls = () => {
     isControlsMoved = false;
   }
 };
+
+// функция расширенного поиска
 const setAdvancedSearch = () => {
   if (!advansedButton || !fieldsList || !fieldsList.length) return;
 
@@ -17553,7 +17540,6 @@ const setAdvancedSearch = () => {
     return;
   }
   heightCalculate();
-  checkAccordion();
   moveControls();
   advansedButton.addEventListener('click', () => {
     if (!advansedButton.classList.contains('js-hide-all')) {
@@ -17574,7 +17560,6 @@ _vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.addEventListener('chan
       hideTags();
     }
     heightCalculate();
-    checkAccordion();
     moveControls();
   }, 10);
 });
@@ -17775,28 +17760,6 @@ __webpack_require__.r(__webpack_exports__);
 const compare = document.querySelector('.compare__wrapper');
 const imageSwiper = compare ? compare.querySelector('.compare__swiper') : null;
 const charSwiper = compare ? compare.querySelector('.compare__char-swiper') : null;
-const compareButtons = compare ? compare.querySelector('.compare__swiper-buttons') : null;
-
-// показывает кнопки свайпера (только при его инициализации)
-const onWindowScroll = () => {
-  const compareRect = compare.getBoundingClientRect();
-  const visibleTop = Math.max(compareRect.top, 0);
-  const visibleBottom = Math.min(compareRect.bottom, window.innerHeight);
-  const visibleHeight = Math.max(visibleBottom - visibleTop, 0);
-  const isCompareVisible = visibleHeight >= window.innerHeight * 0.5;
-  if (isCompareVisible) {
-    compareButtons.classList.add('compare__swiper-buttons--visible');
-  } else {
-    compareButtons.classList.remove('compare__swiper-buttons--visible');
-  }
-};
-const debouncedOnScrollWindow = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.debounce)(onWindowScroll, 30);
-const addWindowListener = () => {
-  window.addEventListener('scroll', debouncedOnScrollWindow);
-};
-const removeWindowListener = () => {
-  window.removeEventListener('scroll', debouncedOnScrollWindow);
-};
 const setCompareSwiper = () => {
   if (!imageSwiper || !charSwiper) return;
   const sectionClass = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSwiperClass)(imageSwiper);
@@ -17827,7 +17790,7 @@ const setCompareSwiper = () => {
     const initImageSwiper = () => {
       (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.addSwiperClass)(imageSwiper, sectionClass);
       imageSwiperContainer = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"](imageSwiper, {
-        modules: [swiper_modules__WEBPACK_IMPORTED_MODULE_1__.Navigation],
+        modules: [swiper_modules__WEBPACK_IMPORTED_MODULE_1__.Scrollbar],
         direction: 'horizontal',
         speed: 500,
         allowTouchMove: true,
@@ -17843,9 +17806,10 @@ const setCompareSwiper = () => {
             slidesPerView: 4
           }
         },
-        navigation: {
-          nextEl: `.${sectionClass}swiper-button--next`,
-          prevEl: `.${sectionClass}swiper-button--prev`
+        scrollbar: {
+          el: '.compare__swiper-scrollbar',
+          draggable: true,
+          hide: false
         },
         on: {
           init: function () {
@@ -17859,7 +17823,7 @@ const setCompareSwiper = () => {
           },
           breakpoint: function () {
             requestAnimationFrame(() => {
-              this.navigation.update();
+              this.Scrollbar.update();
               this.update();
             });
           }
@@ -17872,18 +17836,11 @@ const setCompareSwiper = () => {
       const isNeedDesktop = _vars_js__WEBPACK_IMPORTED_MODULE_3__.DESKTOP_WIDTH.matches && (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getSlidesCount)(imageSwiper) > _vars_js__WEBPACK_IMPORTED_MODULE_3__.SLIDER_CONFIG.compare.desktop_count;
       if (!imageSwiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
         initImageSwiper();
-        addWindowListener();
       } else if (imageSwiperContainer && !isNeedMobile && !isNeedTablet && !isNeedDesktop) {
         destroyImageSwiper(imageSwiper, sectionClass);
-        removeWindowListener();
-        setTimeout(() => {
-          compareButtons.classList.remove('compare__swiper-buttons--visible');
-        }, 10);
       } else if (imageSwiperContainer && (isNeedMobile || isNeedTablet || isNeedDesktop)) {
         destroyImageSwiper(imageSwiper, sectionClass);
-        removeWindowListener();
         initImageSwiper();
-        addWindowListener();
       }
     };
     checkImageSwiper();
@@ -17903,7 +17860,7 @@ const setCompareSwiper = () => {
     const initCharSwiper = () => {
       (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.addSwiperClass)(charSwiper, charClass);
       charSwiperContainer = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"](charSwiper, {
-        modules: [swiper_modules__WEBPACK_IMPORTED_MODULE_1__.Navigation],
+        modules: [swiper_modules__WEBPACK_IMPORTED_MODULE_1__.Scrollbar],
         direction: 'horizontal',
         speed: 500,
         allowTouchMove: true,
@@ -17919,9 +17876,10 @@ const setCompareSwiper = () => {
             slidesPerView: 4
           }
         },
-        navigation: {
-          nextEl: `.${sectionClass}swiper-button--next`,
-          prevEl: `.${sectionClass}swiper-button--prev`
+        scrollbar: {
+          el: '.compare__swiper-scrollbar',
+          draggable: true,
+          hide: false
         },
         on: {
           init: function () {
@@ -18813,6 +18771,42 @@ _vars_js__WEBPACK_IMPORTED_MODULE_0__.TABLET_WIDTH.addEventListener('change', mo
 
 /***/ }),
 
+/***/ "./src/js/components/_move_product_features.js":
+/*!*****************************************************!*\
+  !*** ./src/js/components/_move_product_features.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   moveProductFeatures: () => (/* binding */ moveProductFeatures)
+/* harmony export */ });
+/* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_vars.js */ "./src/js/_vars.js");
+
+const product = document.querySelector('.product');
+const tabs = document.querySelector('.product-tab');
+const productFeatures = document.querySelector('.features');
+let isFeaturesMoved = false;
+let moveTimeout = null;
+const moveProductFeatures = () => {
+  if (!product || !tabs || !productFeatures) return;
+  clearTimeout(moveTimeout);
+  moveTimeout = setTimeout(() => {
+    if (_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && !isFeaturesMoved) {
+      tabs.insertAdjacentElement('beforebegin', productFeatures);
+      isFeaturesMoved = true;
+    }
+    if (!_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.matches && isFeaturesMoved) {
+      tabs.insertAdjacentElement('afterend', productFeatures);
+      isFeaturesMoved = false;
+    }
+  }, 10);
+};
+_vars_js__WEBPACK_IMPORTED_MODULE_0__.SMALL_DESKTOP_WIDTH.addEventListener('change', moveProductFeatures);
+
+
+/***/ }),
+
 /***/ "./src/js/components/_navigation-swiper.js":
 /*!*************************************************!*\
   !*** ./src/js/components/_navigation-swiper.js ***!
@@ -19026,17 +19020,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vars_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../_vars.js */ "./src/js/_vars.js");
 
 
-const header = document.querySelector('.header');
 const menuButtons = document.querySelectorAll('[data-mobile-menu-button]');
 const setMobileMenu = () => {
   if (!menuButtons || !menuButtons.length) return;
   menuButtons.forEach(menuButton => {
     const menuName = menuButton.getAttribute('data-mobile-menu-button');
+    const parentContainer = menuButton.closest('[data-mobile-menu-container]');
     if (!menuName) return;
     const menu = document.querySelector(`[data-mobile-menu="${menuName}"]`);
     if (!menu) return;
-    const headerLinks = menu.querySelectorAll('a, button');
+    const menuLinks = menu.querySelectorAll('a, button');
     const closeButton = menu.querySelector('.js-button-close');
+    const isOverlay = menu.classList.contains('js-overlay');
     let scrollSize = 0;
     const openMobileMenu = () => {
       menu.classList.add('is-open');
@@ -19045,8 +19040,9 @@ const setMobileMenu = () => {
       document.addEventListener('keydown', onDocumentKeydown);
       document.addEventListener('click', onDocumentClick);
       closeButton.addEventListener('click', onCloseButtonClick);
-      header.addEventListener('focusout', onMenuFocusOut);
-      (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.setTabIndex)(headerLinks);
+      if (parentContainer) parentContainer.addEventListener('focusout', onMenuFocusOut);
+      if (isOverlay) document.body.classList.add('overlay');
+      (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.setTabIndex)(menuLinks);
       scrollSize = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.getScrollWidth)();
       document.body.style.paddingRight = `${scrollSize}px`;
     };
@@ -19058,8 +19054,9 @@ const setMobileMenu = () => {
       document.removeEventListener('keydown', onDocumentKeydown);
       document.removeEventListener('click', onDocumentClick);
       closeButton.removeEventListener('click', onCloseButtonClick);
-      header.removeEventListener('focusout', onMenuFocusOut);
-      (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(headerLinks);
+      if (parentContainer) parentContainer.removeEventListener('focusout', onMenuFocusOut);
+      if (isOverlay) document.body.classList.remove('overlay');
+      (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(menuLinks);
     };
     function onDocumentKeydown(evt) {
       if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.isEscapeKey)(evt)) {
@@ -19068,12 +19065,12 @@ const setMobileMenu = () => {
       }
     }
     function onMenuFocusOut(evt) {
-      if (evt.relatedTarget === null || !header.contains(evt.relatedTarget)) {
+      if (evt.relatedTarget === null || parentContainer && !parentContainer.contains(evt.relatedTarget)) {
         closeMobileMenu();
       }
     }
     function onDocumentClick(evt) {
-      if (!header.contains(evt.target)) {
+      if (parentContainer && !parentContainer.contains(evt.target)) {
         closeMobileMenu();
       }
     }
@@ -19090,18 +19087,18 @@ const setMobileMenu = () => {
         }
       });
     };
-    if (!_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.matches && headerLinks && headerLinks.length) {
-      (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(headerLinks);
+    if (!_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.matches && menuLinks && menuLinks.length) {
+      (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(menuLinks);
     }
     let moveTimeout = null;
     _vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.addEventListener('change', () => {
       clearTimeout(moveTimeout);
       moveTimeout = setTimeout(() => {
-        if (!headerLinks || !headerLinks.length) return;
+        if (!menuLinks || !menuLinks.length) return;
         if (_vars_js__WEBPACK_IMPORTED_MODULE_1__.SMALL_DESKTOP_WIDTH.matches) {
-          (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.setTabIndex)(headerLinks);
+          (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.setTabIndex)(menuLinks);
         } else {
-          (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(headerLinks);
+          (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.removeTabIndex)(menuLinks);
         }
       }, 10);
     });
