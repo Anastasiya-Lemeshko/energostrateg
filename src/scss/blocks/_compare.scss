@@ -207,5 +207,10 @@
 .compare__swiper-scrollbar {
   @include swiper-scrollbar;
 
+  display: none;
   margin: 0 10px 10px;
+}
+
+.swiper .compare__swiper-scrollbar {
+  display: block;
 }

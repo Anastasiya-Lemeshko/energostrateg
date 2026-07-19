@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+
+@include('partials/head.html')
+
+<body class="page__body">
+  @include('partials/header.html')
+  <main class="page__main index">
+    @include('partials/breadcrumbs.html', {"h1": "Дизельный генератор AMO ADG 5500", "lastLink": "Дизельный генератор AMO ADG 5500"})
+    @include('partials/pages/product-page-out.html')
+    @include('partials/pages/product-tab.html')
+    @include('partials/pages/product-features.html')
+    @include('partials/delivery-preview.html')
+    @include('partials/analogue.html')
+    @include('partials/selection.html')
+    @include('partials/pages/product-projects.html')
+    @include('partials/pages/product-services.html')
+    @include('partials/recent.html')
+    @include('partials/request.html', {"title": "Закажите дизельный генератор AMO&nbsp;ADG&nbsp;5500 с&nbsp;монтажом под ключ"})
+  </main>
+  @include('partials/footer.html')
+</body>
+
+</html>

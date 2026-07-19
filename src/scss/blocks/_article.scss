@@ -15,7 +15,7 @@
     margin-top: 10px;
   }
 
-  p.article__subtitle {
+  h3 {
     margin: 20px 0;
     font-weight: 500;
     font-size: 30px;
@@ -23,13 +23,15 @@
     color: var(--bg-primary);
   }
 
-  p + p.article__subtitle {
-    margin-top: 20px;
-  }
-
-  b {
+  h4 {
+    margin: 0;
     font-weight: 500;
     color: var(--text-basic);
+  }
+
+  p+h4,
+  h3+h4 {
+    margin-top: 10px;
   }
 
   ul {

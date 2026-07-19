@@ -211,39 +211,6 @@
   }
 }
 
-.filters__dropdown {
-  @include select-standard;
-
-  &-button {
-    padding: 10px 0 10px 10px;
-    font-size: 16px;
-  }
-
-  .select__list {
-    padding: 20px 10px 10px;
-    left: unset;
-    right: 0;
-
-    @include vp-1024 {
-      left: 0;
-      right: unset;
-    }
-  }
-
-  .select__item {
-    font-size: 16px;
-    text-align: right;
-
-    @include vp-1024 {
-      text-align: left;
-    }
-
-    &:not(:last-child) {
-      margin: 0 0 15px;
-    }
-  }
-}
-
 .filters__select {
   @include select-filter;
 }
@@ -321,28 +288,6 @@
   }
 }
 
-.filters__controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 50px;
-  margin: 0 0 10px;
-
-  @include vp-1024 {
-    align-items: flex-end;
-  }
-}
-
-.filters__view {
-  display: none;
-
-  @include vp-1024 {
-    @include view-toggles;
-
-    display: block;
-  }
-}
-
 .filters__products {
   margin: 0 0 30px;
   padding: 0;
@@ -391,8 +336,4 @@
       margin: 0;
     }
   }
-}
-
-.filters__pagination {
-  @include pagination;
 }

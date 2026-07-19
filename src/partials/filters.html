@@ -2,36 +2,47 @@
   <div class="container">
     <h2 class="filters__title title">Фильтр</h2>
     <div class="filters__wrapper" data-mobile-menu-container>
-      <div class="filters__controls">
+      <div class="filters__controls controls">
         <button class="filters__button-open" type="button" data-mobile-menu-button="filter">Фильтр</button>
-        <div class="filters__dropdown dropdown">
-          <button class="filters__dropdown-button dropdown__button" type="button" aria-label="Выполнить сортировку.">Сначала дешевле</button>
-          <ul class="dropdown__list js-select-list">
-            <li class="dropdown__item">
-              <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">Сначала дешевле</a>
-            </li>
-            <li class="dropdown__item">
-              <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">Сначала дороже</a>
-            </li>
-            <li class="dropdown__item">
-              <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">А-Я</a>
-            </li>
-            <li class="dropdown__item">
-              <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">Я-А</a>
-            </li>
-            <li class="dropdown__item">
-              <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">По возрастанию мощности</a>
-            </li>
-            <li class="dropdown__item">
-              <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">По убыванию мощности</a>
-            </li>
-          </ul>
+        <div class="controls__options">
+          <div class="controls__dropdown dropdown">
+            <button class="controls__dropdown-button dropdown__button" type="button" aria-label="Выполнить сортировку.">Сначала дешевле</button>
+            <ul class="dropdown__list js-select-list">
+              <li class="dropdown__item">
+                <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">Сначала дешевле</a>
+              </li>
+              <li class="dropdown__item">
+                <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">Сначала дороже</a>
+              </li>
+              <li class="dropdown__item">
+                <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">А-Я</a>
+              </li>
+              <li class="dropdown__item">
+                <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">Я-А</a>
+              </li>
+              <li class="dropdown__item">
+                <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">По возрастанию мощности</a>
+              </li>
+              <li class="dropdown__item">
+                <a class="dropdown__item-link js-select-link" href="#" data-dir="" data-sort="">По убыванию мощности</a>
+              </li>
+            </ul>
+          </div>
+          <div class="controls__products-count select">
+            <label class="controls__products-count-label" for="view-number">Показать:</label>
+            <button class="controls__products-count-button select__button" type="button" aria-label="Количество отображаемых товаров.">24</button>
+            <select class="select__original" id="view-number" name="view-number" aria-label="Варианты количества отображаемых товаров">
+              <option value="24">24</option>
+              <option value="48">48</option>
+              <option value="96">96</option>
+            </select>
+          </div>
         </div>
-        <div class="filters__view">
-          <button class="filters__view-toggle filters__view-toggle--grid filters__view-toggle--active" type="button">
+        <div class="controls__view">
+          <button class="controls__view-toggle controls__view-toggle--grid controls__view-toggle--active" type="button">
             <span class="visually-hidden">Показать сеткой.</span>
           </button>
-          <button class="filters__view-toggle filters__view-toggle--list" type="button">
+          <button class="controls__view-toggle controls__view-toggle--list" type="button">
             <span class="visually-hidden">Показать списком.</span>
           </button>
         </div>
@@ -1239,25 +1250,25 @@
           </div>
         </li>
       </ul>
-      <div class="filters__pagination">
-        <a class="filters__pagination-button filters__pagination-button--first hidden" href="#">
+      <div class="pagination">
+        <a class="pagination__button pagination__button--first hidden" href="#">
           <span class="visually-hidden">Первая страница.</span>
         </a>
-        <a class="filters__pagination-button filters__pagination-button--prev hidden" href="#">
+        <a class="pagination__button pagination__button--prev hidden" href="#">
           <span class="visually-hidden">Предыдущая страница.</span>
         </a>
-        <ul class="filters__pagination-list">
-          <li class="filters__pagination-item">
-            <span class="filters__pagination-link filters__pagination-link--current">1</span>
+        <ul class="pagination__list">
+          <li class="pagination__item">
+            <span class="pagination__link pagination__link--current">1</span>
           </li>
-          <li class="filters__pagination-item">
-            <a class="filters__pagination-link" href="#">2</a>
+          <li class="pagination__item">
+            <a class="pagination__link" href="#">2</a>
           </li>
         </ul>
-        <a class="filters__pagination-button filters__pagination-button--next" href="#">
+        <a class="pagination__button pagination__button--next" href="#">
           <span class="visually-hidden">Следующая страница</span>
         </a>
-        <a class="filters__pagination-button filters__pagination-button--last" href="#">
+        <a class="pagination__button pagination__button--last" href="#">
           <span class="visually-hidden">Последняя страница</span>
         </a>
       </div>
