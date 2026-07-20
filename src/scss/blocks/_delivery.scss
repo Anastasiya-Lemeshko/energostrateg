@@ -27,11 +27,38 @@
   }
 
   @include vp-1024 {
-    grid-template-columns: repeat(8, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0;
+    background-color: var(--transparent);
   }
 }
 
 .delivery__item {
+  @include vp-1024 {
+    flex-shrink: 0;
+    width: calc((100% - 20px) / 8);
+    padding: 20px 10px;
+    background-color: var(--bg-primary);
+  }
+
+  &:nth-child(8n + 1) {
+    @include vp-1024 {
+      width: calc((100% - 20px) / 8 + 10px);
+      padding-left: 20px;
+    }
+  }
+
+  &:nth-child(8n) {
+    @include vp-1024 {
+      width: calc((100% - 20px) / 8 + 10px);
+      padding-right: 20px;
+    }
+  }
+}
+
+.delivery__item-wrapper {
   padding: 20px;
   aspect-ratio: 1 / 1;
   background-color: var(--bg-light);

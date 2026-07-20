@@ -133,7 +133,7 @@ export const SLIDER_CONFIG = {
     'desktop_width': SMALL_DESKTOP_WIDTH,
   },
   'media': {
-    'mobile_count': 10000,
+    'mobile_count': 1,
     'tablet_count': 3,
     'desktop_count': 4,
     'loop': false,
