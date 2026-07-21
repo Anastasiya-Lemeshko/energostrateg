@@ -11892,9 +11892,14 @@ ul.quick__subtabcontent.tabs__tabcontent--active {
   }
 }
 @media (min-width: 1024px) {
-  .delivery__item:nth-child(8n) {
+  .delivery__item:nth-child(8n), .delivery__item:last-child {
     width: calc((100% - 20px) / 8 + 10px);
     padding-right: 20px;
+  }
+}
+@media (min-width: 1024px) {
+  .delivery__item:nth-child(n+9) {
+    padding-top: 0;
   }
 }
 
