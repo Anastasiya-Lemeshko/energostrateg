@@ -63,6 +63,12 @@
 .compare__controls {
   margin: 0 0 17px;
 
+  @include vp-768 {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
   @include vp-1024 {
     margin: 0 0 20px;
   }
@@ -72,6 +78,64 @@
   @include control-toggle;
 
   width: fit-content;
+  margin: 0 0 15px;
+
+  @include vp-768 {
+    margin: 0;
+  }
+}
+
+.compare__diff {
+  --color-label: var(--error-opacity);
+
+  position: relative;
+  width: fit-content;
+  margin: 0;
+  padding-right: 24px;
+  font-size: 16px;
+
+  @include vp-1024 {
+    margin: 2px 0 0;
+    padding-right: 30px;
+  }
+
+  &:not(:last-child) {
+    margin: 0 0 15px;
+
+    @include vp-768 {
+      margin: 2px 0 0;
+    }
+  }
+
+  &::after {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    content: "";
+    width: 18px;
+    height: 18px;
+    background-color: var(--color-label);
+
+    @include vp-1024 {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &--max {
+    --color-label: var(--green-opacity);
+  }
+}
+
+.compare__diff-item {
+  &--min {
+    background-color: var(--error-opacity);
+  }
+
+  &--max {
+    background-color: var(--green-opacity);
+  }
 }
 
 .compare__char-swiper-wrapper {
@@ -185,6 +249,7 @@
 
     @include vp-768 {
       display: block;
+      width: fit-content;
       transition: transform 0s;
     }
 
