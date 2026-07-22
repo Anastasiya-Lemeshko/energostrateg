@@ -20,6 +20,8 @@
   --yellow: #e6f51e;
   --error: #c10000;
   --error-light: #ff8e8e;
+  --error-opacity: rgba(193, 0, 0, 0.3);
+  --green-opacity: rgba(60, 170, 60, 0.3);
   --z-close-button: 5;
   --z-select: 10;
   --z-button-scroll-top: 15;
@@ -1186,12 +1188,12 @@ form {
   border: none;
 }
 .product-card__model-group:not(:last-child) {
-  margin: 0 0 19px;
+  margin: 0 0 10px;
 }
 
 .product-card__model-text {
   width: 100%;
-  margin: 0 0 10px;
+  margin: 0 0 5px;
   font-weight: 400;
   font-size: 16px;
 }
@@ -12116,6 +12118,17 @@ ul.quick__subtabcontent.tabs__tabcontent--active {
 .compare__controls {
   margin: 0 0 17px;
 }
+@media (min-width: 768px) {
+  .compare__controls {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 20px;
+  }
+}
 @media (min-width: 1024px) {
   .compare__controls {
     margin: 0 0 20px;
@@ -12224,6 +12237,65 @@ ul.quick__subtabcontent.tabs__tabcontent--active {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  margin: 0 0 15px;
+}
+@media (min-width: 768px) {
+  .compare__toggle {
+    margin: 0;
+  }
+}
+
+.compare__diff {
+  --color-label: var(--error-opacity);
+  position: relative;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0;
+  padding-right: 24px;
+  font-size: 16px;
+}
+@media (min-width: 1024px) {
+  .compare__diff {
+    margin: 2px 0 0;
+    padding-right: 30px;
+  }
+}
+.compare__diff:not(:last-child) {
+  margin: 0 0 15px;
+}
+@media (min-width: 768px) {
+  .compare__diff:not(:last-child) {
+    margin: 2px 0 0;
+  }
+}
+.compare__diff::after {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+  content: "";
+  width: 18px;
+  height: 18px;
+  background-color: var(--color-label);
+}
+@media (min-width: 1024px) {
+  .compare__diff::after {
+    width: 24px;
+    height: 24px;
+  }
+}
+.compare__diff--max {
+  --color-label: var(--green-opacity);
+}
+
+.compare__diff-item--min {
+  background-color: var(--error-opacity);
+}
+.compare__diff-item--max {
+  background-color: var(--green-opacity);
 }
 
 .compare__char-swiper-wrapper {
@@ -12356,6 +12428,9 @@ ul.quick__subtabcontent.tabs__tabcontent--active {
 @media (min-width: 768px) {
   .compare__char-group dd {
     display: block;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
     -webkit-transition: -webkit-transform 0s;
     transition: -webkit-transform 0s;
     transition: transform 0s;
