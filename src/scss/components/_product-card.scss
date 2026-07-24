@@ -585,6 +585,7 @@
       grid-area: 1 / 1 / 2 / 2;
       display: grid;
       grid-template-columns: 180px 1fr 312px;
+      grid-template-rows: min-content 1fr;
       align-items: start;
       grid-template-areas:
         "img title model"
