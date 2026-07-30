@@ -252,6 +252,7 @@
   @include vp-1024 {
     margin-right: 10px;
     transition: none;
+    width: unset;
   }
 
   @include vp-1366 {
@@ -269,6 +270,27 @@
   &:focus-within {
     position: absolute;
     width: calc(100% - (var(--container-offset-mobile) * 2));
+
+    @include vp-768 {
+      width: calc(100% - (var(--container-offset-tablet) * 2));
+    }
+
+    @include vp-1024 {
+      position: relative;
+      width: unset;
+    }
+
+    @include vp-1366 {
+      width: 530px;
+    }
+
+    @include vp-1400 {
+      width: 545px;
+    }
+
+    @include vp-2500 {
+      width: 960px;
+    }
   }
 }
 
