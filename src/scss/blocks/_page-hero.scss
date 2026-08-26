@@ -27,6 +27,7 @@
   margin: 0 0 20px;
 
   @include vp-768 {
+    grid-column: 1 / 2;
     margin: 0 0 40px;
   }
 
@@ -69,6 +70,12 @@
 
   img {
     @include img-bg;
+  }
+}
+
+.page-hero__request {
+  @include vp-768 {
+    grid-column: 1 / 2;
   }
 }
 

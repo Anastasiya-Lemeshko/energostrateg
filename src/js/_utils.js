@@ -9,6 +9,7 @@ const isArrowDownKey = (evt) => evt.key === 'ArrowDown';
 const isArrowUpKey = (evt) => evt.key === 'ArrowUp';
 const isEnterKey = (evt) => evt.key === 'Enter';
 const isTabKey = (evt) => evt.key === 'Tab';
+const isBackspaceKey = (evt) => evt.key === 'Backspace';
 
 const getScrollWidth = () => {
   const div = document.createElement('div');
@@ -152,6 +153,7 @@ export {
   isArrowUpKey,
   isEnterKey,
   isTabKey,
+  isBackspaceKey,
   getScrollWidth,
   setTabIndex,
   removeTabIndex,

@@ -341,12 +341,12 @@
   }
 }
 
-.product.card-favorite .product__user-button--favorite {
+.product__user-button--favorite.voted {
   --icon: url("../img/sprite.svg#favorite-fill");
   --icon-size: 100%;
 }
 
-.product.card-compare .product__user-button--compare {
+.product__user-button--compare.added {
   --icon: url("../img/sprite.svg#compare-fill");
 }
 

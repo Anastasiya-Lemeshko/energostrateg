@@ -8,12 +8,13 @@
         <p class="modal-standard__title title">Оставить заявку</p>
         <p class="modal-standard__text">Опишите ваш вопрос по&nbsp;гарантии, возврату или обращению&nbsp;&mdash; поможем разобраться и&nbsp;подскажем дальнейший порядок действий.</p>
       </div>
-      <form class="modal-standard__form" action="form.php" method="post">
+      <form class="modal-standard__form form-validate" action="form.php" method="post">
         <ul class="modal-standard__list">
           <li class="modal-standard__item">
-            <label class="modal-standard__field">
+            <label class="modal-standard__field field-validate">
               <span class="visually-hidden">Ваше имя</span>
-              <input class="modal-standard__input" type="text" name="name" placeholder="Ваше имя*">
+              <input class="modal-standard__input" type="text" name="name" placeholder="Ваше имя*" required>
+              <p class="field-validate__error field-validate__error--light">Допустимы русские буквы, пробелы и дефис</p>
             </label>
           </li>
           <li class="modal-standard__item">
@@ -23,7 +24,7 @@
             </label>
           </li>
           <li class="modal-standard__item">
-            <label class="modal-standard__field">
+            <label class="modal-standard__field field-validate">
               <span class="visually-hidden">Номер телефона</span>
               <input class="modal-standard__input" type="tel" name="phone" placeholder="Номер телефона*" required>
             </label>
@@ -35,7 +36,7 @@
             </label>
           </li>
         </ul>
-        <label class="modal-standard__accept">
+        <label class="modal-standard__accept field-validate">
           <span class="modal-standard__label">Я&nbsp;даю <a href="#">согласие на&nbsp;обработку персональных данных</a> в&nbsp;соответствии с&nbsp;<a href="#">Политикой конфиденциальности</a>.</span>
           <input class="visually-hidden" type="checkbox" name="accept">
         </label>
@@ -43,7 +44,7 @@
           <div class="modal-standard__form-error-wrapper form-error-message">
             <p class="modal-standard__form-error hidden">Обязательные поля не заполнены</p>
           </div>
-          <button class="modal-standard__form-button button button--main button--to-light" type="submit">Отправить заявку</button>
+          <button class="modal-standard__form-button button button--main button--to-light" type="submit" disabled>Отправить заявку</button>
         </div>
       </form>
       <div class="modal-standard__tel">

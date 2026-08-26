@@ -1,0 +1,30 @@
+@use "index" as *;
+
+.field-validate {
+  position: relative;
+}
+
+.field-validate__error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: max-content;
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--error);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+
+  &--light {
+    font-size: 12px;
+    line-height: 0.8;
+    color: #ff6969;
+  }
+}
+
+.field-validate input.error+.field-validate__error {
+  opacity: 1;
+  visibility: visible;
+}

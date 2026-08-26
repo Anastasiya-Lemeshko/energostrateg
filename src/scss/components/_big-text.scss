@@ -14,11 +14,17 @@
     height: 60px;
     background: linear-gradient(to bottom, var(--transparent), var(--white));
     pointer-events: none;
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.3s ease;
   }
 
-  &--opened {
+  &.is-overlay {
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &--opened.is-overlay {
     &::after {
       opacity: 0;
     }

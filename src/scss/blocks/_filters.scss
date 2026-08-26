@@ -172,6 +172,10 @@
   position: relative;
   padding: 20px;
   background-color: var(--white);
+
+  @include vp-1024 {
+    min-height: 230px;
+  }
 }
 
 .filters__checkbox-list {

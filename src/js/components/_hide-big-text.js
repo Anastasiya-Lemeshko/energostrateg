@@ -31,8 +31,10 @@ const checkBigTextHeight = () => {
     // Проверяет, нужно ли показывать кнопку
     const fullHeight = content.scrollHeight;
     if (fullHeight <= HIDE_TEXT_HEIGHT) {
+      content.classList.remove('is-overlay');
       button.classList.add('hidden');
     } else {
+      content.classList.add('is-overlay');
       button.classList.remove('hidden');
       content.style.maxHeight = `${HIDE_TEXT_HEIGHT}px`;
     }

@@ -28,13 +28,23 @@ const renderModalContent = (modal, button) => {
     };
   }
 
-  // заполнение поля "услуги"
-  if (button.hasAttribute('data-service')) {
-    const service = button.dataset.service;
-    const serviceField = modal.querySelector('input[name="service"]');
+  // заполнение поля "товар"
+  if (button.hasAttribute('data-product-name')) {
+    const productName = button.dataset.productName;
+    const productField = modal.querySelector('input[name="product_name"]');
 
-    if (service && serviceField) {
-      serviceField.value = `Услуга: ${service}`;
+    if (productName && productField) {
+      productField.value = `${productName}`;
+    }
+  }
+
+  // заполнение поля "id товара"
+  if (button.hasAttribute('data-product-id')) {
+    const productId = button.dataset.productId;
+    const productField = modal.querySelector('input[name="product_id"]');
+
+    if (productId && productField) {
+      productField.value = `${productId}`;
     }
   }
 };

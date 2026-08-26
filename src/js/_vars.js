@@ -141,6 +141,13 @@ export const SLIDER_CONFIG = {
     'desktop_margin': 20,
     'desktop_width': SMALL_DESKTOP_WIDTH,
   },
+  'delivery': {
+    'mobile_count': 2,
+    'tablet_count': 10000,
+    'desktop_count': 10000,
+    'loop': true,
+    'mobile_margin': 20,
+  },
 };
 
 export const RANGE_VALUES = {
@@ -193,4 +200,18 @@ export const COUNT_GRID_COLUMNS = {
     tablet: 2,
     desktop: 3
   },
+};
+
+export const ERROR_TEXT = {
+  'empty': 'Это обязательное поле.',
+  'phone': 'Номер телефона должен содержать не менее 11 цифр.',
+  'name': 'Имя может содержать только русские буквы, пробелы и дефис.',
+  'select': 'Выберите один пункт из списка.',
+  'checkbox': 'Это обязательный пункт',
+  'default': 'Неверный формат данных',
+};
+
+export const FIELD_STANDARD = {
+  'phone': /(.*\d.*){11}/,
+  'name': /^[а-яё\s-]+$/i,
 };

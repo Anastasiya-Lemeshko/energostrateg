@@ -216,7 +216,7 @@ class ModalWindow {
 const setModals = () => {
   const openButtons = document.querySelectorAll('[data-modal-button]');
   const modalWindow = new ModalWindow(openButtons);
-  const modalSuccess = document.querySelector('[modal-success]');
+  const modalSuccess = document.querySelector('.modal-success');
   modalWindow.init();
 
   // Проверка наличия jQuery

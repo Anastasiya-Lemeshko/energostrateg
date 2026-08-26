@@ -122,12 +122,12 @@
   }
 }
 
-.product-card.card-favorite .product-card__user-button--favorite {
+.product-card__user-button--favorite.voted {
   --icon: url("../img/sprite.svg#favorite-fill");
   --icon-size: 100%;
 }
 
-.product-card.card-compare .product-card__user-button--compare {
+.product-card__user-button--compare.added {
   --icon: url("../img/sprite.svg#compare-fill");
 }
 

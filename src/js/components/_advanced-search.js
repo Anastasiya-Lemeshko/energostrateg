@@ -11,6 +11,11 @@ const controls = filter ? filter.querySelector('.filters__controls') : null;
 let initialHeightForm = 0;
 let initialHeightList = 0;
 let isControlsMoved = false;
+let countVisibleChars = COUNT_VISIBLE_FIELDS;
+
+if (filter) {
+  countVisibleChars = filter.dataset.visibleFields;
+}
 
 // функция расчета высоты формы
 const heightCalculate = () => {
@@ -26,7 +31,7 @@ const heightCalculate = () => {
 
   // расчет высоты списка со скрытыми элементами
   fieldsList.forEach((field, index) => {
-    if (index >= COUNT_VISIBLE_FIELDS) {
+    if (index >= countVisibleChars) {
       field.classList.add('hidden');
     }
   });
@@ -35,7 +40,7 @@ const heightCalculate = () => {
   filterContainer.style.maxHeight = `${initialHeightList}px`;
 
   fieldsList.forEach((field, index) => {
-    if (index >= COUNT_VISIBLE_FIELDS) {
+    if (index >= countVisibleChars) {
       field.classList.remove('hidden');
       field.classList.add('field-hidden');
     }
@@ -45,7 +50,7 @@ const heightCalculate = () => {
 // функция открытия дополнительных полей
 const showTags = () => {
   fieldsList.forEach((field, index) => {
-    if (index >= COUNT_VISIBLE_FIELDS) {
+    if (index >= countVisibleChars) {
       field.classList.remove('field-hidden');
     }
   });
@@ -60,7 +65,7 @@ const hideTags = () => {
   form.style.maxHeight = `${initialHeightForm}px`;
   filterContainer.style.maxHeight = `${initialHeightList}px`;
   fieldsList.forEach((field, index) => {
-    if (index >= COUNT_VISIBLE_FIELDS) {
+    if (index >= countVisibleChars) {
       field.classList.add('field-hidden');
     }
   });
@@ -88,7 +93,7 @@ const setAdvancedSearch = () => {
   if (!advansedButton || !fieldsList || !fieldsList.length) return;
 
   // если фильтров мало, прячет кнопку расширенного поиска
-  if (fieldsList.length <= COUNT_VISIBLE_FIELDS) {
+  if (fieldsList.length <= countVisibleChars) {
     advansedButton.classList.add('hidden');
     return;
   }

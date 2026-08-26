@@ -23,6 +23,8 @@ import { setCompareSwiper } from './components/_compare-swiper.js';
 import { setStickyCards } from './components/_compare-sticky.js';
 import { setFancyboxGallery } from './components/_fancybox.js';
 import { moveProductFeatures } from './components/_move_product_features.js';
+import { setPopupCookies } from './components/_popup-cookies.js';
+import { setFormValidate, formatPhone, formatName } from './components/_form-validate.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   addFixedHeader();
@@ -51,5 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
   setStickyCards();
   setFancyboxGallery();
   moveProductFeatures();
+  setPopupCookies();
+  setFormValidate();
+  formatPhone();
+  formatName();
 });
 

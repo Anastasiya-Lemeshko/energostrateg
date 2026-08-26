@@ -93,7 +93,7 @@
   }
 
   @include disabled {
-    background-color: var(--grey);
+    background-color: var(--bg-light);
     color: var(--text-light);
     cursor: default;
     pointer-events: none;
@@ -117,7 +117,7 @@
   }
 
   @include disabled {
-    background-color: var(--grey);
+    background-color: var(--bg-light);
     color: var(--text-light);
     cursor: default;
     pointer-events: none;

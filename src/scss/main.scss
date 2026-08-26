@@ -25,6 +25,7 @@
 @use "./components/controls";
 @use "./components/pagination";
 @use "./components/popup-cookies";
+@use "./components/field-validate";
 
 // подключения секций страницы
 @use "./blocks/header";

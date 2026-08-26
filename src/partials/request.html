@@ -1,6 +1,6 @@
 <section class="form block">
   <div class="container">
-    <form class="form__body" action="form.php" method="post">
+    <form class="form__body form-validate" action="form.php" method="post">
       @if (typeof title !== 'undefined') {
       <h2 class="form__title title">@title</h2>
       }
@@ -19,7 +19,7 @@
       <div class="form__content">
         <ul class="form__list">
           <li class="form__item">
-            <label class="form__field">
+            <label class="form__field field-validate">
               <span class="visually-hidden">Номер телефона</span>
               <input class="form__input" type="tel" name="phone" placeholder="Номер телефона*" required>
             </label>
@@ -31,9 +31,10 @@
             </label>
           </li>
           <li class="form__item">
-            <label class="form__field">
+            <label class="form__field field-validate">
               <span class="visually-hidden">Ваше имя</span>
-              <input class="form__input" type="text" name="name" placeholder="Ваше имя*">
+              <input class="form__input" type="text" name="name" placeholder="Ваше имя*" required>
+              <p class="field-validate__error">Допустимы русские буквы, пробелы и дефис</p>
             </label>
           </li>
           <li class="form__item">
@@ -55,7 +56,7 @@
             </label>
           </li>
         </ul>
-        <label class="form__accept">
+        <label class="form__accept field-validate">
           <span class="form__label">Я даю <a class="form__label-link" href="#">согласие на обработку персональных данных</a> в&nbsp;соответствии с&nbsp;<a class="form__label-link" href="#">Политикой конфиденциальности</a>.</span>
           <input class="visually-hidden" type="checkbox" name="accept">
         </label>
@@ -63,7 +64,7 @@
           <div class="form__error-wrapper form-error-message">
             <p class="form__error hidden">Обязательные поля не заполнены</p>
           </div>
-          <button class="form__button button button--main" type="submit">Отправить заявку</button>
+          <button class="form__button button button--main" type="submit" disabled>Отправить заявку</button>
         </div>
       </div>
     </form>
